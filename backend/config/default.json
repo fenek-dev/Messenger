@@ -1,0 +1,5 @@
+{
+    "port": 5000,
+    "jwtSecret":"take a chance",
+    "mongoUri": "mongodb+srv://Arthur:djhjrjd090@messanger.pegzl.mongodb.net/Messanger?retryWrites=true&w=majority"
+}
