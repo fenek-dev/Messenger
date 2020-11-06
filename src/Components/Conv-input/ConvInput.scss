@@ -1,0 +1,31 @@
+.conv-input {
+  grid-area: input;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-top: #eeeeee 1px solid;
+
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
+    margin-left: 10px;
+  }
+
+  &-btn {
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    padding: 7px 15px;
+    color: white;
+    background: #ef5350;
+    cursor: pointer;
+    transition: 0.3s ease-in;
+
+    &:hover {
+      box-shadow: 0px 0px 5px 5px rgba(235, 68, 68, 0.1);
+    }
+  }
+}

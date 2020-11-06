@@ -121,9 +121,10 @@ router.post(
     '/token', 
     async(req, res)=> {
     try {
-        
-        // Get jwt token
         const {token} = req.body
+        if(token) {
+        // Get jwt token
+        
         // If there isn't any token
         if (token == null) return res.sendStatus(401) 
     
@@ -140,7 +141,7 @@ router.post(
 
 
         res.json({userId: user.id, name:user.name})
-
+        }
     } catch (error) {
         res.status(500).json({message: error.message})
     }

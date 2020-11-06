@@ -1,0 +1,31 @@
+.conversation {
+  height: 100vh;
+  grid-area: conv;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows:
+    71px
+    1fr
+    74px;
+  grid-template-areas:
+    'header'
+    'chat'
+    'input';
+  &-chat {
+    grid-area: chat;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 15px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 3.5px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #eeeeee;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #ef5350;
+    }
+  }
+}
