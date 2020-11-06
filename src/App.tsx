@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route } from 'react-router-dom';
+import { getStorageItem } from './API/localstorage.api';
+import Auth from './Pages/Auth/Auth';
+import { SignInThunk } from './Redux/Actions/user.action';
 
 function App() {
+
+  const dispacth = useDispatch()
+  const[isAuth, setIsAuth] = useState<boolean>()
+
+
+  useEffect(()=>{
+    dispacth(SignInThunk(getStorageItem('token'), setIsAuth))
+  },[dispacth])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    {isAuth ? 
+    <div className="Hello">Hello</div>
+  
+    :
+    <>
+    <Route exact path='/'><Auth type='login' setIsAuth={setIsAuth}/></Route>
+    <Route exact path='/signup'><Auth type='register' setIsAuth={setIsAuth}/></Route>
+    </>
+    }
+    </>
   );
 }
 
