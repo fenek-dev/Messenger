@@ -10,13 +10,16 @@ body {
 
 a {
   font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+  color: #616161;
 }
 
 .main {
   color: #616161;
   display: grid;
-  grid-template-columns: 2fr 3fr 7fr;
-  grid-template-areas: 'sidebar list conv';
+  grid-template-columns: 5fr 7fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: 'sidebar  conv';
 }
 
 .active {

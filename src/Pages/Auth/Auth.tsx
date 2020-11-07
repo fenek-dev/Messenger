@@ -1,7 +1,6 @@
 import React from 'react'
 import AuthForm from '../../Containers/AuthForm/AuthForm'
 import { CreateUserThunk, SignInUserThunk } from '../../Redux/Actions/user.action'
-
 export interface IAuth {
     type: 'register' | 'login'
     setIsAuth: any

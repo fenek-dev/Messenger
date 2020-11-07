@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { getStorageItem } from './API/localstorage.api';
-import Sidebar from './Components/Sidebar/Sidebar';
-import Chats from './Containers/Chats/Chats';
+import Sidebar from './Containers/Sidebar/Sidebar';
 import Conversation from './Containers/Conversation/Conversation';
 import Auth from './Pages/Auth/Auth';
 import { SignInThunk } from './Redux/Actions/user.action';
@@ -21,9 +20,10 @@ function App() {
     <>
     {isAuth ? 
     <div className="main">
+    <Route path='/'>
     <Sidebar title={'Arthur Moore'}/>  
-    <Chats/>
     <Conversation/>
+    </Route>
     </div>
     
     

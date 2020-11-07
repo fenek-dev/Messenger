@@ -8,19 +8,18 @@ import search from '../../icons/loupe.svg'
 const Chats = () => {
     return (
         <section className='chats'>
-            <div className="chats-header">
-                Messenger
-            </div>
             <div className="chats-search">
             <img src={search} alt="search" className='icon-24'/>
             <input type="text" className='chats-search__input' placeholder='Search'/>
             </div>
             <div className="chats-list">
-                <div className="chats-list__filter">
-            Filter
-                </div>
+                
                 <ListItem name='Maks Fenek' photoUrl={user} lastMessage='Hi there' date='12:20' />
                 <ListItem name='Arthur Moore' photoUrl={user} lastMessage='How are you' date='12:20' className='active-chat'/>
+                <ListItem name='Maks Fenek' photoUrl={user} lastMessage='Hi there' date='12:20' />
+                <ListItem name='Maks Fenek' photoUrl={user} lastMessage='Hi there' date='12:20' />
+                <ListItem name='Maks Fenek' photoUrl={user} lastMessage='Hi there' date='12:20' />
+                <ListItem name='Maks Fenek' photoUrl={user} lastMessage='Hi there' date='12:20' />
                 <ListItem name='Maks Fenek' photoUrl={user} lastMessage='Hi there' date='12:20' />
                 <ListItem name='Maks Fenek' photoUrl={user} lastMessage='Hi there' date='12:20' />
                 <ListItem name='Maks Fenek' photoUrl={user} lastMessage='Hi there' date='12:20' />
