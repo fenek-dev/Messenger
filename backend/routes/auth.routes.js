@@ -1,7 +1,6 @@
 const {Router} = require('express')
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
-const config = require('config')
 const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
 
@@ -48,15 +47,15 @@ router.post(
         const hashedPassword = await bcrypt.hash(password, 2)
 
         // Create new user 
-        const user = new User({email, password: hashedPassword, name})
+        const user = new User({email, password: hashedPassword, name, status: ''})
         // Save new user in mongoDB
         await user.save()
 
         // Create jwt token
         const token = jwt.sign(
             {userId: user.id},
-            config.get('jwtSecret'),
-            {expiresIn: '1h'}
+            process.env.JWT_SECRET,
+            {expiresIn: '30d'}
         )
 
         // Send id and token to client
@@ -79,7 +78,6 @@ router.post(
     try {
         // Get all errors
         const errors = validationResult(req)
-
         if(!errors.isEmpty()) {
             return res.status(400).json({
                 errors: errors.array(),
@@ -104,14 +102,15 @@ router.post(
 
         const token = jwt.sign(
             {userId: user.id},
-            process.env.TOKEN_SECRET,
-            {expiresIn: '1h'}
+            process.env.JWT_SECRET,
+            {expiresIn: '30d'}
         )
 
         res.json({token, userId: user.id, name:user.name})
 
         
     } catch (error) {
+        console.log(error);
         res.status(500).json({message: 'Something goes wrong'})
     }
 })
@@ -129,7 +128,7 @@ router.post(
         if (token == null) return res.sendStatus(401) 
     
         // Check token
-        const userId = await jwt.verify(token, process.env.TOKEN_SECRET,  (err, user) => {
+        const userId = await jwt.verify(token, process.env.JWT_SECRET,  (err, user) => {
         if (err) return res.sendStatus(403).json({error: 'Incorrect token'})
         // Get user id
         return user.userId

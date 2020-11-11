@@ -2,16 +2,15 @@
 import { applyMiddleware, combineReducers } from 'redux';
 import { createStore } from 'redux';
 import thunk from 'redux-thunk';
+import chatsReducer from './chats.reducer';
+import { RootReducerInterface } from './Reducers';
 
-import userReducer, { IUserReducerState } from './user.reducer'
-
-export interface RootReducerInterface {
-    user: IUserReducerState
-}
+import userReducer from './user.reducer';
 
 const rootReducer = combineReducers<RootReducerInterface>({
-    user: userReducer
-  });
-  
+  user: userReducer,
+  chats: chatsReducer,
+});
+
 const store = createStore(rootReducer, applyMiddleware(thunk));
 export default store;

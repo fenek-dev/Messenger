@@ -1,12 +1,8 @@
-import React from 'react'
-import './Chat.scss'
+import React from 'react';
+import './Chat.scss';
 
 const Chat = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+  return <div></div>;
+};
 
-export default Chat
+export default Chat;

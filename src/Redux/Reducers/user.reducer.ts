@@ -1,22 +1,22 @@
-import { ADD_USER } from "../Constants"
+import { IUserPayload } from '../Actions/Actions';
+import { ADD_USER } from '../Constants';
+import { IUserReducerState } from './Reducers';
 
-export interface IUserReducerState {
-    userId:string,
-    name:string
-}
-const initialState = {
-    userId: '',
-    name: ''
-}
+const initialState: IUserReducerState = {
+  user_id: '',
+  name: '',
+};
 
-const reducer = (state = initialState, { type, payload }:{type:string, payload:any}) => {
-    switch (type) {
-
-        case ADD_USER:
-           return {...state, ...payload}
+const reducer = (
+  state = initialState,
+  { type, payload }: { type: string; payload: IUserPayload }
+) => {
+  switch (type) {
+    case ADD_USER:
+      return { ...state, ...payload };
 
     default:
-        return state
-    }
-}
-export default reducer
+      return state;
+  }
+};
+export default reducer;
