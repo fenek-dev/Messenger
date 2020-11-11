@@ -10,6 +10,12 @@ export interface IChat extends Document {
       body: string;
       created_at: number;
       received: boolean;
+      edited: boolean;
+      reply?: {
+        from: string;
+        body: string;
+        created_at: number;
+      };
     }
   ];
 }
@@ -24,6 +30,12 @@ const schema = new Schema({
       body: String,
       created_at: { type: Number, required: true },
       received: Boolean,
+      edited: Boolean,
+      reply: {
+        from: { type: String, required: true },
+        body: String,
+        created_at: { type: Number, required: true },
+      },
     },
   ],
 });

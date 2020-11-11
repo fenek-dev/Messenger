@@ -20,6 +20,8 @@ app.use(express.json());
 
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/chats', require('./routes/chats.routes'));
+app.use('/api/message', require('./routes/messages.routes'));
+
 async function start() {
   try {
     await mongoose.connect(process.env.MONGO_URI!, {
