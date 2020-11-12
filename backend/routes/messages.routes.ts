@@ -48,14 +48,16 @@ router.post('/create', async (req, res) => {
         edited: false,
         reply,
       };
-      await Chat.findOneAndUpdate(
+      const chat = await Chat.findOneAndUpdate(
         { members },
         {
           $push: { messages: newMessage },
           last_message: body,
           created_at: newMessage.created_at,
-        }
+        },
+        { new: true, useFindAndModify: true }
       );
+      await chat?.save();
     }
     res.status(201).json({ message: 'Message created' });
   } catch (error) {
@@ -71,7 +73,7 @@ router.patch('/update', async (req, res) => {
       created_at,
     }: { user_id: string; created_at: number; body: string } = req.body;
 
-    const chat = await Chat.findOneAndUpdate(
+    await Chat.findOneAndUpdate(
       { 'messages.created_at': created_at, 'messages.from': user_id },
       {
         $set: {
@@ -80,7 +82,7 @@ router.patch('/update', async (req, res) => {
         },
       }
     );
-    res.json({ chat });
+    res.status(201).json({ message: 'Message was updated' });
   } catch (error) {
     res.status(500).json({ error: 'Something goes wrong' });
   }

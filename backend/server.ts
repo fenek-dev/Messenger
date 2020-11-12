@@ -63,7 +63,7 @@ io.on('connection', (socket: Socket) => {
       chats.forEach((chat) => {
         new Promise(async (res: (value: IUser) => void, rej) => {
           const user = await User.findOne({
-            _id: chat.members.filter((name) => name !== user_id),
+            _id: chat.members.find((name) => name !== user_id),
           });
 
           res(user!);
@@ -81,19 +81,18 @@ io.on('connection', (socket: Socket) => {
           });
       });
 
-      Chat.watch([{ $match: { 'fullDocument.members': user_id } }]).on(
-        'change',
-        (data: any) => {
-          const updates = {
-            companion_id: data.fullDocument.members.filter(
-              (member: string) => member !== user_id
-            )[0],
-            last_massage: data.fullDocument.last_message || '',
-            created_at: data.fullDocument.created_at || '',
-          };
-          socket.emit('get:list-of-chats', [updates]);
-        }
-      );
+      Chat.watch([{ $match: { 'fullDocument.members': user_id } }], {
+        fullDocument: 'updateLookup',
+      }).on('change', (data: any) => {
+        const updates = {
+          companion_id: data.fullDocument.members.find(
+            (member: string) => member !== user_id
+          ),
+          last_massage: data.fullDocument.last_message || '',
+          created_at: data.fullDocument.created_at || '',
+        };
+        socket.emit('get:list-of-chats', [updates]);
+      });
     }
   });
 
@@ -103,15 +102,18 @@ io.on('connection', (socket: Socket) => {
       const companion_id = members.find((user) => user !== id);
       if (chat) {
         const messages = chat.messages;
+
         socket.emit('get:chat', { companion_id, messages });
       }
-      Chat.watch([{ $match: { 'fullDocument.members': members } }]).on(
-        'change',
-        (data: any) => {
-          const messages = data.fullDocument.messages;
-          socket.emit('get:chat', { companion_id, messages });
-        }
-      );
+      Chat.watch([{ $match: { 'fullDocument.members': members } }], {
+        fullDocument: 'updateLookup',
+      }).on('change', (data: any) => {
+        const message = data.fullDocument.messages.find(
+          (mes: any) =>
+            mes.created_at === data.updateDescription.updatedFields.created_at
+        );
+        socket.emit('get:chat', { companion_id, messages: [message] });
+      });
     }
   });
 

@@ -9,22 +9,28 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetChatThunk } from '../../Redux/Actions/chats.action';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
+import { SendMessageThunk } from '../../Redux/Actions/messages.action';
 const Conversation: React.FC = () => {
   const params = useParams<{ id: string }>();
   const id = params.id;
   const dispatch = useDispatch();
   const state = useSelector((state: RootReducerInterface) => state);
-  //const user = state.user;
+  const user = state.user;
   const chat = state.chats.find((chat) => chat.companion_id === id);
-
-  //const [chat, setChat] = useState<IChats>()
-  console.log(chat);
 
   useEffect(() => {
     if (chat) {
       dispatch(GetChatThunk(id));
     }
   }, [dispatch, id, chat]);
+
+  const handleSubmit = (value: string) => {
+    if (value === value.trim()) {
+      const members = [user.user_id, id];
+      dispatch(SendMessageThunk(members, user.user_id, value));
+      value = '';
+    }
+  };
 
   return (
     <section className='conversation'>
@@ -51,7 +57,7 @@ const Conversation: React.FC = () => {
           </div>
         </>
       )}
-      <ConvInput />
+      <ConvInput handleSubmit={handleSubmit} />
     </section>
   );
 };

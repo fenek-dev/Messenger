@@ -40,7 +40,7 @@ const reducer = (
           // If chat was found than check if messages is empty
           if (chat.messages.length !== 0) {
             // if messages is not empty
-            return chat.messages.filter((message) => {
+            chat.messages.filter((message) => {
               // Take every message and find message with the same created_at property as passed message
               if (message.created_at === payload.message.created_at) {
                 // If message was found than change message body by new value from payload
@@ -55,6 +55,15 @@ const reducer = (
                 return message;
               }
             });
+            if (
+              !chat.messages.find(
+                (mes) => mes.created_at === payload.message.created_at
+              )
+            ) {
+              return chat.messages.push(payload.message);
+            } else {
+              return chat.messages;
+            }
           } else {
             // If messages is empty than add new message
             return (chat.messages = [payload.message]);

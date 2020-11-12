@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './ConvInput.scss';
-const ConvInput = () => {
+
+export interface IConvInput {
+  handleSubmit: (value: string) => void;
+}
+const ConvInput: React.FC<IConvInput> = ({ handleSubmit }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleButton = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    handleSubmit(inputRef.current!.value);
+    inputRef.current!.value = '';
+  };
   return (
-    <div className='conv-input'>
-      <input type='text' placeholder='Type your message' />
-      <button type='submit' className='conv-input-btn'>
+    <form className='conv-input'>
+      <input type='text' ref={inputRef} placeholder='Type your message' />
+      <button type='submit' onClick={handleButton} className='conv-input-btn'>
         Send
       </button>
-    </div>
+    </form>
   );
 };
 

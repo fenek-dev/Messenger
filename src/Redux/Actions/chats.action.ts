@@ -18,6 +18,24 @@ export const AddMessageAction: IAction<IAddMessageAction> = (payload) => ({
   payload,
 });
 
+export const CreateChatThunk = (members: string[]) => async () => {
+  try {
+    const res = await fetch('/api/chats/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(members),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 export const GetAllChatsThunk = (user_id: string) => async (
   dispatch: Dispatch<any>,
   getState: IGetState
@@ -68,8 +86,6 @@ export const GetChatThunk = (companion_id: string) => (
     'get:chat',
     (data: { companion_id: string; messages: IMessage[] }) => {
       data.messages.forEach((message) => {
-        console.log(message);
-
         dispatch(
           AddMessageAction({
             companion_id: data.companion_id,
