@@ -26,10 +26,10 @@ const LoginSchema = Yup.object().shape({
 });
 
 export interface IAuthForm {
-  type: 'login' | 'register';
-  createUser?: any;
-  signIn?: any;
-  setIsAuth: any;
+  readonly type: 'login' | 'register';
+  readonly createUser?: any;
+  readonly signIn?: any;
+  readonly setIsAuth: any;
 }
 
 const AuthForm: React.FC<IAuthForm> = ({

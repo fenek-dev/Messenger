@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import './ConvInput.scss';
 
 export interface IConvInput {
-  handleSubmit: (value: string) => void;
+  readonly handleSubmit: (value: string) => void;
 }
 const ConvInput: React.FC<IConvInput> = ({ handleSubmit }) => {
   const inputRef = useRef<HTMLInputElement>(null);

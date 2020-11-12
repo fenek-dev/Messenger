@@ -1,41 +1,46 @@
-import { IMessage } from '../Reducers/Reducers';
+import { Dispatch } from 'react';
+import { IGetState, IMessage } from '../Reducers/Reducers';
 
 /**
  * General type for actions
  */
 export type IAction<T> = (
-  payload: T
+  payload: readonly T
 ) => {
-  type: string;
-  payload: T;
+  readonly type: string;
+  readonly payload: T;
 };
 
-export type IUserPayload = IAddUserAction;
-export type IChatsPayload = IAddChatAction & IAddMessageAction;
+export type IUserPayload = Readonly<IAddUserAction>;
+export type IChatsPayload = Readonly<IAddChatAction & IAddMessageAction>;
 
 export type IListOfChats = [
   {
-    companion_id: string;
-    companion_name: string;
-    last_massage: string;
-    created_at: string;
+    readonly companion_id: string;
+    readonly companion_name: string;
+    readonly last_massage: string;
+    readonly created_at: string;
   }
 ];
 
 export type IAddChatAction = {
-  companion_id: string;
-  companion_name: string;
-  last_message: string;
-  created_at: string | number;
-  messages: IMessage[];
+  readonly companion_id: string;
+  readonly companion_name: string;
+  readonly last_message: string;
+  readonly created_at: string | number;
+  readonly messages: IMessage[];
 };
 
 export type IAddMessageAction = {
-  companion_id: string;
-  message: IMessage;
+  readonly companion_id: string;
+  readonly message: IMessage;
 };
 
 export type IAddUserAction = {
-  user_id: string;
-  name: string;
+  readonly user_id: string;
+  readonly name: string;
 };
+
+export type IThunkAction = (
+  ...params: readonly any
+) => (dispatch: readonly Dispatch<any>, getState: readonly IGetState) => void;

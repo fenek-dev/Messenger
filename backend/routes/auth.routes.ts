@@ -128,7 +128,7 @@ router.post('/token', async (req, res) => {
         process.env.JWT_SECRET!,
         (err: any, user: any) => {
           if (err)
-            return res.sendStatus(403).json({ error: 'Incorrect token' });
+            return res.sendStatus(403).json({ message: 'Incorrect token' });
           // Get user id
           return user.userId;
         }

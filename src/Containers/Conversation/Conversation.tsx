@@ -11,10 +11,10 @@ import { GetChatThunk } from '../../Redux/Actions/chats.action';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
 import { SendMessageThunk } from '../../Redux/Actions/messages.action';
 const Conversation: React.FC = () => {
-  const params = useParams<{ id: string }>();
+  const params = useParams<{ id: Readonly<string> }>();
   const id = params.id;
   const dispatch = useDispatch();
-  const state = useSelector((state: RootReducerInterface) => state);
+  const state = useSelector((state: Readonly<RootReducerInterface>) => state);
   const user = state.user;
   const chat = state.chats.find((chat) => chat.companion_id === id);
 
@@ -24,7 +24,7 @@ const Conversation: React.FC = () => {
     }
   }, [dispatch, id, chat]);
 
-  const handleSubmit = (value: string) => {
+  const handleSubmit = (value: Readonly<string>) => {
     if (value === value.trim()) {
       const members = [user.user_id, id];
       dispatch(SendMessageThunk(members, user.user_id, value));

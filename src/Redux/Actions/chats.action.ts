@@ -1,12 +1,12 @@
-import { Dispatch } from 'react';
 import io from 'socket.io-client';
 import { ADD_CHAT, ADD_MESSAGES } from '../Constants';
-import { IGetState, IMessage } from '../Reducers/Reducers';
+import { IMessage } from '../Reducers/Reducers';
 import {
   IAction,
   IAddChatAction,
   IAddMessageAction,
   IListOfChats,
+  IThunkAction,
 } from './Actions';
 
 export const AddChatAction: IAction<IAddChatAction> = (payload) => ({
@@ -18,7 +18,9 @@ export const AddMessageAction: IAction<IAddMessageAction> = (payload) => ({
   payload,
 });
 
-export const CreateChatThunk = (members: string[]) => async () => {
+export const CreateChatThunk: IThunkAction = (
+  members: string[]
+) => async () => {
   try {
     const res = await fetch('/api/chats/create', {
       method: 'POST',
@@ -32,13 +34,12 @@ export const CreateChatThunk = (members: string[]) => async () => {
       throw new Error(data.message);
     }
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
   }
 };
 
-export const GetAllChatsThunk = (user_id: string) => async (
-  dispatch: Dispatch<any>,
-  getState: IGetState
+export const GetAllChatsThunk: IThunkAction = (user_id: string) => (
+  dispatch
 ) => {
   if (user_id) {
     const socket = io({
@@ -50,10 +51,6 @@ export const GetAllChatsThunk = (user_id: string) => async (
     socket.emit('list-of-chats', { user_id });
     socket.on('get:list-of-chats', (data: IListOfChats) => {
       data.forEach((chat) => {
-        // const state = getState().chats.find((aChat)=> aChat.companion_id === chat.companion_id && chat.companion_id)
-        // ? getState().chats.find((aChat:any)=> aChat.companion_id === chat.companion_id && chat.companion_id)
-        // : {last_massage : '',created_at :''}
-
         dispatch(
           AddChatAction({
             companion_id: chat.companion_id,
@@ -68,9 +65,9 @@ export const GetAllChatsThunk = (user_id: string) => async (
   }
 };
 
-export const GetChatThunk = (companion_id: string) => (
-  dispatch: any,
-  getState: IGetState
+export const GetChatThunk: IThunkAction = (companion_id: string) => (
+  dispatch,
+  getState
 ) => {
   const id = getState().user.user_id;
   const members = [id, companion_id];

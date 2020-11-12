@@ -1,28 +1,28 @@
 // Root Reducer
 export interface RootReducerInterface {
-  user: IUserReducerState;
-  chats: IChats[];
+  readonly user: IUserReducerState;
+  readonly chats: IChats[];
 }
 
-export type IGetState = () => RootReducerInterface;
+export type IGetState = () => Readonly<RootReducerInterface>;
 
 // User Eeducer
 export interface IUserReducerState {
-  user_id: string;
-  name: string;
+  readonly user_id: string;
+  readonly name: string;
 }
 
 // Chats Reducer
 export type IMessage = {
-  from: string;
-  body: string;
-  created_at: string | number;
-  received: boolean;
+  readonly from: string;
+  readonly body: string;
+  readonly created_at: string | number;
+  readonly received: boolean;
 };
 export type IChats = {
-  companion_id: string;
-  companion_name: string;
-  last_message: string;
-  created_at: string | number;
-  messages: IMessage[];
+  readonly companion_id: string;
+  readonly companion_name: string;
+  readonly last_message: string;
+  readonly created_at: string | number;
+  readonly messages: IMessage[];
 };

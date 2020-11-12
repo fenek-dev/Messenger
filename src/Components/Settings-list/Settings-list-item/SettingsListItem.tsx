@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import './SettingsListItem.scss';
 
 export interface ISettingsListItem {
-  text: string;
-  link: string;
+  readonly text: string;
+  readonly link: string;
 }
 const SettingsListItem: React.FC<ISettingsListItem> = ({ text, link }) => {
   return (

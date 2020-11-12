@@ -2,10 +2,10 @@ import React from 'react';
 import './Message.scss';
 
 export interface IMessageComponent {
-  type: 'own' | 'foreign';
-  text: string;
-  date: string | number;
-  photoUrl: string;
+  readonly type: 'own' | 'foreign';
+  readonly text: string;
+  readonly date: string | number;
+  readonly photoUrl: string;
 }
 
 const Message: React.FC<IMessageComponent> = ({

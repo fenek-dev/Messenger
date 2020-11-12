@@ -1,19 +1,18 @@
-import { Dispatch } from 'react';
-import { setStorageItem } from '../../API/localstorage.api';
+import { storage } from '../../API/localstorage.api';
 import { ADD_USER } from '../Constants';
-import { IAction, IAddUserAction } from './Actions';
+import { IAction, IAddUserAction, IThunkAction } from './Actions';
 
 export const AddUserAction: IAction<IAddUserAction> = (payload) => ({
   type: ADD_USER,
   payload,
 });
 
-export const CreateUserThunk = (
+export const CreateUserThunk: IThunkAction = (
   email: string,
   password: string,
   name: string,
   setIsAuth: (value: boolean) => void
-) => async (dispatch: Dispatch<any>) => {
+) => async (dispatch) => {
   try {
     if (email && password && name) {
       const body = { email, password, name };
@@ -31,19 +30,19 @@ export const CreateUserThunk = (
         throw new Error(data.message || 'Server error');
       }
       setIsAuth(true);
-      setStorageItem('token', data.token);
+      storage('token', data.token);
       dispatch(AddUserAction({ user_id: data.userId, name }));
     }
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
   }
 };
 
-export const SignInUserThunk = (
+export const SignInUserThunk: IThunkAction = (
   email: string,
   password: string,
   setIsAuth: (value: boolean) => void
-) => async (dispatch: Dispatch<any>) => {
+) => async (dispatch) => {
   try {
     if (email && password) {
       const body = { email, password };
@@ -60,18 +59,18 @@ export const SignInUserThunk = (
         throw new Error(data.message);
       }
       setIsAuth(true);
-      setStorageItem('token', data.token);
+      storage('token', data.token);
       dispatch(AddUserAction({ user_id: data.userId, name: data.name }));
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
-export const SignInThunk = (
+export const SignInThunk: IThunkAction = (
   token: string,
   setIsAuth: (value: boolean) => void
-) => async (dispatch: Dispatch<any>) => {
+) => async (dispatch) => {
   try {
     if (token) {
       const body = { token };
@@ -85,12 +84,12 @@ export const SignInThunk = (
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data);
+        throw new Error(data.message);
       }
       setIsAuth(true);
       dispatch(AddUserAction({ user_id: data.userId, name: data.name }));
     }
   } catch (error) {
-    console.log(error);
+    console.error(error.message);
   }
 };

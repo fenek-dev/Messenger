@@ -1,23 +1,22 @@
 import { Schema, model, Document } from 'mongoose';
 
+export interface IMessage {
+  readonly from: string;
+  readonly body: string;
+  readonly created_at: number;
+  readonly received: boolean;
+  readonly edited: boolean;
+  readonly reply?: {
+    readonly from: string;
+    readonly body: string;
+    readonly created_at: number;
+  };
+}
 export interface IChat extends Document {
-  members: string[];
-  last_message: string;
-  created_at: number;
-  messages: [
-    {
-      from: string;
-      body: string;
-      created_at: number;
-      received: boolean;
-      edited: boolean;
-      reply?: {
-        from: string;
-        body: string;
-        created_at: number;
-      };
-    }
-  ];
+  readonly members: string[];
+  readonly last_message: string;
+  readonly created_at: number;
+  readonly messages: IMessage[];
 }
 
 const schema = new Schema({

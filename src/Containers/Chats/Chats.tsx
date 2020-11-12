@@ -5,7 +5,7 @@ import user from '../../icons/user.jpg';
 import search from '../../icons/loupe.svg';
 import { IChats } from '../../Redux/Reducers/Reducers';
 
-const Chats: React.FC<{ chats: IChats[] }> = ({ chats }) => {
+const Chats: React.FC<{ readonly chats: IChats[] }> = ({ chats }) => {
   return (
     <section className='chats'>
       <div className='chats-search'>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { getStorageItem } from './API/localstorage.api';
+import { storage } from './API/localstorage.api';
 import Sidebar from './Containers/Sidebar/Sidebar';
 import Conversation from './Containers/Conversation/Conversation';
 import Auth from './Pages/Auth/Auth';
@@ -16,7 +16,8 @@ function App() {
   const [isAuth, setIsAuth] = useState<boolean>();
 
   useEffect(() => {
-    dispacth(SignInThunk(getStorageItem('token'), setIsAuth));
+    const token = storage('token');
+    dispacth(SignInThunk(token, setIsAuth));
   }, [dispacth]);
   useEffect(() => {
     dispacth(GetAllChatsThunk(state.user_id));

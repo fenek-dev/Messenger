@@ -1,5 +1,4 @@
 import express from 'express';
-import config from 'config';
 import mongoose from 'mongoose';
 import http from 'http';
 import Chat from './models/Chat';
@@ -13,11 +12,12 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-const PORT = config.get('port') || 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json({ type: 'text/plain' }));
 app.use(express.json());
 
+// routes
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/chats', require('./routes/chats.routes'));
 app.use('/api/message', require('./routes/messages.routes'));
@@ -32,7 +32,7 @@ async function start() {
     });
     server.listen(PORT, () => console.log('Server is working on PORT ', PORT));
   } catch (error) {
-    console.log('Error: ', error.message);
+    console.error('Error: ', error.message);
     process.exit(1);
   }
 }
@@ -44,6 +44,7 @@ io.on('connection', (socket: Socket) => {
   const id = query.user_id;
 
   if (id) {
+    // Find user by id and update online status and last activity
     User.findByIdAndUpdate(
       id,
       { logs: { online: true, last_activity: new Date().getTime() } },
@@ -62,6 +63,7 @@ io.on('connection', (socket: Socket) => {
       let data: any[] = [];
       chats.forEach((chat) => {
         new Promise(async (res: (value: IUser) => void, rej) => {
+          // Find user by id
           const user = await User.findOne({
             _id: chat.members.find((name) => name !== user_id),
           });
@@ -81,6 +83,7 @@ io.on('connection', (socket: Socket) => {
           });
       });
 
+      // Watch for document updating
       Chat.watch([{ $match: { 'fullDocument.members': user_id } }], {
         fullDocument: 'updateLookup',
       }).on('change', (data: any) => {
@@ -105,6 +108,8 @@ io.on('connection', (socket: Socket) => {
 
         socket.emit('get:chat', { companion_id, messages });
       }
+
+      // Watch for document updating
       Chat.watch([{ $match: { 'fullDocument.members': members } }], {
         fullDocument: 'updateLookup',
       }).on('change', (data: any) => {

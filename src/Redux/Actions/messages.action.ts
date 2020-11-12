@@ -1,12 +1,11 @@
-import { Dispatch } from 'react';
-import { IGetState } from '../Reducers/Reducers';
+import { IThunkAction } from './Actions';
 import { CreateChatThunk } from './chats.action';
 
-export const SendMessageThunk = (
+export const SendMessageThunk: IThunkAction = (
   members: string[],
   from: string,
   body: string
-) => async (dispatch: Dispatch<any>, getState: IGetState) => {
+) => async (dispatch, getState) => {
   try {
     const companion_id = members.find((member) => member !== from);
     if (!getState().chats.find((chat) => chat.companion_id === companion_id)) {
@@ -26,11 +25,11 @@ export const SendMessageThunk = (
       throw new Error(data.message);
     }
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
   }
 };
 
-export const SendReplyThunk = (
+export const SendReplyThunk: IThunkAction = (
   members: string[],
   from: string,
   body: string,
@@ -55,11 +54,11 @@ export const SendReplyThunk = (
       throw new Error(data.message);
     }
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
   }
 };
 
-export const UpdateMesssageThunk = (
+export const UpdateMesssageThunk: IThunkAction = (
   user_id: string,
   created_at: number,
   body: string
@@ -79,11 +78,11 @@ export const UpdateMesssageThunk = (
       throw new Error(data.message);
     }
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
   }
 };
 
-export const DeleteMessageThunk = (
+export const DeleteMessageThunk: IThunkAction = (
   user_id: string,
   created_at: number
 ) => async () => {
@@ -102,6 +101,6 @@ export const DeleteMessageThunk = (
       throw new Error(data.message);
     }
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
   }
 };

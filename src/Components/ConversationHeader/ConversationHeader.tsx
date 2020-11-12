@@ -4,8 +4,8 @@ import './ConversationHeader.scss';
 import options from '../../icons/settings.svg';
 
 export interface IConversationHeader {
-  name: string;
-  photoUrl: string;
+  readonly name: string;
+  readonly photoUrl: string;
 }
 
 const ConversationHeader: React.FC<IConversationHeader> = ({

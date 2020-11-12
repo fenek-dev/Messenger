@@ -1,14 +1,14 @@
 import { Schema, model, Document } from 'mongoose';
 
 export interface IUser extends Document {
-  email: string;
-  password: string;
-  name: string;
-  logs: {
-    online: boolean;
-    last_activity: number;
+  readonly email: string;
+  readonly password: string;
+  readonly name: string;
+  readonly logs: {
+    readonly online: boolean;
+    readonly last_activity: number;
   };
-  status: string;
+  readonly status: string;
 }
 
 const schema = new Schema({

@@ -6,7 +6,7 @@ import SettingsList from '../../Components/Settings-list/SettingsList';
 import { useSelector } from 'react-redux';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
 export interface ISidebar {
-  title: string;
+  readonly title: string;
 }
 
 const Sidebar: React.FC<ISidebar> = ({ title }) => {

@@ -2,7 +2,7 @@ import { IChatsPayload } from '../Actions/Actions';
 import { ADD_CHAT, ADD_MESSAGES } from '../Constants';
 import { IChats } from './Reducers';
 
-const initialState: IChats[] | any[] = [];
+const initialState: IChats[] = [];
 
 const reducer = (
   state = initialState,
@@ -34,7 +34,7 @@ const reducer = (
       return [...state, payload];
 
     case ADD_MESSAGES:
-      return state.filter((chat: IChats) => {
+      return state.filter((chat) => {
         // Find need chat by companion id
         if (chat.companion_id === payload.companion_id) {
           // If chat was found than check if messages is empty
@@ -66,7 +66,7 @@ const reducer = (
             }
           } else {
             // If messages is empty than add new message
-            return (chat.messages = [payload.message]);
+            return chat.messages.push(payload.message);
           }
         } else {
           // If this chat hasn't the same companion id just return chat

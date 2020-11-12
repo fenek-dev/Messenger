@@ -1,29 +1,25 @@
 import { Router } from 'express';
-import Chat from '../models/Chat';
+import Chat, { IMessage } from '../models/Chat';
 
 const router = Router();
 
+interface IMessageCreateReqBody {
+  readonly members: string[];
+  readonly from: string;
+  readonly body: string;
+  readonly reply: {
+    readonly from: string;
+    readonly body: string;
+    readonly created_at: number;
+  };
+}
 // /api/message/create
 router.post('/create', async (req, res) => {
   try {
-    const {
-      members,
-      from,
-      body,
-      reply,
-    }: {
-      members: string[];
-      from: string;
-      body: string;
-      reply: {
-        from: string;
-        body: string;
-        created_at: number;
-      };
-    } = req.body;
+    const { members, from, body, reply }: IMessageCreateReqBody = req.body;
 
     if (!reply) {
-      const newMessage = {
+      const newMessage: IMessage = {
         from,
         body,
         created_at: new Date().getTime(),
@@ -40,7 +36,7 @@ router.post('/create', async (req, res) => {
         }
       );
     } else {
-      const newMessage = {
+      const newMessage: IMessage = {
         from,
         body,
         created_at: new Date().getTime(),
@@ -48,7 +44,7 @@ router.post('/create', async (req, res) => {
         edited: false,
         reply,
       };
-      const chat = await Chat.findOneAndUpdate(
+      await Chat.findOneAndUpdate(
         { members },
         {
           $push: { messages: newMessage },
@@ -57,21 +53,22 @@ router.post('/create', async (req, res) => {
         },
         { new: true, useFindAndModify: true }
       );
-      await chat?.save();
     }
     res.status(201).json({ message: 'Message created' });
   } catch (error) {
-    res.status(500).json({ error: 'Something goes wrong' });
+    res.status(500).json({ message: 'Something goes wrong' });
   }
 });
 
+interface IMessageUpdateReqBody {
+  readonly user_id: string;
+  readonly created_at: number;
+  readonly body: string;
+}
+
 router.patch('/update', async (req, res) => {
   try {
-    const {
-      user_id,
-      body,
-      created_at,
-    }: { user_id: string; created_at: number; body: string } = req.body;
+    const { user_id, body, created_at }: IMessageUpdateReqBody = req.body;
 
     await Chat.findOneAndUpdate(
       { 'messages.created_at': created_at, 'messages.from': user_id },
@@ -84,16 +81,18 @@ router.patch('/update', async (req, res) => {
     );
     res.status(201).json({ message: 'Message was updated' });
   } catch (error) {
-    res.status(500).json({ error: 'Something goes wrong' });
+    res.status(500).json({ message: 'Something goes wrong' });
   }
 });
 
+interface IMessageDeleteReqBody {
+  readonly user_id: string;
+  readonly created_at: number;
+}
+
 router.delete('/delete', async (req, res) => {
   try {
-    const {
-      user_id,
-      created_at,
-    }: { user_id: string; created_at: number } = req.body;
+    const { user_id, created_at }: IMessageDeleteReqBody = req.body;
 
     await Chat.findOneAndUpdate(
       {
@@ -107,7 +106,7 @@ router.delete('/delete', async (req, res) => {
 
     res.json({ message: 'Message was deleted' });
   } catch (error) {
-    res.status(500).json({ error: 'Something goes wrong' });
+    res.status(500).json({ message: 'Something goes wrong' });
   }
 });
 
