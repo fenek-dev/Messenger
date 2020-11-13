@@ -1,12 +1,10 @@
 .settings-list-item {
-  margin: 10px 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
 
-  border-bottom: #eeeeee 1px solid;
-  border-top: #eeeeee 1px solid;
   a {
     width: 100%;
   }
@@ -17,5 +15,10 @@
     font-size: 15px;
     margin: 0;
     font-weight: 400;
+  }
+
+  &:hover {
+    transition: 0.3s ease-in;
+    background: #ffcdd2;
   }
 }

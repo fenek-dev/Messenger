@@ -29,10 +29,29 @@
 .own {
   margin-left: auto;
   flex-direction: row-reverse;
+  animation: ease-in-out 0.3s ownApper;
 }
 
 .foreign {
   .message-content {
     background: #eeeeee;
+  }
+}
+
+@keyframes ownApper {
+  0% {
+    transform: translateX(150%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes foreignApper {
+  0% {
+    transform: translateX(-150%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }

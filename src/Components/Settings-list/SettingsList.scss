@@ -5,9 +5,9 @@
   height: 100vh;
   width: 100%;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-
+  animation: ease-in-out apper 0.5s;
+  z-index: -10;
   &-list {
-    padding: 10px 0;
     height: 100%;
     overflow-y: scroll;
     &::-webkit-scrollbar {
@@ -20,5 +20,46 @@
     &::-webkit-scrollbar-thumb {
       background: #ef5350;
     }
+
+    &-header {
+      display: flex;
+      height: 70px;
+      align-items: center;
+      justify-content: center;
+      border-bottom: #eeeeee 1px solid;
+      &__title {
+        font-size: 25px;
+        padding: 10px;
+      }
+    }
+    &__label {
+      position: absolute;
+      top: -40px;
+      left: 20px;
+      color: #ef5350;
+    }
+    &-account {
+      margin-top: 35px;
+      position: relative;
+    }
+
+    &-options {
+      margin-top: 40px;
+      position: relative;
+    }
+  }
+}
+
+@keyframes apper {
+  0% {
+    transform: translateX(-110%);
+    box-shadow: none;
+  }
+  100% {
+    transform: translateX(0%);
+  }
+  0% {
+    transform: translateX(-110%);
+    box-shadow: none;
   }
 }

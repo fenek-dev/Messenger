@@ -5,6 +5,7 @@
   justify-content: center;
   padding: 20px;
   border-top: #eeeeee 1px solid;
+  animation: ease-in-out 0.5s convInputApper;
 
   input {
     width: 100%;
@@ -27,5 +28,14 @@
     &:hover {
       box-shadow: 0px 0px 5px 5px rgba(235, 68, 68, 0.1);
     }
+  }
+}
+
+@keyframes convInputApper {
+  0% {
+    transform: translateY(150%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

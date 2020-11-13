@@ -8,6 +8,7 @@
   border-bottom: #eeeeee 1px solid;
   padding: 0 25px;
   margin: 0;
+  animation: ease-in-out 0.5s convHeaderApper;
 
   &__content {
     margin-left: 10px;
@@ -29,5 +30,14 @@
   }
   &__options {
     margin-left: auto;
+  }
+}
+
+@keyframes convHeaderApper {
+  0% {
+    transform: translateY(-150%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

@@ -4,6 +4,7 @@ import './Chats.scss';
 import user from '../../icons/user.jpg';
 import search from '../../icons/loupe.svg';
 import { IChats } from '../../Redux/Reducers/Reducers';
+import moment from 'moment';
 
 const Chats: React.FC<{ readonly chats: IChats[] }> = ({ chats }) => {
   return (
@@ -24,8 +25,12 @@ const Chats: React.FC<{ readonly chats: IChats[] }> = ({ chats }) => {
               companion_id={chat.companion_id}
               name={chat.companion_name}
               photoUrl={user}
-              lastMessage={chat.last_message || ''}
-              date={chat.created_at || ''}
+              lastMessage={
+                chat.last_message.length > 25
+                  ? chat.last_message.slice(0, 25) + '...'
+                  : chat.last_message
+              }
+              date={moment(chat.created_at).utc().format('hh:mm') || ''}
             />
           ))}
       </div>

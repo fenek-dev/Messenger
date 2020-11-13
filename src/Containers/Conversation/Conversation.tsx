@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GetChatThunk } from '../../Redux/Actions/chats.action';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
 import { SendMessageThunk } from '../../Redux/Actions/messages.action';
+
+import moment from 'moment';
 const Conversation: React.FC = () => {
   const params = useParams<{ id: Readonly<string> }>();
   const id = params.id;
@@ -31,6 +33,7 @@ const Conversation: React.FC = () => {
       value = '';
     }
   };
+  console.log(moment(1600173594843).diff(chat?.created_at));
 
   return (
     <section className='conversation'>
@@ -49,15 +52,15 @@ const Conversation: React.FC = () => {
                     key={index}
                     text={message.body}
                     photoUrl={userPhoto}
-                    date={message.created_at}
+                    date={moment(message.created_at).utc().format('hh:mm')}
                     type={message.from === id ? 'foreign' : 'own'}
                   />
                 );
               })}
           </div>
+          <ConvInput handleSubmit={handleSubmit} />
         </>
       )}
-      <ConvInput handleSubmit={handleSubmit} />
     </section>
   );
 };

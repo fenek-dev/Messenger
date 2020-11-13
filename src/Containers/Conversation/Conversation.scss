@@ -1,4 +1,5 @@
 .conversation {
+  animation: ease-in-out 0.5s convApper;
   height: 100vh;
   grid-area: conv;
   display: grid;
@@ -17,6 +18,7 @@
     flex-direction: column;
     padding: 20px 15px;
     overflow-y: scroll;
+    overflow-x: hidden;
     &::-webkit-scrollbar {
       width: 3.5px;
     }
@@ -27,5 +29,14 @@
     &::-webkit-scrollbar-thumb {
       background: #ef5350;
     }
+  }
+}
+
+@keyframes convApper {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

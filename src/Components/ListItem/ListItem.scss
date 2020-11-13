@@ -5,6 +5,7 @@
   align-items: center;
   border-bottom: #eeeeee 1px solid;
   padding: 0 15px;
+  animation: apper 0.3s ease-in-out;
   &__avatar {
     color: #000;
   }
@@ -36,5 +37,15 @@
     right: 10px;
     font-size: 12px;
     font-weight: 300;
+  }
+}
+
+@keyframes apper {
+  0% {
+    transform: translateX(-110%);
+    box-shadow: none;
+  }
+  100% {
+    transform: translateX(0%);
   }
 }

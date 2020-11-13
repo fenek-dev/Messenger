@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: #fff;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   &-header {
     background: #ef5350;
@@ -27,9 +28,11 @@
   &__tab-list {
     display: flex;
     flex-direction: column;
-    margin: 0 0 10px;
+    margin: 0;
     padding: 0;
     z-index: 10;
+    background: white;
+    opacity: 1;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   }
 
@@ -48,7 +51,7 @@
     cursor: pointer;
     &:hover {
       transition: 0.3s ease-in;
-      background: #ffcdd2;
+      background: #fafafa;
     }
 
     &--selected {

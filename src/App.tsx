@@ -8,7 +8,6 @@ import Auth from './Pages/Auth/Auth';
 import { SignInThunk } from './Redux/Actions/user.action';
 import { GetAllChatsThunk } from './Redux/Actions/chats.action';
 import { RootReducerInterface } from './Redux/Reducers/Reducers';
-
 function App() {
   const state = useSelector((state: RootReducerInterface) => state.user);
 
@@ -30,7 +29,7 @@ function App() {
           <Route path='/'>
             <Sidebar title={'Arthur Moore'} />
           </Route>
-          <Route path='/:id'>
+          <Route exact path='/:id'>
             <Conversation />
           </Route>
         </div>
