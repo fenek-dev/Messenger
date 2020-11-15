@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './Sidebar.scss';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import Chats from '../Chats/Chats';
-import SettingsList from '../../Components/Settings-list/SettingsList';
 import { useSelector } from 'react-redux';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
+
+import Chats from '../Chats/Chats';
+import SettingsList from '../../Components/Settings-list/SettingsList';
 export interface ISidebar {
   readonly title: string;
 }
@@ -38,4 +39,4 @@ const Sidebar: React.FC<ISidebar> = ({ title }) => {
   );
 };
 
-export default Sidebar;
+export default memo(Sidebar);

@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { storage } from './API/localstorage.api';
-import Sidebar from './Containers/Sidebar/Sidebar';
-import Conversation from './Containers/Conversation/Conversation';
-import Auth from './Pages/Auth/Auth';
+
 import { SignInThunk } from './Redux/Actions/user.action';
 import { GetAllChatsThunk } from './Redux/Actions/chats.action';
 import { RootReducerInterface } from './Redux/Reducers/Reducers';
+
+const Sidebar = lazy(() => import('./Containers/Sidebar/Sidebar'));
+const Conversation = lazy(
+  () => import('./Containers/Conversation/Conversation')
+);
+const Auth = lazy(() => import('./Pages/Auth/Auth'));
+
 function App() {
   const state = useSelector((state: RootReducerInterface) => state.user);
 
@@ -26,21 +31,25 @@ function App() {
     <>
       {isAuth ? (
         <div className='main'>
-          <Route path='/'>
-            <Sidebar title={'Arthur Moore'} />
-          </Route>
-          <Route exact path='/:id'>
-            <Conversation />
-          </Route>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Route path='/'>
+              <Sidebar title={'Arthur Moore'} />
+            </Route>
+            <Route exact path='/:id'>
+              <Conversation />
+            </Route>
+          </Suspense>
         </div>
       ) : (
         <>
-          <Route exact path='/'>
-            <Auth type='login' setIsAuth={setIsAuth} />
-          </Route>
-          <Route exact path='/signup'>
-            <Auth type='register' setIsAuth={setIsAuth} />
-          </Route>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Route exact path='/'>
+              <Auth type='login' setIsAuth={setIsAuth} />
+            </Route>
+            <Route exact path='/signup'>
+              <Auth type='register' setIsAuth={setIsAuth} />
+            </Route>
+          </Suspense>
         </>
       )}
     </>

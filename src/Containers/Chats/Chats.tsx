@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ListItem from '../../Components/ListItem/ListItem';
 import './Chats.scss';
 import user from '../../icons/user.jpg';
@@ -38,4 +38,4 @@ const Chats: React.FC<{ readonly chats: IChats[] }> = ({ chats }) => {
   );
 };
 
-export default Chats;
+export default memo(Chats);

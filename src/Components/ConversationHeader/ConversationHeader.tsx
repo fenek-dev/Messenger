@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './ConversationHeader.scss';
 
 import options from '../../icons/settings.svg';
@@ -26,4 +26,4 @@ const ConversationHeader: React.FC<IConversationHeader> = ({
   );
 };
 
-export default ConversationHeader;
+export default memo(ConversationHeader);

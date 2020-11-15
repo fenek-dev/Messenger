@@ -48,11 +48,14 @@ export const GetAllChatsThunk: IThunkAction = (user_id: string) => (
       },
     });
 
-    socket.emit('list-of-chats', { user_id });
+    socket.emit('list-of-chats');
     socket.on('get:list-of-chats', (data: IListOfChats) => {
       data.forEach((chat) => {
+        console.log(chat);
+
         dispatch(
           AddChatAction({
+            chat_id: chat.chat_id,
             companion_id: chat.companion_id,
             companion_name: chat.companion_name,
             last_message: chat.last_massage,
@@ -65,24 +68,19 @@ export const GetAllChatsThunk: IThunkAction = (user_id: string) => (
   }
 };
 
-export const GetChatThunk: IThunkAction = (companion_id: string) => (
+export const GetChatThunk: IThunkAction = (chat_id: string) => (
   dispatch,
   getState
 ) => {
-  const id = getState().user.user_id;
-  const members = [id, companion_id];
+  const socket = io();
 
-  const socket = io({
-    query: {
-      user_id: id,
-    },
-  });
-
-  socket.emit('chat', { members });
+  socket.emit('chat', { chat_id });
   socket.on(
     'get:chat',
     (data: { companion_id: string; messages: IMessage[] }) => {
       data.messages.forEach((message) => {
+        console.log(data);
+
         dispatch(
           AddMessageAction({
             companion_id: data.companion_id,

@@ -16,6 +16,7 @@ export type IChatsPayload = Readonly<IAddChatAction & IAddMessageAction>;
 
 export type IListOfChats = [
   {
+    readonly chat_id: string;
     readonly companion_id: string;
     readonly companion_name: string;
     readonly last_massage: string;
@@ -24,6 +25,7 @@ export type IListOfChats = [
 ];
 
 export type IAddChatAction = {
+  readonly chat_id: string;
   readonly companion_id: string;
   readonly companion_name: string;
   readonly last_message: string;

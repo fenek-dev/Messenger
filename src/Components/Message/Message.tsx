@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './Message.scss';
 
 export interface IMessageComponent {
@@ -29,4 +29,4 @@ const Message: React.FC<IMessageComponent> = ({
   );
 };
 
-export default Message;
+export default memo(Message);

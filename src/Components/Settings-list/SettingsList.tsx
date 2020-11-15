@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import SettingsListItem from './Settings-list-item/SettingsListItem';
 import './SettingsList.scss';
 const SettingsList = () => {
@@ -23,4 +23,4 @@ const SettingsList = () => {
   );
 };
 
-export default SettingsList;
+export default memo(SettingsList);

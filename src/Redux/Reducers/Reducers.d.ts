@@ -20,6 +20,7 @@ export type IMessage = {
   readonly received: boolean;
 };
 export type IChats = {
+  readonly chat_id: string;
   readonly companion_id: string;
   readonly companion_name: string;
   readonly last_message: string;

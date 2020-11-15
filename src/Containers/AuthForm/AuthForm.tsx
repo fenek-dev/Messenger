@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import './AuthForm.scss';
@@ -164,4 +164,4 @@ const AuthForm: React.FC<IAuthForm> = ({
     </div>
   );
 };
-export default AuthForm;
+export default memo(AuthForm);

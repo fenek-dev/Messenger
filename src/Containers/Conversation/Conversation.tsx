@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import ConversationHeader from '../../Components/ConversationHeader/ConversationHeader';
+import React, { memo, useCallback, useEffect } from 'react';
 import './Conversation.scss';
 
-import userPhoto from '../../icons/user.jpg';
-import ConvInput from '../../Components/Conv-input/ConvInput';
-import Message from '../../Components/Message/Message';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetChatThunk } from '../../Redux/Actions/chats.action';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
 import { SendMessageThunk } from '../../Redux/Actions/messages.action';
 
+import ConversationHeader from '../../Components/ConversationHeader/ConversationHeader';
+import userPhoto from '../../icons/user.jpg';
+import ConvInput from '../../Components/Conv-input/ConvInput';
+import Message from '../../Components/Message/Message';
 import moment from 'moment';
 const Conversation: React.FC = () => {
   const params = useParams<{ id: Readonly<string> }>();
@@ -21,19 +21,21 @@ const Conversation: React.FC = () => {
   const chat = state.chats.find((chat) => chat.companion_id === id);
 
   useEffect(() => {
-    if (chat) {
-      dispatch(GetChatThunk(id));
+    if (chat?.messages.length === 0 && chat.chat_id) {
+      dispatch(GetChatThunk(chat.chat_id));
     }
   }, [dispatch, id, chat]);
 
-  const handleSubmit = (value: Readonly<string>) => {
-    if (value === value.trim()) {
-      const members = [user.user_id, id];
-      dispatch(SendMessageThunk(members, user.user_id, value));
-      value = '';
-    }
-  };
-  console.log(moment(1600173594843).diff(chat?.created_at));
+  const handleSubmit = useCallback(
+    (value: Readonly<string>) => {
+      if (value === value.trim()) {
+        const members = [user.user_id, id];
+        dispatch(SendMessageThunk(members, user.user_id, value));
+        value = '';
+      }
+    },
+    [dispatch, id, user.user_id]
+  );
 
   return (
     <section className='conversation'>
@@ -65,4 +67,4 @@ const Conversation: React.FC = () => {
   );
 };
 
-export default Conversation;
+export default memo(Conversation);
