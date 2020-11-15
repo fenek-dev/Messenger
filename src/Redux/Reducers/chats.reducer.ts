@@ -31,9 +31,15 @@ const reducer = (
       return [...state, payload];
 
     case ADD_MESSAGES:
+      console.log(
+        state.find((chat) => chat.companion_id === payload.companion_id),
+        payload.companion_id
+      );
+
       const need_chat = state.find(
         (chat) => chat.companion_id === payload.companion_id
       );
+
       // console.log(state[0].companion_id);
       // console.log(payload.companion_id);
 

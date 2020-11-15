@@ -21,10 +21,10 @@ const Conversation: React.FC = () => {
   const chat = state.chats.find((chat) => chat.companion_id === id);
 
   useEffect(() => {
-    if (chat?.messages.length === 0 && chat.chat_id) {
-      dispatch(GetChatThunk(chat.chat_id));
+    if (chat?.messages.length === 0) {
+      dispatch(GetChatThunk(chat.chat_id, user.user_id));
     }
-  }, [dispatch, id, chat]);
+  }, [dispatch, id, chat, user.user_id]);
 
   const handleSubmit = useCallback(
     (value: Readonly<string>) => {
