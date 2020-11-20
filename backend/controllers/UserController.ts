@@ -11,7 +11,7 @@ class UserController {
     this.io = io;
   }
 
-  async register(req: express.Request, res: express.Response) {
+  register = async (req: express.Request, res: express.Response) => {
     try {
       // Get all errors
       const errors = validationResult(req);
@@ -46,9 +46,9 @@ class UserController {
       console.log(error);
       res.status(500).json({ message: 'Something goes wrong' });
     }
-  }
+  };
 
-  async login(req: express.Request, res: express.Response) {
+  login = async (req: express.Request, res: express.Response) => {
     try {
       // Get all errors
       const errors = validationResult(req);
@@ -83,9 +83,9 @@ class UserController {
       console.log(error);
       res.status(500).json({ message: 'Something goes wrong' });
     }
-  }
+  };
 
-  async token(req: express.Request, res: express.Response) {
+  token = async (req: express.Request, res: express.Response) => {
     try {
       const { token } = req.body;
       if (token) {
@@ -114,7 +114,7 @@ class UserController {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  }
+  };
 }
 
 export default UserController;

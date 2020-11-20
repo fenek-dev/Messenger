@@ -50,3 +50,82 @@ a {
   background-position: center center;
   cursor: pointer;
 }
+
+
+.dark {
+  color:#e0e0e0;
+  background: #212121;
+  .react-tabs__tab {
+    &:hover  {
+      
+    background: #424242;
+    }
+    &:focus {
+      background: #212121
+    }
+  }
+  .react-tabs__tab-list {
+    background: #212121;
+  }
+  .react-tabs__tab-panel {
+    background: #212121;
+
+    .chats-search {
+      border:#616161 1px solid ;
+    background: #424242;
+    &__input {
+      background: #424242;
+    color: #f5f5f5;
+    }
+    }
+
+    .chats-list {
+      &::-webkit-scrollbar-track {
+        background: #616161;
+      }
+    }
+    .list-item {
+      border-bottom: solid 1px #616161;
+    }
+
+    .settings-list {
+      &::-webkit-scrollbar-track {
+        background: #616161;
+      }
+      &-header {
+        border-bottom: solid 1px #616161;
+      }
+
+      &-item {
+        h4 {
+          color: #e0e0e0;
+        }
+        &:hover {
+          background:#424242;
+        }
+      }
+    }
+  }
+  .react-tabs__tab--selected {
+    background: #424242;
+  }
+
+  .conv {
+    &-header {
+      border-bottom: solid 1px #616161;
+    }
+
+    &-input {
+      border-top: solid 1px #616161;
+
+      input {
+        background:  #212121;
+      }
+    }
+  }
+  .conversation-chat {
+    &::-webkit-scrollbar-track {
+      background: #616161;
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { IGetState, IMessage } from '../Reducers/Reducers';
 /**
  * General type for actions
  */
-export type IAction<T> = (
+export type IAction<T = any> = (
   payload: readonly T
 ) => {
   readonly type: string;
@@ -41,6 +41,7 @@ export type IAddMessageAction = {
 export type IAddUserAction = {
   readonly user_id: string;
   readonly name: string;
+  readonly socket: any;
 };
 
 export type IThunkAction = (

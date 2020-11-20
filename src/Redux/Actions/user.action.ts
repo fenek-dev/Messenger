@@ -1,9 +1,15 @@
-import { storage } from '../../API/localstorage.api';
-import { ADD_USER } from '../Constants';
+import { storage } from '../../utils/main';
+import createSocket from '../../utils/socket';
+import { ADD_THEME, ADD_USER } from '../Constants';
 import { IAction, IAddUserAction, IThunkAction } from './Actions';
 
 export const AddUserAction: IAction<IAddUserAction> = (payload) => ({
   type: ADD_USER,
+  payload,
+});
+
+export const AddUserTheme: IAction<{ theme: string }> = (payload) => ({
+  type: ADD_THEME,
   payload,
 });
 
@@ -31,7 +37,13 @@ export const CreateUserThunk: IThunkAction = (
       }
       setIsAuth(true);
       storage('token', data.token);
-      dispatch(AddUserAction({ user_id: data.userId, name }));
+      dispatch(
+        AddUserAction({
+          user_id: data.userId,
+          name,
+          socket: createSocket(data.userId),
+        })
+      );
     }
   } catch (error) {
     console.error(error.message);
@@ -60,7 +72,13 @@ export const SignInUserThunk: IThunkAction = (
       }
       setIsAuth(true);
       storage('token', data.token);
-      dispatch(AddUserAction({ user_id: data.userId, name: data.name }));
+      dispatch(
+        AddUserAction({
+          user_id: data.userId,
+          name: data.name,
+          socket: createSocket(data.userId),
+        })
+      );
     }
   } catch (error) {
     console.error(error);
@@ -87,7 +105,13 @@ export const SignInThunk: IThunkAction = (
         throw new Error(data.message);
       }
       setIsAuth(true);
-      dispatch(AddUserAction({ user_id: data.userId, name: data.name }));
+      dispatch(
+        AddUserAction({
+          user_id: data.userId,
+          name: data.name,
+          socket: createSocket(data.userId),
+        })
+      );
     }
   } catch (error) {
     console.error(error.message);

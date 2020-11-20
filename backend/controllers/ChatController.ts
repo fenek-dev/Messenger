@@ -1,7 +1,6 @@
 import express from 'express';
 import socket from 'socket.io';
 import Chat from '../models/Chat';
-import User, { IUser } from '../models/User';
 
 class ChatController {
   io: socket.Server;
@@ -9,7 +8,7 @@ class ChatController {
     this.io = io;
   }
 
-  async create(req: express.Request, res: express.Response) {
+  create = async (req: express.Request, res: express.Response) => {
     try {
       const { members } = req.body;
 
@@ -26,43 +25,9 @@ class ChatController {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  }
+  };
 
-  async getList(req: express.Request, res: express.Response) {
-    try {
-      const { user_id } = req.body;
-
-      const chats = await Chat.find({ members: user_id });
-
-      if (chats[0].errors) {
-        throw new Error(chats[0].errors);
-      }
-      let data: any[] = [];
-      chats.forEach((chat) => {
-        new Promise(async (res: (value: IUser) => void, rej) => {
-          // Find user by id
-          const user = await User.findOne({
-            _id: chat.members.find((name) => name !== user_id),
-          });
-          res(user!);
-        }).then((user) => {
-          data.push({
-            chat_id: chat._id,
-            companion_name: user.name,
-            companion_id: user._id,
-            last_massage: chat.last_message || '',
-            created_at: chat.created_at || 0,
-          });
-
-          this.io.emit('SERVER:LIST', data);
-        });
-      });
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
-
-  async getChat(req: express.Request, res: express.Response) {
+  getChat = async (req: express.Request, res: express.Response) => {
     try {
       const chat_id = req.params.id;
       const { user_id } = req.body;
@@ -79,7 +44,7 @@ class ChatController {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 }
 
 export default ChatController;

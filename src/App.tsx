@@ -1,16 +1,14 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { storage } from './API/localstorage.api';
+import { storage } from './utils/main';
 
 import { SignInThunk } from './Redux/Actions/user.action';
 import { GetAllChatsThunk } from './Redux/Actions/chats.action';
 import { RootReducerInterface } from './Redux/Reducers/Reducers';
 
-const Sidebar = lazy(() => import('./Containers/Sidebar/Sidebar'));
-const Conversation = lazy(
-  () => import('./Containers/Conversation/Conversation')
-);
+import Sidebar from './Containers/Sidebar/Sidebar';
+import Conversation from './Containers/Conversation/Conversation';
 const Auth = lazy(() => import('./Pages/Auth/Auth'));
 
 function App() {
@@ -30,7 +28,7 @@ function App() {
   return (
     <>
       {isAuth ? (
-        <div className='main'>
+        <div className={`main ${state.theme ? state.theme : ''}`}>
           <Suspense fallback={<div>Loading...</div>}>
             <Route path='/'>
               <Sidebar title={'Arthur Moore'} />

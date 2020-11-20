@@ -5,10 +5,15 @@ import './SettingsListItem.scss';
 export interface ISettingsListItem {
   readonly text: string;
   readonly link: string;
+  readonly onClick?: any;
 }
-const SettingsListItem: React.FC<ISettingsListItem> = ({ text, link }) => {
+const SettingsListItem: React.FC<ISettingsListItem> = ({
+  text,
+  link,
+  onClick,
+}) => {
   return (
-    <div className='settings-list-item'>
+    <div onClick={onClick} className='settings-list-item'>
       <Link to={`${link}`}>
         <h4>{text}</h4>
       </Link>

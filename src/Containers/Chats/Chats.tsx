@@ -5,6 +5,7 @@ import user from '../../icons/user.jpg';
 import search from '../../icons/loupe.svg';
 import { IChats } from '../../Redux/Reducers/Reducers';
 import moment from 'moment';
+import { compressString } from '../../utils/main';
 
 const Chats: React.FC<{ readonly chats: IChats[] }> = ({ chats }) => {
   return (
@@ -21,15 +22,11 @@ const Chats: React.FC<{ readonly chats: IChats[] }> = ({ chats }) => {
         {chats.length > 0 &&
           chats.map((chat) => (
             <ListItem
-              key={chat.companion_id}
+              key={chat.chat_id}
               companion_id={chat.companion_id}
               name={chat.companion_name}
               photoUrl={user}
-              lastMessage={
-                chat.last_message.length > 25
-                  ? chat.last_message.slice(0, 25) + '...'
-                  : chat.last_message
-              }
+              lastMessage={compressString(chat.last_message)}
               date={moment(chat.created_at).utc().format('hh:mm') || ''}
             />
           ))}

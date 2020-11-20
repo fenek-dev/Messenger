@@ -12,7 +12,6 @@ export interface ISidebar {
 
 const Sidebar: React.FC<ISidebar> = ({ title }) => {
   const state = useSelector((state: RootReducerInterface) => state.chats);
-
   return (
     <Tabs>
       <section className='sidebar'>

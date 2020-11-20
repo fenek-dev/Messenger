@@ -29,7 +29,7 @@ class MessageController {
     this.io = io;
   }
 
-  async create(req: express.Request, res: express.Response) {
+  create = async (req: express.Request, res: express.Response) => {
     try {
       const { members, from, body, reply }: IMessageCreateReqBody = req.body;
 
@@ -51,7 +51,7 @@ class MessageController {
           }
         );
 
-        this.io.emit('SERVER:NEW_MESSAGE', newMessage);
+        this.io.emit('SERVER:CHAT', newMessage);
       } else {
         const newMessage: IMessage = {
           from,
@@ -70,15 +70,15 @@ class MessageController {
           },
           { new: true, useFindAndModify: true }
         );
-        this.io.emit('SERVER:NEW_MESSAGE', newMessage);
+        this.io.emit('SERVER:CHAT', newMessage);
       }
       res.status(201).json({ message: 'Message created' });
     } catch (error) {
       res.status(500).json({ message: 'Something goes wrong' });
     }
-  }
+  };
 
-  async update(req: express.Request, res: express.Response) {
+  update = async (req: express.Request, res: express.Response) => {
     try {
       const { user_id, body, created_at }: IMessageUpdateReqBody = req.body;
 
@@ -95,9 +95,9 @@ class MessageController {
     } catch (error) {
       res.status(500).json({ message: 'Something goes wrong' });
     }
-  }
+  };
 
-  async delete(req: express.Request, res: express.Response) {
+  delete = async (req: express.Request, res: express.Response) => {
     try {
       const { user_id, created_at }: IMessageDeleteReqBody = req.body;
 
@@ -115,7 +115,7 @@ class MessageController {
     } catch (error) {
       res.status(500).json({ message: 'Something goes wrong' });
     }
-  }
+  };
 }
 
 export default MessageController;

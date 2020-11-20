@@ -1,4 +1,4 @@
-import io from 'socket.io-client';
+import { Socket } from 'socket.io-client/build/socket';
 import { ADD_CHAT, ADD_MESSAGES } from '../Constants';
 import { IMessage } from '../Reducers/Reducers';
 import {
@@ -38,18 +38,15 @@ export const CreateChatThunk: IThunkAction = (
   }
 };
 
-export const GetAllChatsThunk: IThunkAction = (user_id: string) => (
-  dispatch
+export const GetAllChatsThunk: IThunkAction = (user_id: string) => async (
+  dispatch,
+  getState
 ) => {
   if (user_id) {
-    const socket = io({
-      query: {
-        user_id,
-      },
-    });
+    const socket: Socket = await getState().user.socket;
 
-    socket.emit('list-of-chats', { user_id });
-    socket.on('get:list-of-chats', (data: IListOfChats) => {
+    socket.emit('SERVER:LIST', user_id);
+    socket.on('SERVER:LIST', (data: IListOfChats) => {
       data.forEach((chat) => {
         dispatch(
           AddChatAction({
@@ -69,12 +66,19 @@ export const GetAllChatsThunk: IThunkAction = (user_id: string) => (
 export const GetChatThunk: IThunkAction = (
   chat_id: string,
   user_id: string
-) => (dispatch, getState) => {
-  const socket = io();
+) => async (dispatch, getState) => {
+  const socket = getState().user.socket;
 
-  socket.emit('chat', { chat_id, user_id });
+  fetch(`/api/chats/${chat_id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ user_id }),
+  });
+
   socket.on(
-    'get:chat',
+    'SERVER:CHAT',
     (data: { companion_id: string; messages: IMessage[] }) => {
       data.messages.forEach((message) => {
         dispatch(

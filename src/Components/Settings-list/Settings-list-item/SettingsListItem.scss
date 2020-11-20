@@ -4,7 +4,10 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-
+  &:hover {
+    transition: 0.3s ease-in;
+    background: #ffcdd2;
+  }
   a {
     width: 100%;
   }
@@ -17,8 +20,6 @@
     font-weight: 400;
   }
 
-  &:hover {
-    transition: 0.3s ease-in;
-    background: #ffcdd2;
-  }
 }
+
+  

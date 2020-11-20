@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from 'react';
+import React, { Fragment, memo, useCallback, useEffect } from 'react';
 import './Conversation.scss';
 
 import { useParams } from 'react-router-dom';
@@ -12,6 +12,8 @@ import userPhoto from '../../icons/user.jpg';
 import ConvInput from '../../Components/Conv-input/ConvInput';
 import Message from '../../Components/Message/Message';
 import moment from 'moment';
+import DateBar from '../../Components/Message/DateBar/DateBar';
+
 const Conversation: React.FC = () => {
   const params = useParams<{ id: Readonly<string> }>();
   const id = params.id;
@@ -48,10 +50,35 @@ const Conversation: React.FC = () => {
 
           <div className='conversation-chat'>
             {chat!.messages.length > 0 &&
-              chat!.messages.map((message, index) => {
+              chat.messages!.map((message, index, arr) => {
+                if (arr[index - 1]) {
+                  const prevMess = +moment(arr[--index].created_at).format(
+                    'DD'
+                  );
+                  const curnMess = +moment(message.created_at).format('DD');
+                  if (curnMess - prevMess !== 0) {
+                    return (
+                      <Fragment key={index}>
+                        <DateBar
+                          key={index}
+                          date={moment(message.created_at).format('DD MMMM')}
+                        />
+                        <Message
+                          key={message.created_at}
+                          text={message.body}
+                          photoUrl={userPhoto}
+                          date={moment(message.created_at)
+                            .utc()
+                            .format('hh:mm')}
+                          type={message.from === id ? 'foreign' : 'own'}
+                        />
+                      </Fragment>
+                    );
+                  }
+                }
                 return (
                   <Message
-                    key={index}
+                    key={message.created_at}
                     text={message.body}
                     photoUrl={userPhoto}
                     date={moment(message.created_at).utc().format('hh:mm')}

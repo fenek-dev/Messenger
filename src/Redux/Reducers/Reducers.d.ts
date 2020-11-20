@@ -10,6 +10,8 @@ export type IGetState = () => Readonly<RootReducerInterface>;
 export interface IUserReducerState {
   readonly user_id: string;
   readonly name: string;
+  readonly theme?: string;
+  socket: any;
 }
 
 // Chats Reducer
@@ -19,11 +21,12 @@ export type IMessage = {
   readonly created_at: string | number;
   readonly received: boolean;
 };
-export type IChats = {
+
+export interface IChats {
   readonly chat_id: string;
   readonly companion_id: string;
   readonly companion_name: string;
   readonly last_message: string;
   readonly created_at: string | number;
   readonly messages: IMessage[];
-};
+}

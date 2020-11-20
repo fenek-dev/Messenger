@@ -1,6 +1,21 @@
 import { Server, Socket } from 'socket.io';
 import http from 'http';
 import User from '../models/User';
+import Chat, { IChat } from '../models/Chat';
+async function getEveryChat(items: IChat[], data: any[], user_id: string) {
+  for (const chat of items) {
+    const user = await User.findOne({
+      _id: chat.members.find((name) => name !== user_id),
+    });
+    data.push({
+      chat_id: chat._id,
+      companion_name: user!.name,
+      companion_id: user!._id,
+      last_massage: chat.last_message || '',
+      created_at: chat.created_at || 0,
+    });
+  }
+}
 
 const createSocket = (http: http.Server) => {
   const io = new Server(http);
@@ -24,6 +39,18 @@ const createSocket = (http: http.Server) => {
     //   socket.broadcast.emit('DIALOGS:TYPING', obj);
     // });
 
+    socket.on('SERVER:LIST', async (user_id: string) => {
+      const chats = await Chat.find({ members: user_id });
+
+      if (chats[0].errors) {
+        throw new Error(chats[0].errors);
+      }
+      let data: any[] = [];
+
+      await getEveryChat(chats, data, user_id);
+
+      socket.emit('SERVER:LIST', data);
+    });
     // Disconnect
     socket.on('disconnect', () => {
       socket.disconnect(true);
