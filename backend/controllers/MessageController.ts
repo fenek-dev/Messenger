@@ -33,6 +33,7 @@ class MessageController {
     try {
       const { members, from, body, reply }: IMessageCreateReqBody = req.body;
 
+      const companion_id = members.find((member) => member !== from);
       if (!reply) {
         const newMessage: IMessage = {
           from,
@@ -51,7 +52,7 @@ class MessageController {
           }
         );
 
-        this.io.emit('SERVER:CHAT', newMessage);
+        this.io.emit('SERVER:CHAT', { companion_id, messages: [newMessage] });
       } else {
         const newMessage: IMessage = {
           from,
@@ -70,7 +71,7 @@ class MessageController {
           },
           { new: true, useFindAndModify: true }
         );
-        this.io.emit('SERVER:CHAT', newMessage);
+        this.io.emit('SERVER:CHAT', { companion_id, messages: [newMessage] });
       }
       res.status(201).json({ message: 'Message created' });
     } catch (error) {

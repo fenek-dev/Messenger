@@ -1,3 +1,4 @@
+@import '../../styles/variables.scss';
 .conv-header {
   grid-area: header;
   height: 71px;
@@ -5,10 +6,10 @@
   position: relative;
   display: flex;
   align-items: center;
-  border-bottom: #eeeeee 1px solid;
+  border-bottom: $border-color 1px solid;
   padding: 0 25px;
   margin: 0;
-  animation: ease-in-out 0.5s convHeaderApper;
+  animation: ease-in-out 0.5s headerApper;
 
   &__content {
     margin-left: 10px;
@@ -33,11 +34,7 @@
   }
 }
 
-@keyframes convHeaderApper {
-  0% {
-    transform: translateY(-150%);
-  }
-  100% {
-    transform: translateY(0);
-  }
+.dark .conv-header {
+  border-bottom: solid 1px $main-text-color;
 }
+

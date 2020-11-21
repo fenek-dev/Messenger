@@ -1,9 +1,10 @@
+@import '../../styles/variables.scss';
 .list-item {
   height: 70px;
   position: relative;
   display: flex;
   align-items: center;
-  border-bottom: #eeeeee 1px solid;
+  border-bottom:$border-color 1px solid;
   padding: 0 15px;
   animation: apper 0.3s ease-in-out;
   &__avatar {
@@ -40,12 +41,8 @@
   }
 }
 
-@keyframes apper {
-  0% {
-    transform: translateX(-110%);
-    box-shadow: none;
-  }
-  100% {
-    transform: translateX(0%);
-  }
+.dark .list-item {
+  border-bottom: solid 1px $main-text-color;
 }
+
+

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { storage } from './utils/main';
 
 import { SignInThunk } from './Redux/Actions/user.action';
 import { GetAllChatsThunk } from './Redux/Actions/chats.action';
@@ -9,6 +8,7 @@ import { RootReducerInterface } from './Redux/Reducers/Reducers';
 
 import Sidebar from './Containers/Sidebar/Sidebar';
 import Conversation from './Containers/Conversation/Conversation';
+import Theme from './Pages/Theme/Theme';
 const Auth = lazy(() => import('./Pages/Auth/Auth'));
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
   const [isAuth, setIsAuth] = useState<boolean>();
 
   useEffect(() => {
-    const token = storage('token');
+    const token = JSON.parse(localStorage.getItem('token')!);
     dispacth(SignInThunk(token, setIsAuth));
   }, [dispacth]);
   useEffect(() => {
@@ -28,10 +28,13 @@ function App() {
   return (
     <>
       {isAuth ? (
-        <div className={`main ${state.theme ? state.theme : ''}`}>
+        <div className={`main ${state.theme ? 'dark' : ''}`}>
           <Suspense fallback={<div>Loading...</div>}>
             <Route path='/'>
               <Sidebar title={'Arthur Moore'} />
+            </Route>
+            <Route exact path='/settings/theme'>
+              <Theme />
             </Route>
             <Route exact path='/:id'>
               <Conversation />

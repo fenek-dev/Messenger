@@ -1,3 +1,4 @@
+@import '../../styles/variables.scss';
 .message {
   display: flex;
   max-width: 70%;
@@ -6,7 +7,7 @@
   &-content {
     margin: 0 10px;
     padding: 15px;
-    border: #eeeeee 1px solid;
+    border: $border-color 1px solid;
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -33,25 +34,12 @@
 }
 
 .foreign {
+  animation: ease-in-out 0.3s foreignApper ;
   .message-content {
-    background: #eeeeee;
+    background:$border-color;
   }
 }
 
-@keyframes ownApper {
-  0% {
-    transform: translateX(150%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-@keyframes foreignApper {
-  0% {
-    transform: translateX(-150%);
-  }
-  100% {
-    transform: translateX(0);
-  }
+.dark .message-content {
+  border: $dark-text-color 1px solid;
 }

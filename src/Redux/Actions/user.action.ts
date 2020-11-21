@@ -1,4 +1,3 @@
-import { storage } from '../../utils/main';
 import createSocket from '../../utils/socket';
 import { ADD_THEME, ADD_USER } from '../Constants';
 import { IAction, IAddUserAction, IThunkAction } from './Actions';
@@ -8,7 +7,7 @@ export const AddUserAction: IAction<IAddUserAction> = (payload) => ({
   payload,
 });
 
-export const AddUserTheme: IAction<{ theme: string }> = (payload) => ({
+export const AddUserTheme: IAction<{ theme: boolean }> = (payload) => ({
   type: ADD_THEME,
   payload,
 });
@@ -36,7 +35,7 @@ export const CreateUserThunk: IThunkAction = (
         throw new Error(data.message || 'Server error');
       }
       setIsAuth(true);
-      storage('token', data.token);
+      localStorage.setItem('token', JSON.stringify(data.token));
       dispatch(
         AddUserAction({
           user_id: data.userId,
@@ -44,6 +43,7 @@ export const CreateUserThunk: IThunkAction = (
           socket: createSocket(data.userId),
         })
       );
+      dispatch(AddUserTheme({ theme: !!localStorage.getItem('theme') }));
     }
   } catch (error) {
     console.error(error.message);
@@ -71,7 +71,7 @@ export const SignInUserThunk: IThunkAction = (
         throw new Error(data.message);
       }
       setIsAuth(true);
-      storage('token', data.token);
+      localStorage.setItem('token', JSON.stringify(data.token));
       dispatch(
         AddUserAction({
           user_id: data.userId,
@@ -79,6 +79,7 @@ export const SignInUserThunk: IThunkAction = (
           socket: createSocket(data.userId),
         })
       );
+      dispatch(AddUserTheme({ theme: !!localStorage.getItem('theme') }));
     }
   } catch (error) {
     console.error(error);
@@ -112,6 +113,7 @@ export const SignInThunk: IThunkAction = (
           socket: createSocket(data.userId),
         })
       );
+      dispatch(AddUserTheme({ theme: !!localStorage.getItem('theme') }));
     }
   } catch (error) {
     console.error(error.message);

@@ -1,14 +1,7 @@
-import React, { memo, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { AddUserTheme } from '../../Redux/Actions/user.action';
+import React, { memo } from 'react';
 import SettingsListItem from './Settings-list-item/SettingsListItem';
 import './SettingsList.scss';
 const SettingsList: React.FC = () => {
-  const dispatch = useDispatch();
-
-  const handleClick = useCallback(() => {
-    dispatch(AddUserTheme({ theme: 'dark' }));
-  }, [dispatch]);
   return (
     <section className='settings'>
       <div className='settings-list'>
@@ -23,7 +16,7 @@ const SettingsList: React.FC = () => {
         <div className='settings-list-options'>
           <h4 className='settings-list__label'>Options</h4>
           <SettingsListItem text='Notification' link='/notification' />
-          <SettingsListItem onClick={handleClick} text='Theme' link='/theme' />
+          <SettingsListItem text='Theme' link='/settings/theme' />
         </div>
       </div>
     </section>

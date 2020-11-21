@@ -1,3 +1,4 @@
+@import '../../styles/variables.scss';
 .conversation {
   animation: ease-in-out 0.5s convApper;
   height: 100vh;
@@ -23,20 +24,18 @@
       width: 3.5px;
     }
     &::-webkit-scrollbar-track {
-      background: #eeeeee;
+      background:$border-color;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #ef5350;
+      background:$main-color;
     }
   }
 }
 
-@keyframes convApper {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
+.dark .conversation-chat {
+  &::-webkit-scrollbar-track {
+    background: $main-text-color;
   }
 }
+

@@ -5,13 +5,16 @@ import { IUserReducerState } from './Reducers';
 const initialState: IUserReducerState = {
   user_id: '',
   name: '',
-  theme: '',
+  theme: false,
   socket: '',
 };
 
 const reducer = (
   state = initialState,
-  { type, payload }: { type: string; payload: IUserPayload & { theme: string } }
+  {
+    type,
+    payload,
+  }: { type: string; payload: IUserPayload & { theme: boolean } }
 ) => {
   switch (type) {
     case ADD_USER:

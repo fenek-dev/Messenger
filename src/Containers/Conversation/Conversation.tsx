@@ -7,7 +7,7 @@ import { GetChatThunk } from '../../Redux/Actions/chats.action';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
 import { SendMessageThunk } from '../../Redux/Actions/messages.action';
 
-import ConversationHeader from '../../Components/ConversationHeader/ConversationHeader';
+import ConversationHeader from '../../Components/Conversation-header/ConversationHeader';
 import userPhoto from '../../icons/user.jpg';
 import ConvInput from '../../Components/Conv-input/ConvInput';
 import Message from '../../Components/Message/Message';

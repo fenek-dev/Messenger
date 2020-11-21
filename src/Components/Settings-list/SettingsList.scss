@@ -1,3 +1,4 @@
+@import '../../styles/variables.scss';
 .settings {
   grid-area: list;
   display: flex;
@@ -14,11 +15,11 @@
       width: 3.5px;
     }
     &::-webkit-scrollbar-track {
-      background: #eeeeee;
+      background:$border-color;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #ef5350;
+      background: $main-color;
     }
 
     &-header {
@@ -26,7 +27,7 @@
       height: 70px;
       align-items: center;
       justify-content: center;
-      border-bottom: #eeeeee 1px solid;
+      border-bottom: $border-color 1px solid;
       &__title {
         font-size: 25px;
         padding: 10px;
@@ -36,7 +37,7 @@
       position: absolute;
       top: -40px;
       left: 20px;
-      color: #ef5350;
+      color:$main-color;
     }
     &-account {
       margin-top: 35px;
@@ -50,16 +51,4 @@
   }
 }
 
-@keyframes apper {
-  0% {
-    transform: translateX(-110%);
-    box-shadow: none;
-  }
-  100% {
-    transform: translateX(0%);
-  }
-  0% {
-    transform: translateX(-110%);
-    box-shadow: none;
-  }
-}
+

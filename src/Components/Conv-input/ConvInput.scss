@@ -1,10 +1,12 @@
+@import '../../styles/variables.scss';
+
 .conv-input {
   grid-area: input;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  border-top: #eeeeee 1px solid;
+  border-top:$border-color 1px solid;
   animation: ease-in-out 0.5s convInputApper;
 
   input {
@@ -21,7 +23,7 @@
     font-size: 18px;
     padding: 7px 15px;
     color: white;
-    background: #ef5350;
+    background: $main-color;
     cursor: pointer;
     transition: 0.3s ease-in;
 
@@ -31,11 +33,11 @@
   }
 }
 
-@keyframes convInputApper {
-  0% {
-    transform: translateY(150%);
-  }
-  100% {
-    transform: translateY(0);
+.dark .conv-input {
+  border-top: solid 1px $main-text-color;
+
+  input {
+    background:  $dark-main-color;
+    color: $dark-text-color;
   }
 }

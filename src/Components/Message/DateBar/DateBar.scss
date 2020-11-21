@@ -1,7 +1,8 @@
+@import '../../../styles/variables.scss';
 .datebar {
     display: block;
     margin: 10px auto;
     padding: 5px 10px;
-    border: 1px solid #ef5350;
+    border: 1px solid $main-color;
     border-radius: 25px;
 }

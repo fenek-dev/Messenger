@@ -1,3 +1,4 @@
+@import '../../../styles/variables.scss';
 .settings-list-item {
   margin: 0;
   display: flex;
@@ -6,7 +7,7 @@
   justify-content: center;
   &:hover {
     transition: 0.3s ease-in;
-    background: #ffcdd2;
+    background:$main-hover;
   }
   a {
     width: 100%;
@@ -22,4 +23,20 @@
 
 }
 
-  
+.dark .settings-list {
+  &::-webkit-scrollbar-track {
+    background: $main-text-color;
+  }
+  &-header {
+    border-bottom: solid 1px $main-text-color;
+  }
+
+  &-item {
+    h4 {
+      color: #e0e0e0;
+    }
+    &:hover {
+      background:$dark-hover;
+    }
+  }
+}
