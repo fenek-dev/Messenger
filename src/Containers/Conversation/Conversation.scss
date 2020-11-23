@@ -1,4 +1,5 @@
 @import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
 .conversation {
   animation: ease-in-out 0.5s convApper;
   height: 100vh;
@@ -18,18 +19,7 @@
     display: flex;
     flex-direction: column;
     padding: 20px 15px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    &::-webkit-scrollbar {
-      width: 3.5px;
-    }
-    &::-webkit-scrollbar-track {
-      background:$border-color;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background:$main-color;
-    }
+    @include scroll
   }
 }
 

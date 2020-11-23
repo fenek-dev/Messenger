@@ -1,0 +1,11 @@
+@import '../../styles/mixins.scss';
+.profile {
+        @include scroll;
+    
+    &-content {
+        animation: ease-in-out 0.5s convApper;
+        display: grid;
+        grid-template-columns: 320px 1fr ;
+
+    }
+}

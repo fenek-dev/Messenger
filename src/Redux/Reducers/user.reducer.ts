@@ -1,6 +1,9 @@
+//===== Redux =====
 import { IUserPayload } from '../Actions/Actions';
-import { ADD_THEME, ADD_USER } from '../Constants';
 import { IUserReducerState } from './Reducers';
+
+//===== Constants =====
+import { ADD_THEME, ADD_USER } from '../Constants';
 
 const initialState: IUserReducerState = {
   user_id: '',

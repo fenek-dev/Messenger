@@ -1,17 +1,24 @@
+//===== React and Redux =====
 import React, { memo } from 'react';
-import './Sidebar.scss';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useSelector } from 'react-redux';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
 
+//===== Components =====
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Chats from '../Chats/Chats';
 import SettingsList from '../../Components/Settings-list/SettingsList';
-export interface ISidebar {
+
+//===== Styles =====
+import './Sidebar.scss';
+
+//===== Interface =====
+interface ISidebar {
   readonly title: string;
 }
 
+//===== Main =====
 const Sidebar: React.FC<ISidebar> = ({ title }) => {
-  const state = useSelector((state: RootReducerInterface) => state.chats);
+  const state = useSelector((state: RootReducerInterface) => state);
   return (
     <Tabs>
       <section className='sidebar'>
@@ -26,10 +33,10 @@ const Sidebar: React.FC<ISidebar> = ({ title }) => {
             </TabList>
 
             <TabPanel>
-              <Chats chats={state} />
+              <Chats chats={state.chats} />
             </TabPanel>
             <TabPanel>
-              <SettingsList />
+              <SettingsList userId={state.user.user_id} />
             </TabPanel>
           </div>
         </div>

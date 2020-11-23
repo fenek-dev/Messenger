@@ -1,5 +1,4 @@
-import { Socket } from 'socket.io-client/build/socket';
-import { ADD_CHAT, ADD_MESSAGES } from '../Constants';
+//===== Redux =====;
 import { IMessage } from '../Reducers/Reducers';
 import {
   IAction,
@@ -8,6 +7,12 @@ import {
   IListOfChats,
   IThunkAction,
 } from './Actions';
+
+//===== Constants =====
+import { ADD_CHAT, ADD_MESSAGES } from '../Constants';
+
+//===== Socket =====
+import { Socket } from 'socket.io-client/build/socket';
 
 export const AddChatAction: IAction<IAddChatAction> = (payload) => ({
   type: ADD_CHAT,

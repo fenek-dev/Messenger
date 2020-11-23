@@ -1,0 +1,15 @@
+ @import './variables.scss';
+ @mixin scroll {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+        width: 3.5px;
+      }
+      &::-webkit-scrollbar-track {
+        background: $border-color;
+      }
+  
+      &::-webkit-scrollbar-thumb {
+        background:$main-color;
+      }
+ }

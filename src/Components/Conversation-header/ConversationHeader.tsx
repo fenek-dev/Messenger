@@ -1,13 +1,17 @@
+//===== React and styles =====
 import React, { memo } from 'react';
 import './ConversationHeader.scss';
 
+//===== SVG =====
 import options from '../../icons/settings.svg';
 
-export interface IConversationHeader {
+//===== Interface =====
+interface IConversationHeader {
   readonly name: string;
   readonly photoUrl: string;
 }
 
+//===== Main =====
 const ConversationHeader: React.FC<IConversationHeader> = ({
   name,
   photoUrl,

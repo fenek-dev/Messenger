@@ -1,3 +1,4 @@
+//===== Redux =====
 import { IThunkAction } from './Actions';
 import { CreateChatThunk } from './chats.action';
 

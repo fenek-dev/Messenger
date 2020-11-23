@@ -1,10 +1,20 @@
+//================================
+// React and Redux
+//================================
 import React, { memo } from 'react';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import './AuthForm.scss';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+//================================
+// Formik
+//================================
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+
+//===== Styles =====
+import './AuthForm.scss';
+
+//===== Schema of singup data =====
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Name should be 3 or more characters')
@@ -17,6 +27,7 @@ const SignupSchema = Yup.object().shape({
     .required('Required'),
 });
 
+//===== Schema of login data =====
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string()
@@ -25,13 +36,15 @@ const LoginSchema = Yup.object().shape({
     .required('Required'),
 });
 
-export interface IAuthForm {
+//===== Interface =====
+interface IAuthForm {
   readonly type: 'login' | 'register';
   readonly createUser?: any;
   readonly signIn?: any;
   readonly setIsAuth: any;
 }
 
+//===== Main =====
 const AuthForm: React.FC<IAuthForm> = ({
   createUser,
   signIn,

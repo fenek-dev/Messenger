@@ -1,11 +1,15 @@
-import React, { CSSProperties } from 'react';
+//===== React and styles =====
+import React, { CSSProperties, memo } from 'react';
 import './SettingsItem.scss';
 
-export interface ISettingsItem {
-  styles?: CSSProperties;
-  onClick?: any;
+//===== Interface =====
+interface ISettingsItem {
+  readonly styles?: CSSProperties;
+  readonly onClick?: any;
+  readonly children?: React.ReactNode[];
 }
 
+//===== Main =====
 const SettingsItem: React.FC<ISettingsItem> = ({
   children,
   styles,
@@ -18,4 +22,4 @@ const SettingsItem: React.FC<ISettingsItem> = ({
   );
 };
 
-export default SettingsItem;
+export default memo(SettingsItem);

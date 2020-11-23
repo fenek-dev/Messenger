@@ -1,9 +1,13 @@
+//===== React and styles =====
 import React from 'react';
 import './SettingsHeader.scss';
-export interface ISettingsHeader {
+
+//===== Interface =====
+interface ISettingsHeader {
   title: string;
 }
 
+//===== Main =====
 const SettingsHeader: React.FC<ISettingsHeader> = ({ title }) => {
   return (
     <div className='settings-header'>

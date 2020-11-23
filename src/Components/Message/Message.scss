@@ -30,11 +30,9 @@
 .own {
   margin-left: auto;
   flex-direction: row-reverse;
-  animation: ease-in-out 0.3s ownApper;
 }
 
 .foreign {
-  animation: ease-in-out 0.3s foreignApper ;
   .message-content {
     background:$border-color;
   }

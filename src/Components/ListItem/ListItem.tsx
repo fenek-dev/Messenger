@@ -1,8 +1,10 @@
+//===== React and styles =====
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import './ListItem.scss';
 
-export interface IListItem {
+//===== Interface =====
+interface IListItem {
   readonly name: string;
   readonly companion_id: string;
   readonly photoUrl: string;
@@ -11,6 +13,7 @@ export interface IListItem {
   readonly className?: string;
 }
 
+//===== Main =====
 const ListItem: React.FC<IListItem> = ({
   name,
   companion_id,

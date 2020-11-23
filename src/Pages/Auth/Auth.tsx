@@ -1,14 +1,20 @@
+//===== React and Redux =====
 import React from 'react';
-import AuthForm from '../../Containers/AuthForm/AuthForm';
 import {
   CreateUserThunk,
   SignInUserThunk,
 } from '../../Redux/Actions/user.action';
-export interface IAuth {
-  type: 'register' | 'login';
+
+//===== Components =====
+import AuthForm from '../../Containers/AuthForm/AuthForm';
+
+//===== Interface =====
+interface IAuth {
+  readonly type: 'register' | 'login';
   setIsAuth: any;
 }
 
+//===== Main =====
 const Auth: React.FC<IAuth> = ({ type, setIsAuth }) => {
   return (
     <>

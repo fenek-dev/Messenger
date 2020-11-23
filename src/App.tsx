@@ -1,16 +1,23 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react';
+//================================
+//  React and Redux
+//================================
+import React, { useEffect, useState, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
-
 import { SignInThunk } from './Redux/Actions/user.action';
 import { GetAllChatsThunk } from './Redux/Actions/chats.action';
 import { RootReducerInterface } from './Redux/Reducers/Reducers';
 
+//================================
+// Components
+//================================
 import Sidebar from './Containers/Sidebar/Sidebar';
 import Conversation from './Containers/Conversation/Conversation';
 import Theme from './Pages/Theme/Theme';
-const Auth = lazy(() => import('./Pages/Auth/Auth'));
+import Auth from './Pages/Auth/Auth';
+import Profile from './Pages/Profile/Profile';
 
+//===== Main =====
 function App() {
   const state = useSelector((state: RootReducerInterface) => state.user);
 
@@ -21,6 +28,7 @@ function App() {
     const token = JSON.parse(localStorage.getItem('token')!);
     dispacth(SignInThunk(token, setIsAuth));
   }, [dispacth]);
+
   useEffect(() => {
     dispacth(GetAllChatsThunk(state.user_id));
   }, [dispacth, state.user_id]);
@@ -35,6 +43,9 @@ function App() {
             </Route>
             <Route exact path='/settings/theme'>
               <Theme />
+            </Route>
+            <Route exact path='/profile/:id'>
+              <Profile />
             </Route>
             <Route exact path='/:id'>
               <Conversation />

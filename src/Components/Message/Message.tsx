@@ -1,13 +1,16 @@
+//===== React and styles =====
 import React, { memo } from 'react';
 import './Message.scss';
 
-export interface IMessageComponent {
+//===== Interface =====
+interface IMessageComponent {
   readonly type: 'own' | 'foreign';
   readonly text: string;
   readonly date: string | number;
   readonly photoUrl: string;
 }
 
+//===== Main =====
 const Message: React.FC<IMessageComponent> = ({
   text,
   date,

@@ -1,4 +1,5 @@
 @import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
 .chats {
   grid-area: list;
   display: flex;
@@ -30,17 +31,8 @@
   &-list {
     padding: 10px 0;
     height: 100%;
-    overflow-y: scroll;
-    &::-webkit-scrollbar {
-      width: 3.5px;
-    }
-    &::-webkit-scrollbar-track {
-      background: $border-color;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background:$main-color;
-    }
+    @include scroll
+    
   }
 }
 

@@ -1,13 +1,28 @@
+//================================
+// React and Redux
+//================================
 import React, { memo } from 'react';
-import ListItem from '../../Components/ListItem/ListItem';
-import './Chats.scss';
-import user from '../../icons/user.jpg';
-import search from '../../icons/loupe.svg';
 import { IChats } from '../../Redux/Reducers/Reducers';
+
+//===== Components =====
+import ListItem from '../../Components/ListItem/ListItem';
+
+//===== Utils =====
 import moment from 'moment';
 import { compressString } from '../../utils/main';
 
-const Chats: React.FC<{ readonly chats: IChats[] }> = ({ chats }) => {
+//===== Styles and images =====
+import './Chats.scss';
+import user from '../../icons/user.jpg';
+import search from '../../icons/loupe.svg';
+
+//===== Interface =====
+interface IChatsComponent {
+  readonly chats: IChats[];
+}
+
+//===== Main =====
+const Chats: React.FC<IChatsComponent> = ({ chats }) => {
   return (
     <section className='chats'>
       <div className='chats-search'>

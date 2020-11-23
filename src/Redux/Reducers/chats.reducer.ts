@@ -1,6 +1,9 @@
+//===== Redux =====
 import { IChatsPayload } from '../Actions/Actions';
-import { ADD_CHAT, ADD_MESSAGES } from '../Constants';
 import { IChats } from './Reducers';
+
+//===== Constants =====
+import { ADD_CHAT, ADD_MESSAGES } from '../Constants';
 
 const initialState: IChats[] = [];
 

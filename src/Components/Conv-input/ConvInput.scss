@@ -16,21 +16,6 @@
     margin-left: 10px;
   }
 
-  &-btn {
-    outline: none;
-    border: none;
-    border-radius: 30px;
-    font-size: 18px;
-    padding: 7px 15px;
-    color: white;
-    background: $main-color;
-    cursor: pointer;
-    transition: 0.3s ease-in;
-
-    &:hover {
-      box-shadow: 0px 0px 5px 5px rgba(235, 68, 68, 0.1);
-    }
-  }
 }
 
 .dark .conv-input {

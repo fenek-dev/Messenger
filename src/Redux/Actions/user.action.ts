@@ -1,6 +1,11 @@
-import createSocket from '../../utils/socket';
-import { ADD_THEME, ADD_USER } from '../Constants';
+//===== Redux =====
 import { IAction, IAddUserAction, IThunkAction } from './Actions';
+
+//===== Constatns =====
+import { ADD_THEME, ADD_USER } from '../Constants';
+
+//===== Utils =====
+import createSocket from '../../utils/socket';
 
 export const AddUserAction: IAction<IAddUserAction> = (payload) => ({
   type: ADD_USER,
@@ -43,7 +48,9 @@ export const CreateUserThunk: IThunkAction = (
           socket: createSocket(data.userId),
         })
       );
-      dispatch(AddUserTheme({ theme: !!localStorage.getItem('theme') }));
+      dispatch(
+        AddUserTheme({ theme: !!JSON.parse(localStorage.getItem('theme')!) })
+      );
     }
   } catch (error) {
     console.error(error.message);
@@ -79,7 +86,9 @@ export const SignInUserThunk: IThunkAction = (
           socket: createSocket(data.userId),
         })
       );
-      dispatch(AddUserTheme({ theme: !!localStorage.getItem('theme') }));
+      dispatch(
+        AddUserTheme({ theme: !!JSON.parse(localStorage.getItem('theme')!) })
+      );
     }
   } catch (error) {
     console.error(error);
@@ -113,7 +122,9 @@ export const SignInThunk: IThunkAction = (
           socket: createSocket(data.userId),
         })
       );
-      dispatch(AddUserTheme({ theme: !!localStorage.getItem('theme') }));
+      dispatch(
+        AddUserTheme({ theme: !!JSON.parse(localStorage.getItem('theme')!) })
+      );
     }
   } catch (error) {
     console.error(error.message);

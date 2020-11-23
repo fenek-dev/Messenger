@@ -1,7 +1,17 @@
+//===== React and styles =====
 import React, { memo } from 'react';
-import SettingsListItem from './Settings-list-item/SettingsListItem';
 import './SettingsList.scss';
-const SettingsList: React.FC = () => {
+
+//===== Components =====
+import SettingsListItem from './Settings-list-item/SettingsListItem';
+
+//===== Interface =====
+interface ISettingsList {
+  readonly userId: string;
+}
+
+//===== Main =====
+const SettingsList: React.FC<ISettingsList> = ({ userId }) => {
   return (
     <section className='settings'>
       <div className='settings-list'>
@@ -10,7 +20,7 @@ const SettingsList: React.FC = () => {
         </div>
         <div className='settings-list-account'>
           <h4 className='settings-list__label'>Account</h4>
-          <SettingsListItem text='Edit profile' link='/profile' />
+          <SettingsListItem text='Edit profile' link={`/profile/${userId}`} />
           <SettingsListItem text='Confidentiality' link='/confidentiality' />
         </div>
         <div className='settings-list-options'>
