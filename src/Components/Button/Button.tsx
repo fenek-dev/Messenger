@@ -1,5 +1,5 @@
 //===== React and styles =====
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import './Button.scss';
 
 //===== Interface =====
@@ -8,6 +8,7 @@ interface IButton {
   readonly type?: 'button' | 'reset' | 'submit';
   readonly onClick?: (e: React.FormEvent<HTMLButtonElement>) => void;
   readonly backgroundColor?: string;
+  readonly style?: CSSProperties;
 }
 
 //===== Main =====
@@ -16,10 +17,11 @@ const Button: React.FC<IButton> = ({
   type,
   onClick,
   backgroundColor,
+  style,
 }) => {
   return (
     <button
-      style={{ backgroundColor }}
+      style={{ backgroundColor, ...style }}
       className='button'
       type={type ? type : 'submit'}
       onClick={onClick ? onClick : () => {}}>

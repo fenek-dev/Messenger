@@ -6,9 +6,10 @@ import './Popup.scss';
 interface IPopup {
   readonly width: string;
   readonly height: string;
-  readonly title: string;
+  readonly title?: string;
   readonly text?: string;
   readonly onClose?: () => void;
+  readonly children?: React.ReactNode;
 }
 
 //===== Main =====
@@ -21,7 +22,7 @@ const Popup: React.FC<IPopup> = ({
   onClose,
 }) => {
   return (
-    <div className='popup-layout' onClick={onClose}>
+    <div className='popup-layout'>
       <div
         className='popup-window'
         style={{ width: `${width}`, height: `${height}` }}>

@@ -4,6 +4,8 @@ import './ProfilePhoto.scss';
 
 //===== Components =====
 import FileInput from '../../Components/File-input/FileInput';
+import Popup from '../../Components/Popup/Popup';
+import PhotoResizer from '../Photo-resizer/PhotoResizer';
 
 //===== Images =====
 import user from '../../icons/user.jpg';
@@ -11,6 +13,17 @@ import user from '../../icons/user.jpg';
 //===== Main =====
 const ProfilePhoto: React.FC = () => {
   const [photo, setPhoto] = useState<string>();
+
+  const [open, setOpen] = useState<boolean>(false);
+
+  const [newPhoto, setNewPhoto] = useState<boolean>(false);
+
+  const [newPhotoParams, setNewPhotoParams] = useState({
+    image: '',
+    crop: { x: 0, y: 0 },
+    zoom: 1,
+    aspect: 1,
+  });
 
   useEffect(() => {
     setPhoto(user);
@@ -21,16 +34,38 @@ const ProfilePhoto: React.FC = () => {
     const reader = new FileReader();
     reader.readAsDataURL(image);
     reader.onloadend = () => {
-      const img = reader.result as string;
-      setPhoto(img);
+      const image = reader.result as string;
+      setNewPhotoParams((prev) => ({
+        ...prev,
+        image,
+      }));
+      setNewPhoto(true);
     };
   }, []);
+
+  const handleImgClick = useCallback(() => {
+    setOpen(!open);
+  }, [open]);
+
   return (
     <div className='profile-photo'>
-      <div className='profile-photo-img'>
+      <div onClick={handleImgClick} className='profile-photo-img'>
         <img src={photo} alt='User' />
       </div>
       <FileInput label={'Add photo'} onChange={handleImg} />
+      {open && (
+        <Popup height='500' width='500' onClose={handleImgClick}>
+          <img src={photo} width='500' height='500' alt='User' />
+        </Popup>
+      )}
+      {newPhoto && (
+        <PhotoResizer
+          photoParams={newPhotoParams}
+          setOpen={setNewPhoto}
+          setPhoto={setPhoto}
+          setPhotoParams={setNewPhotoParams}
+        />
+      )}
     </div>
   );
 };
