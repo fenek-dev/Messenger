@@ -17,6 +17,30 @@ export const AddUserTheme: IAction<{ theme: boolean }> = (payload) => ({
   payload,
 });
 
+export const UpdateUserInfoThunk: IThunkAction = ({
+  name,
+  status,
+}: IAddUserAction) => async (dispatch, getState) => {
+  try {
+    const { user_id } = getState().user;
+    const body = { name, status, user_id };
+    const res = await fetch('/api/auth/update', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || 'Server error');
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 export const CreateUserThunk: IThunkAction = (
   email: string,
   password: string,
@@ -44,6 +68,7 @@ export const CreateUserThunk: IThunkAction = (
       dispatch(
         AddUserAction({
           user_id: data.userId,
+          status: data.status,
           name,
           socket: createSocket(data.userId),
         })
@@ -82,6 +107,7 @@ export const SignInUserThunk: IThunkAction = (
       dispatch(
         AddUserAction({
           user_id: data.userId,
+          status: data.status,
           name: data.name,
           socket: createSocket(data.userId),
         })
@@ -118,6 +144,7 @@ export const SignInThunk: IThunkAction = (
       dispatch(
         AddUserAction({
           user_id: data.userId,
+          status: data.status,
           name: data.name,
           socket: createSocket(data.userId),
         })

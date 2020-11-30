@@ -1,5 +1,5 @@
 //===== React and styles =====
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, memo } from 'react';
 import './Button.scss';
 
 //===== Interface =====
@@ -30,4 +30,4 @@ const Button: React.FC<IButton> = ({
   );
 };
 
-export default Button;
+export default memo(Button);

@@ -41,7 +41,12 @@ class UserController {
         expiresIn: '30d',
       });
 
-      res.json({ token, userId: user!.id, name: user!.name });
+      res.json({
+        token,
+        userId: user!.id,
+        name: user!.name,
+        status: user?.status,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: 'Something goes wrong' });
@@ -78,7 +83,12 @@ class UserController {
         expiresIn: '30d',
       });
 
-      res.json({ token, userId: user!.id, name: user!.name });
+      res.json({
+        token,
+        userId: user!.id,
+        name: user!.name,
+        status: user?.status,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: 'Something goes wrong' });
@@ -109,7 +119,26 @@ class UserController {
         // Find user by id
         const user = await User.findOne({ _id: userId });
 
-        res.json({ userId: user!.id, name: user!.name });
+        res.json({ userId: user!.id, name: user!.name, status: user?.status });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  update = async (req: express.Request, res: express.Response) => {
+    try {
+      const { name, status, user_id } = req.body;
+
+      if (name) {
+        await User.findByIdAndUpdate(user_id, {
+          $set: {
+            name,
+            status,
+          },
+        });
+
+        res.status(201).json({ message: 'User was updated' });
       }
     } catch (error) {
       res.status(500).json({ message: error.message });

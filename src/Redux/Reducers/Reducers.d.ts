@@ -11,6 +11,7 @@ export interface IUserReducerState {
   readonly user_id: string;
   readonly name: string;
   readonly theme: boolean;
+  readonly status: string;
   socket: any;
 }
 

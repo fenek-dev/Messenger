@@ -7,6 +7,7 @@ import { ADD_THEME, ADD_USER } from '../Constants';
 
 const initialState: IUserReducerState = {
   user_id: '',
+  status: '',
   name: '',
   theme: false,
   socket: '',

@@ -39,7 +39,7 @@ function App() {
         <div className={`main ${state.theme ? 'dark' : ''}`}>
           <Suspense fallback={<div>Loading...</div>}>
             <Route path='/'>
-              <Sidebar title={'Arthur Moore'} />
+              <Sidebar title={state.name} />
             </Route>
             <Route exact path='/settings/theme'>
               <Theme />

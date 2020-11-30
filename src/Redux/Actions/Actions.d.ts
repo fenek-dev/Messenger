@@ -38,11 +38,12 @@ export type IAddMessageAction = {
   readonly message: IMessage;
 };
 
-export type IAddUserAction = {
-  readonly user_id: string;
+export interface IAddUserAction {
+  readonly user_id?: string;
   readonly name: string;
-  readonly socket: any;
-};
+  readonly status?: string;
+  readonly socket?: any;
+}
 
 export type IThunkAction = (
   ...params: readonly any

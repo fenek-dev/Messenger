@@ -15,11 +15,11 @@ const createRoutes = (app: express.Express, io: socket.Server) => {
 
   app.use(express.json({ type: 'text/plain' }));
   app.use(express.json());
-
   // routes
   app.post('/api/auth/register', registerValidation, UserCtrl.register);
   app.post('/api/auth/login', loginValidation, UserCtrl.login);
   app.post('/api/auth/token', UserCtrl.token);
+  app.patch('/api/auth/update', UserCtrl.update);
 
   app.post('/api/chats/create', ChatCtrl.create);
   app.post('/api/chats/:id', ChatCtrl.getChat);

@@ -5,6 +5,7 @@ import './Profile.scss';
 //===== Components =====
 import SettingsHeader from '../../Components/Settings-header/SettingsHeader';
 import ProfilePhoto from '../../Containers/Profile-photo/ProfilePhoto';
+import ProfileInputs from '../../Containers/Profile-inputs/ProfileInputs';
 
 //===== Main =====
 const Profile: React.FC = () => {
@@ -14,6 +15,7 @@ const Profile: React.FC = () => {
         <SettingsHeader title='Profile' />
         <div className='profile-content'>
           <ProfilePhoto />
+          <ProfileInputs />
         </div>
       </div>
     </>
