@@ -3,7 +3,6 @@
 //================================
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddUserTheme } from '../../Redux/Actions/user.action';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
 
 //================================
@@ -15,15 +14,19 @@ import SettingsItem from '../../Components/Settings-item/SettingsItem';
 
 //===== Styles =====
 import './Theme.scss';
+import { AddThemeAction } from '../../Redux/Actions/theme.action';
 
 //===== Main =====
 const Theme: React.FC = () => {
-  const state = useSelector((state: RootReducerInterface) => state.user);
+  const state = useSelector((state: RootReducerInterface) => state.theme);
   const dispatch = useDispatch();
 
   const handleTheme = useCallback(() => {
-    dispatch(AddUserTheme({ theme: !state.theme }));
-    localStorage.setItem('theme', JSON.stringify(!state.theme));
+    dispatch(AddThemeAction({ theme: state.theme === 'dark' ? null : 'dark' }));
+    localStorage.setItem(
+      'theme',
+      JSON.stringify(state.theme === 'dark' ? null : 'dark')
+    );
   }, [dispatch, state.theme]);
 
   return (
@@ -33,7 +36,7 @@ const Theme: React.FC = () => {
         styles={{ justifyContent: 'space-between', cursor: 'pointer' }}
         onClick={handleTheme}>
         <h4>Dark theme</h4>
-        <Checkbox checked={state.theme} onChange={handleTheme} />
+        <Checkbox checked={state.theme === 'dark'} onChange={handleTheme} />
       </SettingsItem>
     </div>
   );

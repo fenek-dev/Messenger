@@ -2,6 +2,7 @@
 export interface RootReducerInterface {
   readonly user: IUserReducerState;
   readonly chats: IChats[];
+  readonly theme: IThemeReducerState;
 }
 
 export type IGetState = () => Readonly<RootReducerInterface>;
@@ -10,18 +11,26 @@ export type IGetState = () => Readonly<RootReducerInterface>;
 export interface IUserReducerState {
   readonly user_id: string;
   readonly name: string;
-  readonly theme: boolean;
   readonly status: string;
   socket: any;
 }
 
+export interface IThemeReducerState {
+  readonly theme: TTheme;
+  readonly textSize: number;
+  readonly messageTheme: string;
+  readonly messageBorderRadius: number;
+  readonly chatBackgroundImg: string;
+}
+
+export type TTheme = 'dark' | null;
 // Chats Reducer
-export type IMessage = {
+export interface IMessage {
   readonly from: string;
   readonly body: string;
   readonly created_at: string | number;
   readonly received: boolean;
-};
+}
 
 export interface IChats {
   readonly chat_id: string;

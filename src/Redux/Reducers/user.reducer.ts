@@ -3,13 +3,12 @@ import { IUserPayload } from '../Actions/Actions';
 import { IUserReducerState } from './Reducers';
 
 //===== Constants =====
-import { ADD_THEME, ADD_USER } from '../Constants';
+import { ADD_USER } from '../Constants';
 
 const initialState: IUserReducerState = {
   user_id: '',
   status: '',
   name: '',
-  theme: false,
   socket: '',
 };
 
@@ -24,8 +23,6 @@ const reducer = (
     case ADD_USER:
       return { ...state, ...payload };
 
-    case ADD_THEME:
-      return { ...state, theme: payload.theme };
     default:
       return state;
   }

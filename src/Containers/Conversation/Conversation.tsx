@@ -1,7 +1,7 @@
 //================================
 // React and Redux
 //================================
-import React, { Fragment, memo, useCallback, useEffect } from 'react';
+import React, { Fragment, memo, useCallback, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetChatThunk } from '../../Redux/Actions/chats.action';
@@ -34,7 +34,10 @@ const Conversation: React.FC = () => {
   //===== States =====
   const state = useSelector((state: Readonly<RootReducerInterface>) => state);
   const user = state.user;
-  const chat = state.chats.find((chat) => chat.companion_id === id);
+  const chat = useMemo(
+    () => state.chats.find((chat) => chat.companion_id === id),
+    [state.chats, id]
+  );
 
   // Get all chats from server
   useEffect(() => {

@@ -1,5 +1,5 @@
 //===== React and styles =====
-import React, { CSSProperties, memo } from 'react';
+import React, { CSSProperties, memo, useMemo } from 'react';
 import './Button.scss';
 
 //===== Interface =====
@@ -14,17 +14,21 @@ interface IButton {
 //===== Main =====
 const Button: React.FC<IButton> = ({
   label,
-  type,
+  type = 'submit',
   onClick,
   backgroundColor,
   style,
 }) => {
+  const styles = useMemo(() => ({ backgroundColor, ...style }), [
+    backgroundColor,
+    style,
+  ]);
   return (
     <button
-      style={{ backgroundColor, ...style }}
+      style={styles}
       className='button'
-      type={type ? type : 'submit'}
-      onClick={onClick ? onClick : () => {}}>
+      type={type}
+      onClick={onClick && onClick}>
       {label}
     </button>
   );

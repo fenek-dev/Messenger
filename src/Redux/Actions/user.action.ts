@@ -2,18 +2,14 @@
 import { IAction, IAddUserAction, IThunkAction } from './Actions';
 
 //===== Constatns =====
-import { ADD_THEME, ADD_USER } from '../Constants';
+import { ADD_USER } from '../Constants';
 
 //===== Utils =====
 import createSocket from '../../utils/socket';
+import { AddThemeAction } from './theme.action';
 
 export const AddUserAction: IAction<IAddUserAction> = (payload) => ({
   type: ADD_USER,
-  payload,
-});
-
-export const AddUserTheme: IAction<{ theme: boolean }> = (payload) => ({
-  type: ADD_THEME,
   payload,
 });
 
@@ -74,7 +70,7 @@ export const CreateUserThunk: IThunkAction = (
         })
       );
       dispatch(
-        AddUserTheme({ theme: !!JSON.parse(localStorage.getItem('theme')!) })
+        AddThemeAction({ theme: JSON.parse(localStorage.getItem('theme')!) })
       );
     }
   } catch (error) {
@@ -113,7 +109,7 @@ export const SignInUserThunk: IThunkAction = (
         })
       );
       dispatch(
-        AddUserTheme({ theme: !!JSON.parse(localStorage.getItem('theme')!) })
+        AddThemeAction({ theme: JSON.parse(localStorage.getItem('theme')!) })
       );
     }
   } catch (error) {
@@ -150,7 +146,7 @@ export const SignInThunk: IThunkAction = (
         })
       );
       dispatch(
-        AddUserTheme({ theme: !!JSON.parse(localStorage.getItem('theme')!) })
+        AddThemeAction({ theme: JSON.parse(localStorage.getItem('theme')!) })
       );
     }
   } catch (error) {

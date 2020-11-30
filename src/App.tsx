@@ -19,7 +19,7 @@ import Profile from './Pages/Profile/Profile';
 
 //===== Main =====
 function App() {
-  const state = useSelector((state: RootReducerInterface) => state.user);
+  const state = useSelector((state: RootReducerInterface) => state);
 
   const dispacth = useDispatch();
   const [isAuth, setIsAuth] = useState<boolean>();
@@ -30,16 +30,16 @@ function App() {
   }, [dispacth]);
 
   useEffect(() => {
-    dispacth(GetAllChatsThunk(state.user_id));
-  }, [dispacth, state.user_id]);
+    dispacth(GetAllChatsThunk(state.user.user_id));
+  }, [dispacth, state.user.user_id]);
 
   return (
     <>
       {isAuth ? (
-        <div className={`main ${state.theme ? 'dark' : ''}`}>
+        <div className={`main ${state.theme.theme ? 'dark' : ''}`}>
           <Suspense fallback={<div>Loading...</div>}>
             <Route path='/'>
-              <Sidebar title={state.name} />
+              <Sidebar title={state.user.name} />
             </Route>
             <Route exact path='/settings/theme'>
               <Theme />
