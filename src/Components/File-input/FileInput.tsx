@@ -23,6 +23,7 @@ const FileInput: React.FC<IFileInput> = ({
         {label}
       </label>
       <input
+        data-testid='input'
         type='file'
         id='input'
         className={`file-input ${className ? className : ''}`}

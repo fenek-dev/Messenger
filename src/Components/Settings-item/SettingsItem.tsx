@@ -16,7 +16,11 @@ const SettingsItem: React.FC<ISettingsItem> = ({
   onClick,
 }) => {
   return (
-    <div style={styles} className='settings-item' onClick={onClick}>
+    <div
+      data-testid='wrapper'
+      style={styles}
+      className='settings-item'
+      onClick={onClick}>
       {children}
     </div>
   );

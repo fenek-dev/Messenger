@@ -24,9 +24,10 @@ const Popup: React.FC<IPopup> = ({
   return (
     <div className='popup-layout'>
       <div
+        data-testid='wrapper'
         className='popup-window'
         style={{ width: `${width}`, height: `${height}` }}>
-        <span className='popup-window__close' onClick={onClose}>
+        <span role='button' className='popup-window__close' onClick={onClose}>
           &times;
         </span>
         <div className='popup-window__content'>

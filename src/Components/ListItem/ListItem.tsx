@@ -24,7 +24,9 @@ const ListItem: React.FC<IListItem> = ({
 }) => {
   return (
     <Link style={{ display: 'block' }} to={`/${companion_id}`}>
-      <div className={`list-item ${className && className}`}>
+      <div
+        data-testid='wrapper'
+        className={`list-item ${className && className}`}>
         <img src={photoUrl} alt='avatar' className='list-item__avatar icon' />
         <div className='list-item__content'>
           <h5 className='list-item__content-name'>{name}</h5>

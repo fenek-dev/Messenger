@@ -17,8 +17,8 @@ const SettingsListItem: React.FC<ISettingsListItem> = ({
   onClick,
 }) => {
   return (
-    <div onClick={onClick} className='settings-list-item'>
-      <Link to={`${link}`}>
+    <div data-testid='wrapper' onClick={onClick} className='settings-list-item'>
+      <Link role='link' to={`${link}`}>
         <h4>{text}</h4>
       </Link>
     </div>

@@ -1,5 +1,5 @@
 //===== React and styles =====
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, memo } from 'react';
 import './Checkbox.scss';
 
 //===== Interface =====
@@ -13,6 +13,7 @@ interface ICheckbox {
 const Checkbox: React.FC<ICheckbox> = ({ style, onChange, checked }) => {
   return (
     <input
+      data-testid='checkbox'
       style={style}
       type='checkbox'
       className='checkbox'
@@ -22,4 +23,4 @@ const Checkbox: React.FC<ICheckbox> = ({ style, onChange, checked }) => {
   );
 };
 
-export default Checkbox;
+export default memo(Checkbox);

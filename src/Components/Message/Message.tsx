@@ -18,7 +18,9 @@ const Message: React.FC<IMessageComponent> = ({
   type,
 }) => {
   return (
-    <div className={type === 'own' ? 'message own' : 'message foreign'}>
+    <div
+      data-testid='wrapper'
+      className={type === 'own' ? 'message own' : 'message foreign'}>
       <img src={photoUrl} alt='User' className='icon' />
       <div className='message-content'>
         <p

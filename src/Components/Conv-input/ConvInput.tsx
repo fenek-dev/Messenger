@@ -15,16 +15,18 @@ const ConvInput: React.FC<IConvInput> = ({ handleSubmit }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const handleButton = useCallback(
     (e: React.FormEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      handleSubmit(inputRef.current!.value);
-      inputRef.current!.value = '';
+      if (inputRef.current!.value !== '') {
+        e.preventDefault();
+        handleSubmit(inputRef.current!.value);
+        inputRef.current!.value = '';
+      }
     },
     [handleSubmit]
   );
   return (
     <form className='conv-input'>
       <input type='text' ref={inputRef} placeholder='Type your message' />
-      <Button label='Send' onClick={handleButton} />
+      <Button label='Send' onClick={handleButton} type='button' />
     </form>
   );
 };
