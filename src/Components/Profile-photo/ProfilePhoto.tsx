@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import './ProfilePhoto.scss';
 
 //===== Components =====
-import FileInput from '../../Components/File-input/FileInput';
-import Popup from '../../Components/Popup/Popup';
+import FileInput from '../File-input/FileInput';
+import Popup from '../Popup/Popup';
 import PhotoResizer from '../Photo-resizer/PhotoResizer';
 
 //===== Images =====
@@ -55,7 +55,7 @@ const ProfilePhoto: React.FC = () => {
       <FileInput label={'Add photo'} onChange={handleImg} />
       {open && (
         <Popup height='500' width='500' onClose={handleImgClick}>
-          <img src={photo} width='500' height='500' alt='User' />
+          <img src={photo} width='500' height='500' alt='opened user' />
         </Popup>
       )}
       {newPhoto && (

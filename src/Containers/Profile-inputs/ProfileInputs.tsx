@@ -1,11 +1,7 @@
 //===== React and Redux =====
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
-import {
-  AddUserAction,
-  UpdateUserInfoThunk,
-} from '../../Redux/Actions/user.action';
 
 //===== Components =====
 import Button from '../../Components/Button/Button';
@@ -14,6 +10,12 @@ import { Field, Form, Formik } from 'formik';
 
 //===== Stules =====
 import './ProfileInputs.scss';
+
+//===== Interface =====
+interface IProfileInputs {
+  updateUser: (...params: any) => void;
+  addUser: (...params: any) => void;
+}
 
 //===== Schema of user date =====
 const ProfileSchema = Yup.object().shape({
@@ -25,21 +27,18 @@ const ProfileSchema = Yup.object().shape({
 });
 
 //===== Main =====
-const ProfileInputs: React.FC = () => {
+const ProfileInputs: React.FC<IProfileInputs> = ({ updateUser, addUser }) => {
   const { name, status } = useSelector(
     (state: RootReducerInterface) => state.user
   );
-  const dispatch = useDispatch();
 
   return name ? (
     <Formik
       initialValues={{ name, status }}
       validationSchema={ProfileSchema}
       onSubmit={(values) => {
-        dispatch(
-          UpdateUserInfoThunk({ name: values.name, status: values.status })
-        );
-        dispatch(AddUserAction({ name: values.name, status: values.status }));
+        updateUser({ name: values.name, status: values.status });
+        addUser({ name: values.name, status: values.status });
       }}>
       {({ errors, touched }) => (
         <Form className='profile-form'>

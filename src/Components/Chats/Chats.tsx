@@ -5,7 +5,7 @@ import React, { memo } from 'react';
 import { IChats } from '../../Redux/Reducers/Reducers';
 
 //===== Components =====
-import ListItem from '../../Components/ListItem/ListItem';
+import ListItem from '../ListItem/ListItem';
 
 //===== Utils =====
 import moment from 'moment';
@@ -42,7 +42,11 @@ const Chats: React.FC<IChatsComponent> = ({ chats }) => {
               name={chat.companion_name}
               photoUrl={user}
               lastMessage={compressString(chat.last_message)}
-              date={moment(chat.created_at).utc().format('hh:mm') || ''}
+              date={
+                typeof chat.created_at === 'number'
+                  ? moment(chat.created_at).utc().format('hh:mm')
+                  : chat.created_at
+              }
             />
           ))}
       </div>

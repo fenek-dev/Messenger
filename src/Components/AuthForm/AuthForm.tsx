@@ -2,7 +2,6 @@
 // React and Redux
 //================================
 import React, { memo } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 //================================
@@ -41,18 +40,10 @@ interface IAuthForm {
   readonly type: 'login' | 'register';
   readonly createUser?: any;
   readonly signIn?: any;
-  readonly setIsAuth: any;
 }
 
 //===== Main =====
-const AuthForm: React.FC<IAuthForm> = ({
-  createUser,
-  signIn,
-  type,
-  setIsAuth,
-}) => {
-  const dispatch = useDispatch();
-
+const AuthForm: React.FC<IAuthForm> = ({ createUser, signIn, type }) => {
   return (
     <div className='auth'>
       {type === 'register' ? (
@@ -65,16 +56,7 @@ const AuthForm: React.FC<IAuthForm> = ({
               password: '',
             }}
             validationSchema={SignupSchema}
-            onSubmit={(values) => {
-              return dispatch(
-                createUser(
-                  values.email,
-                  values.password,
-                  values.name,
-                  setIsAuth
-                )
-              );
-            }}>
+            onSubmit={(values) => createUser(values)}>
             {({ errors, touched }) => (
               <Form className='auth-form'>
                 <label htmlFor='name' className='auth-form__name-label'>
@@ -86,7 +68,9 @@ const AuthForm: React.FC<IAuthForm> = ({
                   className='auth-form__name form-input'
                 />
                 {errors.name && touched.name ? (
-                  <div className='auth-form__error'>{errors.name}</div>
+                  <div className='auth-form__error' data-testid='error'>
+                    {errors.name}
+                  </div>
                 ) : null}
 
                 <label htmlFor='email' className='auth-form__email-label'>
@@ -99,7 +83,9 @@ const AuthForm: React.FC<IAuthForm> = ({
                   className='auth-form__email form-input'
                 />
                 {errors.email && touched.email ? (
-                  <div className='auth-form__error'>{errors.email}</div>
+                  <div className='auth-form__error' data-testid='error'>
+                    {errors.email}
+                  </div>
                 ) : null}
 
                 <label htmlFor='password' className='auth-form__name-label'>
@@ -112,7 +98,9 @@ const AuthForm: React.FC<IAuthForm> = ({
                   className='auth-form__password form-input'
                 />
                 {errors.password && touched.password ? (
-                  <div className='auth-form__error'>{errors.password}</div>
+                  <div className='auth-form__error' data-testid='error'>
+                    {errors.password}
+                  </div>
                 ) : null}
                 <button type='submit' className='auth-form__submit'>
                   Submit
@@ -133,9 +121,7 @@ const AuthForm: React.FC<IAuthForm> = ({
               password: '',
             }}
             validationSchema={LoginSchema}
-            onSubmit={(values) => {
-              return dispatch(signIn(values.email, values.password, setIsAuth));
-            }}>
+            onSubmit={(values) => signIn(values)}>
             {({ errors, touched }) => (
               <Form className='auth-form'>
                 <label htmlFor='email' className='auth-form__email-label'>
@@ -148,7 +134,9 @@ const AuthForm: React.FC<IAuthForm> = ({
                   className='auth-form__email form-input'
                 />
                 {errors.email && touched.email ? (
-                  <div className='auth-form__error'>{errors.email}</div>
+                  <div className='auth-form__error' data-testid='error'>
+                    {errors.email}
+                  </div>
                 ) : null}
 
                 <label htmlFor='password' className='auth-form__name-label'>
@@ -161,7 +149,9 @@ const AuthForm: React.FC<IAuthForm> = ({
                   className='auth-form__password form-input'
                 />
                 {errors.password && touched.password ? (
-                  <div className='auth-form__error'>{errors.password}</div>
+                  <div className='auth-form__error' data-testid='error'>
+                    {errors.password}
+                  </div>
                 ) : null}
                 <button type='submit' className='auth-form__submit'>
                   Submit

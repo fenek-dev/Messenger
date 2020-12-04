@@ -1,10 +1,10 @@
 //===== React =====
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 
 //===== Components =====
 import Cropper from 'react-easy-crop';
-import Button from '../../Components/Button/Button';
-import Popup from '../../Components/Popup/Popup';
+import Button from '../Button/Button';
+import Popup from '../Popup/Popup';
 
 //===== Utils and types =====
 import getCroppedImg from '../../utils/cropImage';
@@ -93,4 +93,4 @@ const PhotoResizer: React.FC<IPhotoResizer> = ({
   );
 };
 
-export default PhotoResizer;
+export default memo(PhotoResizer);

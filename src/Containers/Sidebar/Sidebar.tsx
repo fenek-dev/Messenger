@@ -5,7 +5,7 @@ import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
 
 //===== Components =====
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import Chats from '../Chats/Chats';
+import Chats from '../../Components/Chats/Chats';
 import SettingsList from '../../Components/Settings-list/SettingsList';
 
 //===== Styles =====
