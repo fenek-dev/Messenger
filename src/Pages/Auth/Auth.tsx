@@ -1,5 +1,5 @@
 //===== React and Redux =====
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import {
   CreateUserThunk,
   SignInUserThunk,
@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 //===== Interface =====
 interface IAuth {
   readonly type: 'register' | 'login';
-  setIsAuth: any;
+  setIsAuth: (...params: any) => void;
 }
 
 //===== Main =====
@@ -45,4 +45,4 @@ const Auth: React.FC<IAuth> = ({ type, setIsAuth }) => {
   );
 };
 
-export default Auth;
+export default memo(Auth);
