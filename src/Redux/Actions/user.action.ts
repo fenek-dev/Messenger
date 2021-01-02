@@ -81,7 +81,8 @@ export const CreateUserThunk: IThunkAction = (
 export const SignInUserThunk: IThunkAction = (
   email: string,
   password: string,
-  setIsAuth: (value: boolean) => void
+  setIsAuth: (value: boolean) => void,
+  setError: (message: string) => void
 ) => async (dispatch) => {
   try {
     if (email && password) {
@@ -113,13 +114,15 @@ export const SignInUserThunk: IThunkAction = (
       );
     }
   } catch (error) {
+    setError(error.message);
     console.error(error);
   }
 };
 
 export const SignInThunk: IThunkAction = (
   token: string,
-  setIsAuth: (value: boolean) => void
+  setIsAuth: (value: boolean) => void,
+  setError: (message: string) => void
 ) => async (dispatch) => {
   try {
     if (token) {
@@ -150,6 +153,7 @@ export const SignInThunk: IThunkAction = (
       );
     }
   } catch (error) {
+    setError(error.message);
     console.error(error.message);
   }
 };

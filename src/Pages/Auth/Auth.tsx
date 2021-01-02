@@ -1,5 +1,5 @@
 //===== React and Redux =====
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import {
   CreateUserThunk,
   SignInUserThunk,
@@ -8,6 +8,7 @@ import {
 //===== Components =====
 import AuthForm from '../../Components/AuthForm/AuthForm';
 import { useDispatch } from 'react-redux';
+import Popup from '../../Components/Popup/Popup';
 
 //===== Interface =====
 interface IAuth {
@@ -19,9 +20,12 @@ interface IAuth {
 const Auth: React.FC<IAuth> = ({ type, setIsAuth }) => {
   const dispatch = useDispatch();
 
+  const [error, setError] = useState<string>();
   const signIn = useCallback(
     (values: { email: string; password: string }) => {
-      dispatch(SignInUserThunk(values.email, values.password, setIsAuth));
+      dispatch(
+        SignInUserThunk(values.email, values.password, setIsAuth, setError)
+      );
     },
     [dispatch, setIsAuth]
   );
@@ -29,17 +33,36 @@ const Auth: React.FC<IAuth> = ({ type, setIsAuth }) => {
   const createUser = useCallback(
     (values: { email: string; password: string; name: string }) => {
       dispatch(
-        CreateUserThunk(values.email, values.password, values.name, setIsAuth)
+        CreateUserThunk(
+          values.email,
+          values.password,
+          values.name,
+          setIsAuth,
+          setError
+        )
       );
     },
     [dispatch, setIsAuth]
   );
+
+  const cleanError = useCallback(() => {
+    setError(undefined);
+  }, []);
   return (
     <>
       {type === 'login' ? (
         <AuthForm signIn={signIn} type={type} />
       ) : (
         <AuthForm createUser={createUser} type={type} />
+      )}
+      {error && (
+        <Popup
+          width='200px'
+          height='auto'
+          onClose={cleanError}
+          title='Error'
+          text={error}
+        />
       )}
     </>
   );

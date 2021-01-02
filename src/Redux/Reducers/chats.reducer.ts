@@ -38,9 +38,6 @@ const reducer = (
         (chat) => chat.companion_id === payload.companion_id
       );
 
-      // console.log(state[0].companion_id);
-      // console.log(payload.companion_id);
-
       need_chat?.messages.filter((message) => {
         // Take every message and find message with the same created_at property as passed message
         if (message.created_at === payload.message.created_at) {
@@ -64,46 +61,6 @@ const reducer = (
         }
         return chat;
       });
-
-    // return state.filter((chat) => {
-    //   // Find need chat by companion id
-    //   if (chat.companion_id === payload.companion_id) {
-    //     // If chat was found than check if messages is empty
-    //     if (chat.messages.length !== 0) {
-    //       // if messages is not empty
-    //       chat.messages.filter((message) => {
-    //         // Take every message and find message with the same created_at property as passed message
-    //         if (message.created_at === payload.message.created_at) {
-    //           // If message was found than change message body by new value from payload
-    //           return {
-    //             from: message.from,
-    //             body: payload.message.body,
-    //             created_at: message.created_at,
-    //             received: message.received,
-    //           };
-    //         } else {
-    //           // If message wasn't found, add new message
-    //           return message;
-    //         }
-    //       });
-    //       if (
-    //         !chat.messages.find(
-    //           (mes) => mes.created_at === payload.message.created_at
-    //         )
-    //       ) {
-    //         return chat.messages.unshift(payload.message);
-    //       } else {
-    //         return chat.messages;
-    //       }
-    //     } else {
-    //       // If messages is empty than add new message
-    //       return chat.messages.unshift(payload.message);
-    //     }
-    //   } else {
-    //     // If this chat hasn't the same companion id just return chat
-    //     return chat;
-    //   }
-    // });
 
     default:
       return state;
