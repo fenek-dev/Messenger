@@ -1,5 +1,6 @@
 @import '../../styles/variables.scss';
 @import '../../styles/mixins.scss';
+@import '../../styles/animations.scss';
 .chats {
   grid-area: list;
   display: flex;
@@ -25,6 +26,12 @@
       border: none;
       outline: none;
       margin-left: 10px;
+    }
+
+    &__close {
+      cursor: pointer;
+      font-size: 30px;
+      animation: convApper 0.5s ease-in-out normal;
     }
   }
 

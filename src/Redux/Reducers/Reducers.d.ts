@@ -3,6 +3,7 @@ export interface RootReducerInterface {
   readonly user: IUserReducerState;
   readonly chats: IChats[];
   readonly theme: IThemeReducerState;
+  readonly search: ISearchState[];
 }
 
 export type IGetState = () => Readonly<RootReducerInterface>;
@@ -39,4 +40,10 @@ export interface IChats {
   readonly last_message: string;
   readonly created_at: string | number;
   readonly messages: IMessage[];
+}
+
+export interface ISearchState {
+  readonly user_id: string;
+  readonly user_name: string;
+  readonly user_photo: string;
 }

@@ -7,10 +7,11 @@ import './ListItem.scss';
 interface IListItem {
   readonly name: string;
   readonly companion_id: string;
-  readonly photoUrl: string;
-  readonly lastMessage: string;
-  readonly date: string | number;
+  readonly photoUrl?: string;
+  readonly lastMessage?: string;
+  readonly date?: string | number;
   readonly className?: string;
+  readonly prefix?: string;
 }
 
 //===== Main =====
@@ -21,9 +22,10 @@ const ListItem: React.FC<IListItem> = ({
   lastMessage,
   date,
   className,
+  prefix = '',
 }) => {
   return (
-    <Link style={{ display: 'block' }} to={`/${companion_id}`}>
+    <Link style={{ display: 'block' }} to={`/${prefix}${companion_id}`}>
       <div
         data-testid='wrapper'
         className={`list-item ${className && className}`}>

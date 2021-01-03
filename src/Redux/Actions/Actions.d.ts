@@ -8,12 +8,11 @@ export type IAction<T = any> = (
   payload: readonly T
 ) => {
   readonly type: string;
-  readonly payload: T;
+  readonly payload?: T;
 };
 
 export type IUserPayload = Readonly<IAddUserAction>;
 export type IChatsPayload = Readonly<IAddChatAction & IAddMessageAction>;
-
 export type IListOfChats = [
   {
     readonly chat_id: string;

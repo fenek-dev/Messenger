@@ -2,6 +2,7 @@ import express from 'express';
 import socket from 'socket.io';
 import ChatController from '../controllers/ChatController';
 import MessageController from '../controllers/MessageController';
+import SearchController from '../controllers/SearchController';
 import UserController from '../controllers/UserController';
 import {
   loginValidation,
@@ -12,6 +13,7 @@ const createRoutes = (app: express.Express, io: socket.Server) => {
   const UserCtrl = new UserController(io);
   const ChatCtrl = new ChatController(io);
   const MessageCtrl = new MessageController(io);
+  const SearchCtrl = new SearchController(io);
 
   app.use(express.json({ type: 'text/plain' }));
   app.use(express.json());
@@ -27,6 +29,8 @@ const createRoutes = (app: express.Express, io: socket.Server) => {
   app.post('/api/message/create', MessageCtrl.create);
   app.patch('/api/message/update', MessageCtrl.update);
   app.delete('/api/message/delete', MessageCtrl.delete);
+
+  app.post('/api/search/find', SearchCtrl.getMatches);
 };
 
 export default createRoutes;

@@ -12,10 +12,12 @@ import { RootReducerInterface } from './Reducers';
 import chatsReducer from './chats.reducer';
 import userReducer from './user.reducer';
 import themeReducer from './theme.reducer';
+import searchReducer from './search.reducer';
 
 const rootReducer = combineReducers<RootReducerInterface>({
   user: userReducer,
   chats: chatsReducer,
+  search: searchReducer,
   theme: themeReducer,
 });
 
