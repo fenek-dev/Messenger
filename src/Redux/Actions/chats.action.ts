@@ -81,7 +81,6 @@ export const GetChatThunk: IThunkAction = (
       data.messages.forEach((message) => {
         dispatch(
           AddMessageAction({
-            chat_id: data.chat_id,
             companion_id: data.companion_id,
             message,
           })

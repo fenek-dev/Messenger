@@ -33,8 +33,9 @@ const reducer = (
 
     case ADD_MESSAGES:
       let changed = false;
-      const need_chat = state.find((chat) => chat.chat_id === payload.chat_id);
-
+      const need_chat = state.find(
+        (chat) => chat.companion_id === payload.companion_id
+      );
       need_chat?.messages.map((message) => {
         // Take every message and find message with the same created_at property as passed message
         if (message.created_at === payload.message.created_at) {
@@ -51,6 +52,7 @@ const reducer = (
           return message;
         }
       });
+
       if (!changed) need_chat?.messages.unshift(payload.message);
 
       return state.filter((chat) => {

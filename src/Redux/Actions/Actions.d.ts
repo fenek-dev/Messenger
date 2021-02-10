@@ -35,7 +35,6 @@ export type IAddChatAction = {
 export type IAddMessageAction = {
   readonly companion_id: string;
   readonly message: IMessage;
-  readonly chat_id: string;
 };
 
 export interface IAddUserAction {
