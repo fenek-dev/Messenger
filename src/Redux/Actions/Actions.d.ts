@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { IGetState, IMessage } from '../Reducers/Reducers';
+import { IMessage, RootReducerInterface } from '../Reducers/Reducers';
 
 /**
  * General type for actions
@@ -35,6 +35,7 @@ export type IAddChatAction = {
 export type IAddMessageAction = {
   readonly companion_id: string;
   readonly message: IMessage;
+  readonly chat_id: string;
 };
 
 export interface IAddUserAction {
@@ -46,4 +47,7 @@ export interface IAddUserAction {
 
 export type IThunkAction = (
   ...params: readonly any
-) => (dispatch: readonly Dispatch<any>, getState: readonly IGetState) => void;
+) => (
+  dispatch: readonly Dispatch<any>,
+  getState: () => RootReducerInterface
+) => void;

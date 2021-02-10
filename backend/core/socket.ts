@@ -32,12 +32,6 @@ const createSocket = (http: http.Server) => {
         }
       }
     );
-    socket.on('CHAT:JOIN', (chat_id: string) => {
-      socket.join(chat_id);
-    });
-    // socket.on('DIALOGS:TYPING', (obj: any) => {
-    //   socket.broadcast.emit('DIALOGS:TYPING', obj);
-    // });
 
     socket.on('SERVER:LIST', async (user_id: string) => {
       const chats = await Chat.find({ members: user_id });
@@ -50,6 +44,18 @@ const createSocket = (http: http.Server) => {
       await getEveryChat(chats, data, user_id);
 
       socket.emit('SERVER:LIST', data);
+    });
+
+    socket.on('SERVER:CHAT', async (chat_id: string, user_id: string) => {
+      const chat = await Chat.findById(chat_id);
+      socket.join(chat_id);
+      if (chat?.errors) {
+        throw new Error(chat?.errors);
+      }
+      const members = chat!.members;
+      const companion_id = members.find((user) => user !== user_id);
+      const messages = chat!.messages;
+      io.to(chat_id).emit('SERVER:CHAT', { chat_id, companion_id, messages });
     });
     // Disconnect
     socket.on('disconnect', () => {

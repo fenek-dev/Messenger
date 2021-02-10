@@ -4,3 +4,5 @@ export const ADD_MESSAGES = 'ADD_MESSAGES';
 export const ADD_THEME = 'ADD_THEME';
 export const ADD_USER_IN_SEARCH = 'ADD_USER_IN_SEARCH';
 export const CLEAN_SEARCH = 'CLEAN_SEARCH';
+export const ADD_PROFILE = 'ADD_PROFILE';
+export const CLEAN_PROFILE = 'CLEAN_PROFILE';

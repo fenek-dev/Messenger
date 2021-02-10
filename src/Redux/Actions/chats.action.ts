@@ -23,9 +23,9 @@ export const AddMessageAction: IAction<IAddMessageAction> = (payload) => ({
   payload,
 });
 
-export const CreateChatThunk: IThunkAction = (
-  members: string[]
-) => async () => {
+export const CreateChatThunk: IThunkAction = (members: string[]) => async (
+  dispatch
+) => {
   try {
     const res = await fetch('/api/chats/create', {
       method: 'POST',
@@ -72,22 +72,16 @@ export const GetChatThunk: IThunkAction = (
   chat_id: string,
   user_id: string
 ) => async (dispatch, getState) => {
-  const socket = getState().user.socket;
+  const socket: Socket = getState().user.socket;
 
-  fetch(`/api/chats/${chat_id}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ user_id }),
-  });
-
+  socket.emit('SERVER:CHAT', chat_id, user_id);
   socket.on(
     'SERVER:CHAT',
-    (data: { companion_id: string; messages: IMessage[] }) => {
+    (data: { companion_id: string; messages: IMessage[]; chat_id: string }) => {
       data.messages.forEach((message) => {
         dispatch(
           AddMessageAction({
+            chat_id: data.chat_id,
             companion_id: data.companion_id,
             message,
           })

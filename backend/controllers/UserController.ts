@@ -144,6 +144,29 @@ class UserController {
       res.status(500).json({ message: error.message });
     }
   };
+
+  profile = async (req: express.Request, res: express.Response) => {
+    try {
+      const { user_id } = req.body;
+
+      const user = await User.findById(user_id);
+
+      if (!user) {
+        res.status(404).json({ message: 'User is not found' });
+      }
+
+      const result = {
+        user_id,
+        user_name: user?.name,
+        user_photo: '',
+        user_last_seen: user?.logs,
+      };
+
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
 }
 
 export default UserController;

@@ -1,11 +1,11 @@
 //================================
 // React and Redux
 //================================
-import React, { Fragment, memo, useCallback, useEffect, useMemo } from 'react';
+import React, { Fragment, memo, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetChatThunk } from '../../Redux/Actions/chats.action';
-import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
+import { IChats, RootReducerInterface } from '../../Redux/Reducers/Reducers';
 import { SendMessageThunk } from '../../Redux/Actions/messages.action';
 
 //================================
@@ -31,13 +31,15 @@ const Conversation: React.FC = () => {
 
   const dispatch = useDispatch();
 
+  const [chat, setChat] = useState<IChats>();
   //===== States =====
   const state = useSelector((state: Readonly<RootReducerInterface>) => state);
   const user = state.user;
-  const chat = useMemo(
-    () => state.chats.find((chat) => chat.companion_id === id),
-    [state.chats, id]
-  );
+
+  useEffect(() => {
+    const need = state.chats.find((chat) => chat.companion_id === id);
+    setChat(need);
+  }, [id, state.chats]);
 
   // Get all chats from server
   useEffect(() => {
@@ -69,48 +71,47 @@ const Conversation: React.FC = () => {
           <div className='conversation-chat'>
             {
               // If messages is existing
-              chat!.messages.length > 0 &&
-                chat.messages!.map((message, index, arr) => {
-                  // If there is messages
-                  if (arr[index - 1]) {
-                    // Get create time of previos message by momentjs
-                    const prevMess = +moment(arr[--index].created_at).format(
-                      'DD'
-                    );
-                    // Get create time of current message by momentjs
-                    const curnMess = +moment(message.created_at).format('DD');
-
-                    //If there is difference between times
-                    if (curnMess - prevMess !== 0) {
-                      return (
-                        <Fragment key={index}>
-                          <DateBar
-                            key={index}
-                            date={moment(message.created_at).format('DD MMMM')}
-                          />
-                          <Message
-                            key={message.created_at}
-                            text={message.body}
-                            photoUrl={userPhoto}
-                            date={moment(message.created_at)
-                              .utc()
-                              .format('hh:mm')}
-                            type={message.from === id ? 'foreign' : 'own'}
-                          />
-                        </Fragment>
-                      );
-                    }
-                  }
-                  return (
-                    <Message
-                      key={message.created_at}
-                      text={message.body}
-                      photoUrl={userPhoto}
-                      date={moment(message.created_at).utc().format('hh:mm')}
-                      type={message.from === id ? 'foreign' : 'own'}
-                    />
+              chat.messages.map((message, index, arr) => {
+                // If there is messages
+                if (arr[index - 1]) {
+                  // Get create time of previos message by momentjs
+                  const prevMess = +moment(arr[--index].created_at).format(
+                    'DD'
                   );
-                })
+                  // Get create time of current message by momentjs
+                  const curnMess = +moment(message.created_at).format('DD');
+
+                  //If there is difference between times
+                  if (curnMess - prevMess !== 0) {
+                    return (
+                      <Fragment key={index}>
+                        <DateBar
+                          key={index}
+                          date={moment(message.created_at).format('DD MMMM')}
+                        />
+                        <Message
+                          key={message.created_at}
+                          text={message.body}
+                          photoUrl={userPhoto}
+                          date={moment(message.created_at)
+                            .utc()
+                            .format('hh:mm')}
+                          type={message.from === id ? 'foreign' : 'own'}
+                        />
+                      </Fragment>
+                    );
+                  }
+                }
+                return (
+                  <Message
+                    key={message.created_at}
+                    text={message.body}
+                    photoUrl={userPhoto}
+                    date={moment(message.created_at).utc().format('hh:mm')}
+                    type={message.from === id ? 'foreign' : 'own'}
+                  />
+                );
+              })
             }
           </div>
           <ConvInput handleSubmit={handleSubmit} />

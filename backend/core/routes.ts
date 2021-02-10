@@ -22,9 +22,9 @@ const createRoutes = (app: express.Express, io: socket.Server) => {
   app.post('/api/auth/login', loginValidation, UserCtrl.login);
   app.post('/api/auth/token', UserCtrl.token);
   app.patch('/api/auth/update', UserCtrl.update);
+  app.post('/api/auth/profile', UserCtrl.profile);
 
   app.post('/api/chats/create', ChatCtrl.create);
-  app.post('/api/chats/:id', ChatCtrl.getChat);
 
   app.post('/api/message/create', MessageCtrl.create);
   app.patch('/api/message/update', MessageCtrl.update);

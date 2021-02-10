@@ -11,7 +11,7 @@ import PhotoResizer from '../Photo-resizer/PhotoResizer';
 import user from '../../icons/user.jpg';
 
 //===== Main =====
-const ProfilePhoto: React.FC = () => {
+const ProfilePhoto: React.FC<{ owner: boolean }> = ({ owner }) => {
   const [photo, setPhoto] = useState<string>();
 
   const [open, setOpen] = useState<boolean>(false);
@@ -52,7 +52,7 @@ const ProfilePhoto: React.FC = () => {
       <div onClick={handleImgClick} className='profile-photo-img'>
         <img src={photo} alt='User' />
       </div>
-      <FileInput label={'Add photo'} onChange={handleImg} />
+      {owner && <FileInput label={'Add photo'} onChange={handleImg} />}
       {open && (
         <Popup height='500' width='500' onClose={handleImgClick}>
           <img src={photo} width='500' height='500' alt='opened user' />

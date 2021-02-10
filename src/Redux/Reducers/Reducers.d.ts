@@ -4,10 +4,8 @@ export interface RootReducerInterface {
   readonly chats: IChats[];
   readonly theme: IThemeReducerState;
   readonly search: ISearchState[];
+  readonly profile: IProfileState;
 }
-
-export type IGetState = () => Readonly<RootReducerInterface>;
-
 // User Eeducer
 export interface IUserReducerState {
   readonly user_id: string;
@@ -46,4 +44,14 @@ export interface ISearchState {
   readonly user_id: string;
   readonly user_name: string;
   readonly user_photo: string;
+}
+
+export interface IProfileState {
+  readonly user_id: string;
+  readonly user_name: string;
+  readonly user_photo: string;
+  readonly user_logs: {
+    online: boolean;
+    last_seen: number;
+  };
 }
