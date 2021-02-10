@@ -23,9 +23,25 @@ const ConvInput: React.FC<IConvInput> = ({ handleSubmit }) => {
     },
     [handleSubmit]
   );
+
+  const handleChange = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (inputRef.current!.value !== '' && e.key === 'Enter') {
+        e.preventDefault();
+        handleSubmit(inputRef.current!.value);
+        inputRef.current!.value = '';
+      }
+    },
+    [handleSubmit]
+  );
   return (
     <form className='conv-input'>
-      <input type='text' ref={inputRef} placeholder='Type your message' />
+      <input
+        type='text'
+        ref={inputRef}
+        onKeyDown={handleChange}
+        placeholder='Type your message'
+      />
       <Button label='Send' onClick={handleButton} type='button' />
     </form>
   );
