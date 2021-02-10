@@ -14,7 +14,6 @@ import { SendMessageThunk } from '../../Redux/Actions/messages.action';
 import ConversationHeader from '../../Components/Conversation-header/ConversationHeader';
 import ConvInput from '../../Components/Conv-input/ConvInput';
 import Message from '../../Components/Message/Message';
-import DateBar from '../../Components/Message/DateBar/DateBar';
 
 //===== Utils =====
 import moment from 'moment';
@@ -71,43 +70,15 @@ const Conversation: React.FC = () => {
           <div className='conversation-chat'>
             {
               // If messages is existing
-              chat.messages.map((message, index, arr) => {
-                // If there is messages
-                if (arr[index - 1]) {
-                  // Get create time of previos message by momentjs
-                  const prevMess = +moment(arr[--index].created_at).format(
-                    'DD'
-                  );
-                  // Get create time of current message by momentjs
-                  const curnMess = +moment(message.created_at).format('DD');
-
-                  //If there is difference between times
-                  if (curnMess - prevMess !== 0) {
-                    return (
-                      <Fragment key={index}>
-                        <DateBar
-                          key={index}
-                          date={moment(message.created_at).format('DD MMMM')}
-                        />
-                        <Message
-                          key={message.created_at}
-                          text={message.body}
-                          photoUrl={userPhoto}
-                          date={moment(message.created_at)
-                            .utc()
-                            .format('hh:mm')}
-                          type={message.from === id ? 'foreign' : 'own'}
-                        />
-                      </Fragment>
-                    );
-                  }
-                }
+              chat.messages.map((message) => {
                 return (
                   <Message
                     key={message.created_at}
                     text={message.body}
                     photoUrl={userPhoto}
-                    date={moment(message.created_at).utc().format('hh:mm')}
+                    date={moment(message.created_at)
+                      .utc()
+                      .format('hh:mm  MMM DD ')}
                     type={message.from === id ? 'foreign' : 'own'}
                   />
                 );
