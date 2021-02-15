@@ -18,9 +18,6 @@ import ConversationHeader from '../../Components/Conversation-header/Conversatio
 import ConvInput from '../../Components/Conv-input/ConvInput';
 import Message from '../../Components/Message/Message';
 
-//===== Utils =====
-import moment from 'moment';
-
 //===== Styles and images =====
 import './Conversation.scss';
 import userPhoto from '../../icons/user.jpg';
@@ -130,9 +127,7 @@ const Conversation: React.FC = () => {
                     text={message.body}
                     reply={message.reply}
                     photoUrl={userPhoto}
-                    date={moment(message.created_at)
-                      .utc()
-                      .format('hh:mm  MMM DD ')}
+                    date={message.created_at}
                     from={message.from}
                     type={message.from === id ? 'foreign' : 'own'}
                   />

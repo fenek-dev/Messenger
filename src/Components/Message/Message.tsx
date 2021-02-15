@@ -52,9 +52,7 @@ const Message: React.FC<IMessageComponent> = ({
         {reply && (
           <p className='message-content__reply'>
             {reply.body}{' '}
-            <span>
-              {moment(reply.created_at).utc().format('hh:mm  MMM DD ')}
-            </span>
+            <span>{moment(reply.created_at).format('hh:mm  MMM DD ')}</span>
           </p>
         )}
         <p
@@ -62,7 +60,9 @@ const Message: React.FC<IMessageComponent> = ({
           className='message-content__text'>
           {text}
         </p>
-        <span className='message-content__date'>{date}</span>
+        <span className='message-content__date'>
+          {moment(date).format('hh:mm  MMM DD ')}
+        </span>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ export const SendMessageThunk: IThunkAction = (
     if (!getState().chats.find((chat) => chat.companion_id === companion_id)) {
       dispatch(CreateChatThunk(members));
     }
-    const message = { members, from, body };
+    const message = { members, from, body, created_at: new Date().getTime() };
     const res = await fetch('/api/message/create', {
       method: 'POST',
       headers: {
@@ -45,6 +45,7 @@ export const SendReplyThunk: IThunkAction = (
       members,
       from,
       body,
+      created_at: new Date().getTime(),
       reply,
     };
     const res = await fetch('/api/message/create', {

@@ -6,6 +6,7 @@ interface IMessageCreateReqBody {
   readonly members: string[];
   readonly from: string;
   readonly body: string;
+  readonly created_at: number;
   readonly reply: {
     readonly from: string;
     readonly body: string;
@@ -31,14 +32,20 @@ class MessageController {
 
   create = async (req: express.Request, res: express.Response) => {
     try {
-      const { members, from, body, reply }: IMessageCreateReqBody = req.body;
+      const {
+        members,
+        from,
+        body,
+        reply,
+        created_at,
+      }: IMessageCreateReqBody = req.body;
 
       const companion_id = members.find((member) => member !== from);
       if (!reply) {
         const newMessage: IMessage = {
           from,
           body,
-          created_at: new Date().getTime(),
+          created_at,
           received: false,
           edited: false,
         };
@@ -57,7 +64,7 @@ class MessageController {
         const newMessage: IMessage = {
           from,
           body,
-          created_at: new Date().getTime(),
+          created_at,
           received: false,
           edited: false,
           reply,
