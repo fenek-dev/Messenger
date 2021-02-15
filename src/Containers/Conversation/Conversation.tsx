@@ -6,7 +6,10 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetChatThunk } from '../../Redux/Actions/chats.action';
 import { IChats, RootReducerInterface } from '../../Redux/Reducers/Reducers';
-import { SendMessageThunk } from '../../Redux/Actions/messages.action';
+import {
+  SendMessageThunk,
+  SendReplyThunk,
+} from '../../Redux/Actions/messages.action';
 
 //================================
 // Components
@@ -37,11 +40,20 @@ const Conversation: React.FC = () => {
   const [coord, setCoord] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [open, setOpen] = useState<boolean>(false);
 
-  const [message, setMessage] = useState<{ id: number; text: string }>({
+  const [message, setMessage] = useState<{
+    id: number;
+    text: string;
+    from: string;
+  }>({
     id: 0,
     text: '',
+    from: '',
   });
-  const [reply, setReply] = useState<{ id: number; text: string }>();
+  const [reply, setReply] = useState<{
+    id: number;
+    text: string;
+    from: string;
+  }>();
   //===== States =====
   const state = useSelector((state: Readonly<RootReducerInterface>) => state);
   const user = state.user;
@@ -62,18 +74,29 @@ const Conversation: React.FC = () => {
     (value: Readonly<string>) => {
       if (value === value.trim()) {
         const members = [user.user_id, id];
-        dispatch(SendMessageThunk(members, user.user_id, value));
-        value = '';
+        if (reply) {
+          dispatch(SendReplyThunk(members, user.user_id, value, reply));
+          value = '';
+          setReply(undefined);
+        } else {
+          dispatch(SendMessageThunk(members, user.user_id, value));
+          value = '';
+        }
       }
     },
-    [dispatch, id, user.user_id]
+    [dispatch, id, user.user_id, reply]
   );
 
   const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>, id: number, text: string) => {
+    (
+      e: React.MouseEvent<HTMLDivElement>,
+      id: number,
+      text: string,
+      from: string
+    ) => {
       setCoord({ x: e.clientX, y: e.clientY });
       setOpen(true);
-      setMessage({ id, text });
+      setMessage({ id, text, from });
     },
     []
   );
@@ -109,6 +132,7 @@ const Conversation: React.FC = () => {
                     date={moment(message.created_at)
                       .utc()
                       .format('hh:mm  MMM DD ')}
+                    from={message.from}
                     type={message.from === id ? 'foreign' : 'own'}
                   />
                 );

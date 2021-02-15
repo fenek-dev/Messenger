@@ -36,12 +36,17 @@ export const SendReplyThunk: IThunkAction = (
   body: string,
   reply: {
     from: string;
-    body: string;
-    created_at: number;
+    text: string;
+    id: number;
   }
 ) => async () => {
   try {
-    const message = { members, from, body, reply };
+    const message = {
+      members,
+      from,
+      body,
+      reply: { from: reply.from, body: reply.text, created_at: reply.id },
+    };
     const res = await fetch('/api/message/create', {
       method: 'POST',
       headers: {

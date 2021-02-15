@@ -8,17 +8,20 @@ interface IMessageComponent {
   readonly type: 'own' | 'foreign';
   readonly text: string;
   readonly date: string | number;
+  readonly from: string;
   readonly photoUrl: string;
   readonly onClick: (
     e: React.MouseEvent<HTMLDivElement>,
     id: number,
-    text: string
+    text: string,
+    from: string
   ) => void;
 }
 
 //===== Main =====
 const Message: React.FC<IMessageComponent> = ({
   id,
+  from,
   text,
   date,
   photoUrl,
@@ -28,10 +31,10 @@ const Message: React.FC<IMessageComponent> = ({
   const handleClick = useCallback(
     (e) => {
       if (typeof id === 'number') {
-        onClick(e, id, text);
+        onClick(e, id, text, from);
       }
     },
-    [id, text, onClick]
+    [id, text, onClick, from]
   );
   return (
     <div

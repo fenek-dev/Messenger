@@ -10,7 +10,7 @@ import moment from 'moment';
 //===== Interface =====
 interface IConvInput {
   readonly handleSubmit: (value: string) => void;
-  readonly reply: { id: number; text: string } | undefined;
+  readonly reply: { id: number; text: string; from: string } | undefined;
   readonly setReply: any;
 }
 
