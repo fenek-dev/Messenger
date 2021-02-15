@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import './MenuItem.scss';
 
 interface IMenuItem {
-  onClick?: () => void;
-  children: React.ReactNode;
+  readonly onClick?: () => void;
+  readonly children: React.ReactNode;
 }
 
 const MenuItem: React.FC<IMenuItem> = ({ onClick, children }) => {

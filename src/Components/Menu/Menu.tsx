@@ -2,10 +2,10 @@ import React, { memo } from 'react';
 import './Menu.scss';
 
 interface IMenu {
-  coord: { x: number; y: number };
-  children: React.ReactNode;
-  visible: boolean;
-  onClose?: () => void;
+  readonly coord: { x: number; y: number };
+  readonly children: React.ReactNode;
+  readonly visible: boolean;
+  readonly onClose?: () => void;
 }
 
 const Menu: React.FC<IMenu> = ({ children, coord, visible, onClose }) => {

@@ -1,6 +1,7 @@
 @import '../../styles/variables.scss';
 
 .conv-input {
+  position: relative;
   grid-area: input;
   display: flex;
   align-items: center;
@@ -9,7 +10,26 @@
   border-top:$border-color 1px solid;
   animation: ease-in-out 0.5s convInputApper;
 
+  .reply {
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    padding: 0 30px;
+    top: -30px;
+    height: 30px;
+    width: 100%;
+    border-top:$border-color 1px solid;
+
+    .close {
+      cursor: pointer;
+      margin-left: 10px;
+      font-size: 20px;
+    }
+  }
   input {
+    z-index: 11;
     width: 100%;
     border: none;
     outline: none;
@@ -21,6 +41,10 @@
 .dark .conv-input {
   border-top: solid 1px $main-text-color;
 
+  .reply {
+    border-top: solid 1px $main-text-color;
+    background: $dark-main-color;
+  }
   input {
     background:  $dark-main-color;
     color: $dark-text-color;

@@ -4,14 +4,18 @@ import './ConvInput.scss';
 
 //===== Components =====
 import Button from '../Button/Button';
+import { compressString } from '../../utils/main';
+import moment from 'moment';
 
 //===== Interface =====
 interface IConvInput {
   readonly handleSubmit: (value: string) => void;
+  readonly reply: { id: number; text: string } | undefined;
+  readonly setReply: any;
 }
 
 //===== Main =====
-const ConvInput: React.FC<IConvInput> = ({ handleSubmit }) => {
+const ConvInput: React.FC<IConvInput> = ({ handleSubmit, reply, setReply }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const handleButton = useCallback(
     (e: React.FormEvent<HTMLButtonElement>) => {
@@ -34,8 +38,23 @@ const ConvInput: React.FC<IConvInput> = ({ handleSubmit }) => {
     },
     [handleSubmit]
   );
+
+  const handleClose = useCallback(() => {
+    setReply(undefined);
+  }, [setReply]);
   return (
     <form className='conv-input'>
+      {reply && (
+        <div className='reply'>
+          {compressString(reply.text)}{' '}
+          <span>
+            {moment(reply.id).utc().format('hh:mm  MMM DD ')}{' '}
+            <span className='close' onClick={handleClose}>
+              &times;
+            </span>
+          </span>
+        </div>
+      )}
       <input
         type='text'
         ref={inputRef}
