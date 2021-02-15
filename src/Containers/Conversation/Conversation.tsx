@@ -21,6 +21,8 @@ import moment from 'moment';
 //===== Styles and images =====
 import './Conversation.scss';
 import userPhoto from '../../icons/user.jpg';
+import Menu from '../../Components/Menu/Menu';
+import MenuItem from '../../Components/Menu/MenuItem/MenuItem';
 
 //===== Main =====
 const Conversation: React.FC = () => {
@@ -31,6 +33,9 @@ const Conversation: React.FC = () => {
   const dispatch = useDispatch();
 
   const [chat, setChat] = useState<IChats>();
+
+  const [coord, setCoord] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [open, setOpen] = useState<boolean>(false);
   //===== States =====
   const state = useSelector((state: Readonly<RootReducerInterface>) => state);
   const user = state.user;
@@ -58,6 +63,23 @@ const Conversation: React.FC = () => {
     [dispatch, id, user.user_id]
   );
 
+  const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    setCoord({ x: e.clientX, y: e.clientY });
+    setOpen(true);
+  }, []);
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+  const handleReply = useCallback(() => {
+    setOpen(false);
+  }, []);
+  const handleEdit = useCallback(() => {
+    setOpen(false);
+  }, []);
+  const handleDelete = useCallback(() => {
+    setOpen(false);
+  }, []);
+
   return (
     <section className='conversation'>
       {chat && (
@@ -73,6 +95,7 @@ const Conversation: React.FC = () => {
               chat.messages.map((message) => {
                 return (
                   <Message
+                    onClick={handleClick}
                     key={message.created_at}
                     text={message.body}
                     photoUrl={userPhoto}
@@ -87,6 +110,13 @@ const Conversation: React.FC = () => {
           </div>
           <ConvInput handleSubmit={handleSubmit} />
         </>
+      )}
+      {open && (
+        <Menu coord={coord} visible={open} onClose={handleClose}>
+          <MenuItem onClick={handleReply}>Reply</MenuItem>
+          <MenuItem onClick={handleEdit}>Edit</MenuItem>
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        </Menu>
       )}
     </section>
   );
