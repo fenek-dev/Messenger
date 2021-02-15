@@ -50,8 +50,8 @@ const ConvInput: React.FC<IConvInput> = ({ handleSubmit, reply, setReply }) => {
         <div className='reply'>
           {compressString(reply.body)}{' '}
           <span>
-            {moment(reply.created_at).utc().format('hh:mm  MMM DD ')}{' '}
-            <span className='close' onClick={handleClose}>
+            {moment(reply.created_at).format('hh:mm  MMM DD ')}{' '}
+            <span data-testid='close' className='close' onClick={handleClose}>
               &times;
             </span>
           </span>
