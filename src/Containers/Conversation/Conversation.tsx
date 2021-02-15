@@ -113,9 +113,9 @@ const Conversation: React.FC = () => {
       )}
       {open && (
         <Menu coord={coord} visible={open} onClose={handleClose}>
-          <MenuItem onClick={handleReply}>Reply</MenuItem>
-          <MenuItem onClick={handleEdit}>Edit</MenuItem>
-          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+          <MenuItem>Reply</MenuItem>
+          <MenuItem>Edit</MenuItem>
+          <MenuItem>Delete</MenuItem>
         </Menu>
       )}
     </section>
