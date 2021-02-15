@@ -5,7 +5,7 @@ import './Message.scss';
 
 //===== Interface =====
 interface IMessageComponent {
-  readonly id: number | string;
+  readonly id: string;
   readonly type: 'own' | 'foreign';
   readonly text: string;
   readonly date: string | number;
@@ -18,9 +18,10 @@ interface IMessageComponent {
   };
   readonly onClick: (
     e: React.MouseEvent<HTMLDivElement>,
-    id: number,
+    date: number,
     text: string,
-    from: string
+    from: string,
+    id: string
   ) => void;
 }
 
@@ -37,11 +38,11 @@ const Message: React.FC<IMessageComponent> = ({
 }) => {
   const handleClick = useCallback(
     (e) => {
-      if (typeof id === 'number') {
-        onClick(e, id, text, from);
+      if (typeof date === 'number') {
+        onClick(e, date, text, from, id);
       }
     },
-    [id, text, onClick, from]
+    [date, text, onClick, from]
   );
   return (
     <div
@@ -52,7 +53,7 @@ const Message: React.FC<IMessageComponent> = ({
         {reply && (
           <p className='message-content__reply'>
             {reply.body}{' '}
-            <span>{moment(reply.created_at).format('hh:mm  MMM DD ')}</span>
+            <span>{moment(reply.created_at).format('HH:mm  MMM DD ')}</span>
           </p>
         )}
         <p
@@ -61,7 +62,7 @@ const Message: React.FC<IMessageComponent> = ({
           {text}
         </p>
         <span className='message-content__date'>
-          {moment(date).format('hh:mm  MMM DD ')}
+          {moment(date).format('HH:mm  MMM DD ')}
         </span>
       </div>
     </div>

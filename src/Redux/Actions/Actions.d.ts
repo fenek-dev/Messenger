@@ -33,7 +33,7 @@ export type IAddChatAction = {
 };
 
 export type IAddMessageAction = {
-  readonly companion_id: string;
+  readonly chat_id: string;
   readonly message: IMessage;
 };
 

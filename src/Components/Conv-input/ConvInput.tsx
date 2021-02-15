@@ -1,5 +1,5 @@
 //===== React and styles =====
-import React, { memo, useCallback, useRef } from 'react';
+import React, { memo, useCallback, useEffect, useRef } from 'react';
 import './ConvInput.scss';
 
 //===== Components =====
@@ -10,15 +10,24 @@ import moment from 'moment';
 //===== Interface =====
 interface IConvInput {
   readonly handleSubmit: (value: string) => void;
-  readonly reply:
-    | { created_at: number; body: string; from: string }
-    | undefined;
   readonly setReply: any;
+  readonly reply?: {
+    created_at: number;
+    body: string;
+    from: string;
+    edit: boolean | undefined;
+  };
 }
 
 //===== Main =====
 const ConvInput: React.FC<IConvInput> = ({ handleSubmit, reply, setReply }) => {
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (reply?.edit) {
+      inputRef.current!.value = reply?.body;
+    }
+  }, [reply]);
   const handleButton = useCallback(
     (e: React.FormEvent<HTMLButtonElement>) => {
       if (inputRef.current!.value !== '') {
@@ -48,6 +57,7 @@ const ConvInput: React.FC<IConvInput> = ({ handleSubmit, reply, setReply }) => {
     <form className='conv-input'>
       {reply && (
         <div className='reply'>
+          {reply.edit && 'Edit: '}
           {compressString(reply.body)}{' '}
           <span>
             {moment(reply.created_at).format('hh:mm  MMM DD ')}{' '}

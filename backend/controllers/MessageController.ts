@@ -15,9 +15,9 @@ interface IMessageCreateReqBody {
 }
 
 interface IMessageUpdateReqBody {
-  readonly user_id: string;
-  readonly created_at: number;
+  readonly message_id: string;
   readonly body: string;
+  readonly chat_id: string;
 }
 
 interface IMessageDeleteReqBody {
@@ -40,7 +40,6 @@ class MessageController {
         created_at,
       }: IMessageCreateReqBody = req.body;
 
-      const companion_id = members.find((member) => member !== from);
       if (!reply) {
         const newMessage: IMessage = {
           from,
@@ -50,7 +49,7 @@ class MessageController {
           edited: false,
         };
 
-        await Chat.findOneAndUpdate(
+        const chat = await Chat.findOneAndUpdate(
           { members },
           {
             $push: { messages: newMessage },
@@ -59,7 +58,10 @@ class MessageController {
           }
         );
 
-        this.io.emit('SERVER:CHAT', { companion_id, messages: [newMessage] });
+        this.io.emit('SERVER:CHAT', {
+          chat_id: chat?.id,
+          messages: [newMessage],
+        });
       } else {
         const newMessage: IMessage = {
           from,
@@ -69,7 +71,7 @@ class MessageController {
           edited: false,
           reply,
         };
-        await Chat.findOneAndUpdate(
+        const chat = await Chat.findOneAndUpdate(
           { members },
           {
             $push: { messages: newMessage },
@@ -78,7 +80,10 @@ class MessageController {
           },
           { new: true, useFindAndModify: true }
         );
-        this.io.emit('SERVER:CHAT', { companion_id, messages: [newMessage] });
+        this.io.emit('SERVER:CHAT', {
+          chat_id: chat?.id,
+          messages: [newMessage],
+        });
       }
       res.status(201).json({ message: 'Message created' });
     } catch (error) {
@@ -88,10 +93,9 @@ class MessageController {
 
   update = async (req: express.Request, res: express.Response) => {
     try {
-      const { user_id, body, created_at }: IMessageUpdateReqBody = req.body;
-
+      const { message_id, body, chat_id }: IMessageUpdateReqBody = req.body;
       await Chat.findOneAndUpdate(
-        { 'messages.created_at': created_at, 'messages.from': user_id },
+        { _id: chat_id, 'messages._id': message_id },
         {
           $set: {
             'messages.$.body': body,
@@ -99,6 +103,11 @@ class MessageController {
           },
         }
       );
+
+      this.io.emit('SERVER:CHAT', {
+        chat_id,
+        messages: [{ _id: message_id, body, chat_id }],
+      });
       res.status(201).json({ message: 'Message was updated' });
     } catch (error) {
       res.status(500).json({ message: 'Something goes wrong' });

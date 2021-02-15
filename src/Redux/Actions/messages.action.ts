@@ -66,12 +66,13 @@ export const SendReplyThunk: IThunkAction = (
 };
 
 export const UpdateMesssageThunk: IThunkAction = (
-  user_id: string,
-  created_at: number,
+  chat_id: string,
+  message_id: string,
   body: string
 ) => async () => {
   try {
-    const message = { user_id, created_at, body };
+    const message = { message_id, body, chat_id };
+
     const res = await fetch('/api/message/update', {
       method: 'PATCH',
       headers: {

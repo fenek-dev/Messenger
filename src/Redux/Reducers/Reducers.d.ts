@@ -25,6 +25,7 @@ export interface IThemeReducerState {
 export type TTheme = 'dark' | null;
 // Chats Reducer
 export interface IMessage {
+  readonly _id: string;
   readonly from: string;
   readonly body: string;
   readonly created_at: string | number;
@@ -42,7 +43,7 @@ export interface IChats {
   readonly companion_name: string;
   readonly last_message: string;
   readonly created_at: string | number;
-  readonly messages: IMessage[];
+  messages: IMessage[];
 }
 
 export interface ISearchState {

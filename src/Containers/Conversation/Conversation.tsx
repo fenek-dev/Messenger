@@ -9,6 +9,7 @@ import { IChats, RootReducerInterface } from '../../Redux/Reducers/Reducers';
 import {
   SendMessageThunk,
   SendReplyThunk,
+  UpdateMesssageThunk,
 } from '../../Redux/Actions/messages.action';
 
 //================================
@@ -41,21 +42,27 @@ const Conversation: React.FC = () => {
     created_at: number;
     body: string;
     from: string;
+    id: string;
   }>({
     created_at: 0,
     body: '',
     from: '',
+    id: '',
   });
   const [reply, setReply] = useState<{
     created_at: number;
     body: string;
     from: string;
+    edit: boolean;
+    id: string;
   }>();
-  //===== States =====
+
   const state = useSelector((state: Readonly<RootReducerInterface>) => state);
   const user = state.user;
 
   useEffect(() => {
+    // console.log(state.chats.find((chat) => chat.companion_id === id)?.messages);
+
     const need = state.chats.find((chat) => chat.companion_id === id);
     setChat(need);
   }, [id, state.chats]);
@@ -71,17 +78,21 @@ const Conversation: React.FC = () => {
     (value: Readonly<string>) => {
       if (value === value.trim()) {
         const members = [user.user_id, id];
-        if (reply) {
+        if (reply && !reply.edit) {
           dispatch(SendReplyThunk(members, user.user_id, value, reply));
           value = '';
           setReply(undefined);
+        } else if (reply && reply.edit) {
+          dispatch(UpdateMesssageThunk(chat?.chat_id, reply.id, value));
+          setReply(undefined);
+          value = '';
         } else {
           dispatch(SendMessageThunk(members, user.user_id, value));
           value = '';
         }
       }
     },
-    [dispatch, id, user.user_id, reply]
+    [dispatch, id, user.user_id, reply, chat?.chat_id]
   );
 
   const handleClick = useCallback(
@@ -89,11 +100,12 @@ const Conversation: React.FC = () => {
       e: React.MouseEvent<HTMLDivElement>,
       created_at: number,
       body: string,
-      from: string
+      from: string,
+      id: string
     ) => {
       setCoord({ x: e.clientX, y: e.clientY });
       setOpen(true);
-      setMessage({ created_at, body, from });
+      setMessage({ created_at, body, from, id });
     },
     []
   );
@@ -101,9 +113,11 @@ const Conversation: React.FC = () => {
     setOpen(false);
   }, []);
   const handleReply = useCallback(() => {
-    setReply(message);
+    setReply({ ...message, edit: false });
   }, [message]);
-  const handleEdit = useCallback(() => {}, []);
+  const handleEdit = useCallback(() => {
+    setReply({ ...message, edit: true });
+  }, [message]);
   const handleDelete = useCallback(() => {}, []);
 
   return (
@@ -121,7 +135,7 @@ const Conversation: React.FC = () => {
               chat.messages.map((message) => {
                 return (
                   <Message
-                    id={message.created_at}
+                    id={message._id}
                     onClick={handleClick}
                     key={message.created_at}
                     text={message.body}

@@ -69,7 +69,7 @@ const Chats: React.FC<IChatsComponent> = ({ chats }) => {
               lastMessage={compressString(chat.last_message)}
               date={
                 typeof chat.created_at === 'number'
-                  ? moment(chat.created_at).format('hh:mm')
+                  ? moment(chat.created_at).format('HH:mm')
                   : chat.created_at
               }
             />

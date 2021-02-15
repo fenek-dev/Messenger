@@ -77,11 +77,11 @@ export const GetChatThunk: IThunkAction = (
   socket.emit('SERVER:CHAT', chat_id, user_id);
   socket.on(
     'SERVER:CHAT',
-    (data: { companion_id: string; messages: IMessage[]; chat_id: string }) => {
+    (data: { messages: IMessage[]; chat_id: string }) => {
       data.messages.forEach((message) => {
         dispatch(
           AddMessageAction({
-            companion_id: data.companion_id,
+            chat_id: data.chat_id,
             message,
           })
         );

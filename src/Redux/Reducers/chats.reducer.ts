@@ -33,35 +33,34 @@ const reducer = (
 
     case ADD_MESSAGES:
       let changed = false;
-      const need_chat = state.find(
-        (chat) => chat.companion_id === payload.companion_id
-      );
-      need_chat?.messages.map((message) => {
-        // Take every message and find message with the same created_at property as passed message
-        if (message.created_at === payload.message.created_at) {
-          changed = true;
-          // If message was found than change message body by new value from payload
-          return {
-            from: message.from,
-            body: payload.message.body,
-            created_at: message.created_at,
-            received: message.received,
-          };
-        } else {
-          // If message wasn't found, add new message
-          return message;
-        }
-      });
+      const need_chat = state.find((chat) => chat.chat_id === payload.chat_id);
+      if (need_chat)
+        need_chat.messages = need_chat?.messages.map((message) => {
+          // Take every message and find message with the same created_at property as passed message
+          if (message._id === payload.message._id) {
+            changed = true;
 
-      if (!changed) need_chat?.messages.unshift(payload.message);
+            // If message was found than change message body by new value from payload
+            const newMessage = {
+              ...message,
+              body: payload.message.body,
+            };
 
-      return state.filter((chat) => {
-        if (chat.chat_id === payload.chat_id) {
-          return need_chat;
-        }
-        return chat;
-      });
+            return newMessage;
+          } else {
+            // If message wasn't found, add new message
+            return message;
+          }
+        });
 
+      if (!changed) need_chat?.messages?.unshift(payload.message);
+      if (need_chat) {
+        return state.map((chat) =>
+          chat.chat_id === payload.chat_id ? need_chat : chat
+        );
+      } else {
+        return state;
+      }
     default:
       return state;
   }
