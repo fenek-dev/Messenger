@@ -118,7 +118,6 @@ const Conversation: React.FC = () => {
   const handleEdit = useCallback(() => {
     setReply({ ...message, edit: true });
   }, [message]);
-  const handleDelete = useCallback(() => {}, []);
 
   return (
     <section className='conversation'>
@@ -160,7 +159,6 @@ const Conversation: React.FC = () => {
         <Menu coord={coord} visible={open} onClose={handleClose}>
           <MenuItem onClick={handleReply}>Reply</MenuItem>
           <MenuItem onClick={handleEdit}>Edit</MenuItem>
-          <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
       )}
     </section>

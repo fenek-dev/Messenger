@@ -28,7 +28,6 @@ const createRoutes = (app: express.Express, io: socket.Server) => {
 
   app.post('/api/message/create', MessageCtrl.create);
   app.patch('/api/message/update', MessageCtrl.update);
-  app.delete('/api/message/delete', MessageCtrl.delete);
 
   app.post('/api/search/find', SearchCtrl.getMatches);
 };

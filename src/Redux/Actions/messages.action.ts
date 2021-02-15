@@ -89,26 +89,3 @@ export const UpdateMesssageThunk: IThunkAction = (
     console.error(error.message);
   }
 };
-
-export const DeleteMessageThunk: IThunkAction = (
-  user_id: string,
-  created_at: number
-) => async () => {
-  try {
-    const message = { user_id, created_at };
-    const res = await fetch('/api/message/create', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    });
-
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message);
-    }
-  } catch (error) {
-    console.error(error.message);
-  }
-};

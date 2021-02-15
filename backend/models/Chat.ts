@@ -18,25 +18,23 @@ export interface IChat extends Document {
   readonly created_at: number;
   readonly messages: IMessage[];
 }
-
+const messageSchema = new Schema({
+  from: { type: String, required: true },
+  body: String,
+  created_at: { type: Number, required: true },
+  received: Boolean,
+  edited: Boolean,
+  reply: {
+    from: { type: String, required: true },
+    body: String,
+    created_at: { type: Number, required: true },
+  },
+});
 const schema = new Schema({
   members: [{ type: String }],
   last_message: { type: String },
   created_at: { type: Number },
-  messages: [
-    {
-      from: { type: String, required: true },
-      body: String,
-      created_at: { type: Number, required: true },
-      received: Boolean,
-      edited: Boolean,
-      reply: {
-        from: { type: String, required: true },
-        body: String,
-        created_at: { type: Number, required: true },
-      },
-    },
-  ],
+  messages: [messageSchema],
 });
 
 export default model<IChat>('Chat', schema);

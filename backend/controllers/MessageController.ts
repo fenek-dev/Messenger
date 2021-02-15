@@ -20,10 +20,6 @@ interface IMessageUpdateReqBody {
   readonly chat_id: string;
 }
 
-interface IMessageDeleteReqBody {
-  readonly user_id: string;
-  readonly created_at: number;
-}
 class MessageController {
   io: socket.Server;
   constructor(io: socket.Server) {
@@ -109,26 +105,6 @@ class MessageController {
         messages: [{ _id: message_id, body, chat_id }],
       });
       res.status(201).json({ message: 'Message was updated' });
-    } catch (error) {
-      res.status(500).json({ message: 'Something goes wrong' });
-    }
-  };
-
-  delete = async (req: express.Request, res: express.Response) => {
-    try {
-      const { user_id, created_at }: IMessageDeleteReqBody = req.body;
-
-      await Chat.findOneAndUpdate(
-        {
-          'messages.created_at': created_at,
-          'messages.from': user_id,
-        },
-        {
-          $pull: { messages: { created_at } },
-        }
-      );
-      this.io.emit('SERVER:MESSAGE_DELETED', { user_id, created_at });
-      res.json({ message: 'Message was deleted' });
     } catch (error) {
       res.status(500).json({ message: 'Something goes wrong' });
     }

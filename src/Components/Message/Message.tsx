@@ -42,7 +42,7 @@ const Message: React.FC<IMessageComponent> = ({
         onClick(e, date, text, from, id);
       }
     },
-    [date, text, onClick, from]
+    [date, text, onClick, from, id]
   );
   return (
     <div
