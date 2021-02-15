@@ -10,7 +10,9 @@ import moment from 'moment';
 //===== Interface =====
 interface IConvInput {
   readonly handleSubmit: (value: string) => void;
-  readonly reply: { id: number; text: string; from: string } | undefined;
+  readonly reply:
+    | { created_at: number; body: string; from: string }
+    | undefined;
   readonly setReply: any;
 }
 
@@ -46,9 +48,9 @@ const ConvInput: React.FC<IConvInput> = ({ handleSubmit, reply, setReply }) => {
     <form className='conv-input'>
       {reply && (
         <div className='reply'>
-          {compressString(reply.text)}{' '}
+          {compressString(reply.body)}{' '}
           <span>
-            {moment(reply.id).utc().format('hh:mm  MMM DD ')}{' '}
+            {moment(reply.created_at).utc().format('hh:mm  MMM DD ')}{' '}
             <span className='close' onClick={handleClose}>
               &times;
             </span>

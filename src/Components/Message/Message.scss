@@ -12,6 +12,21 @@
     border-radius: 4px;
     display: flex;
     flex-direction: column;
+
+    &__reply {
+      border: $border-color 1px solid;
+      display: flex;
+      flex-direction: column;
+      border-radius: 4px;
+      padding: 10px;
+      margin: 5px 0;
+
+      span {
+      font-size: 14px;
+      font-weight: 300;
+      margin-right: auto;
+      }
+    }
     &__text {
       font-size: 15px;
       margin-top: 0;

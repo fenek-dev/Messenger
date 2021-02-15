@@ -1,4 +1,5 @@
 //===== React and styles =====
+import moment from 'moment';
 import React, { memo, useCallback } from 'react';
 import './Message.scss';
 
@@ -10,6 +11,11 @@ interface IMessageComponent {
   readonly date: string | number;
   readonly from: string;
   readonly photoUrl: string;
+  readonly reply?: {
+    from: string;
+    body: string;
+    created_at: number;
+  };
   readonly onClick: (
     e: React.MouseEvent<HTMLDivElement>,
     id: number,
@@ -26,6 +32,7 @@ const Message: React.FC<IMessageComponent> = ({
   date,
   photoUrl,
   type,
+  reply,
   onClick,
 }) => {
   const handleClick = useCallback(
@@ -42,6 +49,14 @@ const Message: React.FC<IMessageComponent> = ({
       className={type === 'own' ? 'message own' : 'message foreign'}>
       <img src={photoUrl} alt='User' className='icon' />
       <div className='message-content' onClick={handleClick}>
+        {reply && (
+          <p className='message-content__reply'>
+            {reply.body}{' '}
+            <span>
+              {moment(reply.created_at).utc().format('hh:mm  MMM DD ')}
+            </span>
+          </p>
+        )}
         <p
           style={{ wordBreak: 'break-word' }}
           className='message-content__text'>

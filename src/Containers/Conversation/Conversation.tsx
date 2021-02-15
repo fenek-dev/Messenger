@@ -41,17 +41,17 @@ const Conversation: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const [message, setMessage] = useState<{
-    id: number;
-    text: string;
+    created_at: number;
+    body: string;
     from: string;
   }>({
-    id: 0,
-    text: '',
+    created_at: 0,
+    body: '',
     from: '',
   });
   const [reply, setReply] = useState<{
-    id: number;
-    text: string;
+    created_at: number;
+    body: string;
     from: string;
   }>();
   //===== States =====
@@ -90,13 +90,13 @@ const Conversation: React.FC = () => {
   const handleClick = useCallback(
     (
       e: React.MouseEvent<HTMLDivElement>,
-      id: number,
-      text: string,
+      created_at: number,
+      body: string,
       from: string
     ) => {
       setCoord({ x: e.clientX, y: e.clientY });
       setOpen(true);
-      setMessage({ id, text, from });
+      setMessage({ created_at, body, from });
     },
     []
   );
@@ -128,6 +128,7 @@ const Conversation: React.FC = () => {
                     onClick={handleClick}
                     key={message.created_at}
                     text={message.body}
+                    reply={message.reply}
                     photoUrl={userPhoto}
                     date={moment(message.created_at)
                       .utc()

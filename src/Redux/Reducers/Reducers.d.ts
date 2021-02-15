@@ -29,6 +29,11 @@ export interface IMessage {
   readonly body: string;
   readonly created_at: string | number;
   readonly received: boolean;
+  readonly reply: {
+    created_at: number;
+    body: string;
+    from: string;
+  };
 }
 
 export interface IChats {
