@@ -11,7 +11,9 @@ const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
 
 describe('<Profile>',()=> {
-    const store = mockStore({user: { name: 'Arthur', status: ''}})
+    const store = mockStore({user: { name: 'Arthur', status: ''}, profile: {user_id: 'skdfl', user_name: 'Maks Treonin', user_photo: '', user_status: 'Hello, friend', user_logs: {online: true, last_seen: 1613669308632}}})
+    //20:28 Feb 18
+
 
     render(<Provider store={store}><MemoryRouter><Profile/></MemoryRouter></Provider>)
 

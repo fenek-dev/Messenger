@@ -28,7 +28,7 @@ const ProfileLogs: React.FC<IProfileLogs> = ({
       <span>
         {online
           ? 'Online'
-          : `Last seen: ${moment(last_seen).utc().format('DD MMMM hh:mm')}`}
+          : `Last seen: ${moment(last_seen).format('DD MMM HH:mm')}`}
       </span>
     </div>
   );
