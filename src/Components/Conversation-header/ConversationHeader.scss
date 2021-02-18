@@ -1,0 +1,40 @@
+@import '../../styles/variables.scss';
+.conv-header {
+  grid-area: header;
+  height: 71px;
+  min-height: 71px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-bottom: $border-color 1px solid;
+  padding: 0 25px;
+  margin: 0;
+  animation: ease-in-out 0.5s headerApper;
+
+  &__content {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    &-name {
+      font-size: 15px;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    &-status {
+      font-weight: 300;
+      margin-right: auto;
+    }
+  }
+  &__options {
+    margin-left: auto;
+  }
+}
+
+.dark .conv-header {
+  border-bottom: solid 1px $main-text-color;
+}
+

@@ -1,0 +1,23 @@
+@import '../../styles/variables.scss';
+
+.settings-header {
+  height: 70px;
+  min-height: 70px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-bottom:$border-color 1px solid;
+  padding: 0 25px;
+  margin: 0;
+  animation: ease-in-out 0.5s headerApper;
+
+  &__title {
+    font-size: 25px;
+    margin: 0;
+    font-weight: 400;
+  }
+}
+
+.dark .settings-header {
+  border-bottom:$main-text-color 1px solid;
+}

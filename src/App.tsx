@@ -1,25 +1,70 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+//================================
+//  React and Redux
+//================================
+import React, { useEffect, useState, Suspense } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route } from 'react-router-dom';
+import { SignInThunk } from './Redux/Actions/user.action';
+import { GetAllChatsThunk } from './Redux/Actions/chats.action';
+import { RootReducerInterface } from './Redux/Reducers/Reducers';
 
+//================================
+// Components
+//================================
+import Sidebar from './Containers/Sidebar/Sidebar';
+import Conversation from './Containers/Conversation/Conversation';
+import Theme from './Pages/Theme/Theme';
+import Auth from './Pages/Auth/Auth';
+import Profile from './Pages/Profile/Profile';
+
+//===== Main =====
 function App() {
+  const state = useSelector((state: RootReducerInterface) => state);
+
+  const dispacth = useDispatch();
+  const [isAuth, setIsAuth] = useState<boolean>();
+
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem('token')!);
+    dispacth(SignInThunk(token, setIsAuth));
+  }, [dispacth]);
+
+  useEffect(() => {
+    dispacth(GetAllChatsThunk(state.user.user_id));
+  }, [dispacth, state.user.user_id]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {isAuth ? (
+        <div className={`main ${state.theme.theme ? 'dark' : ''}`}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Route path='/'>
+              <Sidebar title={state.user.name} />
+            </Route>
+            <Route exact path='/settings/theme'>
+              <Theme />
+            </Route>
+            <Route exact path='/profile/:id'>
+              <Profile />
+            </Route>
+            <Route exact path='/:id'>
+              <Conversation />
+            </Route>
+          </Suspense>
+        </div>
+      ) : (
+        <>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Route exact path='/'>
+              <Auth type='login' setIsAuth={setIsAuth} />
+            </Route>
+            <Route exact path='/signup'>
+              <Auth type='register' setIsAuth={setIsAuth} />
+            </Route>
+          </Suspense>
+        </>
+      )}
+    </>
   );
 }
 

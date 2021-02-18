@@ -1,0 +1,42 @@
+@import '../../../styles/variables.scss';
+.settings-list-item {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  &:hover {
+    transition: 0.3s ease-in;
+    background:$main-hover;
+  }
+  a {
+    width: 100%;
+  }
+  h4 {
+    padding: 15px 20px;
+
+    height: 100%;
+    font-size: 15px;
+    margin: 0;
+    font-weight: 400;
+  }
+
+}
+
+.dark .settings-list {
+  &::-webkit-scrollbar-track {
+    background: $main-text-color;
+  }
+  &-header {
+    border-bottom: solid 1px $main-text-color;
+  }
+
+  &-item {
+    h4 {
+      color: #e0e0e0;
+    }
+    &:hover {
+      background:$dark-hover;
+    }
+  }
+}

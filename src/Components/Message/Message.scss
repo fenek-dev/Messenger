@@ -1,0 +1,59 @@
+@import '../../styles/variables.scss';
+.message {
+  display: flex;
+  max-width: 70%;
+  margin-bottom: 15px;
+
+  &-content {
+    cursor: pointer;
+    margin: 0 10px;
+    padding: 15px;
+    border: $border-color 1px solid;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+
+    &__reply {
+      border: $border-color 1px solid;
+      display: flex;
+      flex-direction: column;
+      border-radius: 4px;
+      padding: 10px;
+      margin: 5px 0;
+
+      span {
+      font-size: 14px;
+      font-weight: 300;
+      margin-right: auto;
+      }
+    }
+    &__text {
+      font-size: 15px;
+      margin-top: 0;
+      font-weight: 400;
+      word-wrap: break-word;
+    }
+
+    &__date {
+      font-size: 14px;
+      line-height: 0;
+      font-weight: 300;
+      margin-right: auto;
+    }
+  }
+}
+
+.own {
+  margin-left: auto;
+  flex-direction: row-reverse;
+}
+
+.foreign {
+  .message-content {
+    background:$border-color;
+  }
+}
+
+.dark .message-content {
+  border: $dark-text-color 1px solid;
+}

@@ -1,0 +1,25 @@
+@import '../../styles/variables.scss';
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    height: 100vh;
+    width: 100vw;
+    background:rgba($color: #000000, $alpha: 0.1);
+}
+.context-menu {
+    position: fixed;
+    min-width: 80px;
+    max-width: 130px;
+    z-index: 100;
+    background: $dark-text-color;
+    color: $main-text-color;
+}
+
+.dark .context-menu {
+    background: $main-text-color;
+    color:$dark-text-color;
+}

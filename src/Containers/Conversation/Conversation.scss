@@ -1,0 +1,31 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+.conversation {
+  animation: ease-in-out 0.5s convApper;
+  height: 100vh;
+  grid-area: conv;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows:
+    71px
+    1fr
+    74px;
+  grid-template-areas:
+    'header'
+    'chat'
+    'input';
+  &-chat {
+    grid-area: chat;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 15px;
+    @include scroll
+  }
+}
+
+.dark .conversation-chat {
+  &::-webkit-scrollbar-track {
+    background: $main-text-color;
+  }
+}
+

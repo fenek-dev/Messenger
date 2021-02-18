@@ -1,0 +1,63 @@
+@keyframes convInputApper {
+    0% {
+      transform: translateY(150%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+}
+
+@keyframes headerApper {
+0% {
+    transform: translateY(-150%);
+}
+100% {
+    transform: translateY(0);
+    }
+}
+
+@keyframes apper {
+0% {
+    transform: translateX(-110%);
+    box-shadow: none;
+    }
+100% {
+    transform: translateX(0%);
+    }
+}
+
+@keyframes ownApper {
+    0% {
+        transform: translateX(150%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes foreignApper {
+0% {
+    transform: translateX(-150%);
+}
+100% {
+    transform: translateX(0);
+}
+}
+
+@keyframes convApper {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+}
+
+@keyframes popup {
+    0% {
+        transform: translateY(-70vh);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+@import './styles/variables.scss';
+@import './styles/animations.scss';
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden;
+}
+
+a {
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+  color:$main-text-color;
+}
+
+.main {
+  color: $main-text-color;
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: 'sidebar  conv';
+}
+
+.active {
+  border-left:$main-color 2px solid;
+  color: $main-color;
+  background: $main-active;
+}
+
+.active-chat {
+  border: $main-color 1px solid !important;
+  box-shadow: 0px -5px 15px 15px rgba(235, 68, 68, 0.1);
+  transition: 0.3s ease-in;
+}
+
+.icon {
+  color:$main-text-color;
+  height: 48px;
+  width: 48px;
+  background-position: center center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.icon-24 {
+  color:$main-text-color;
+  height: 24px;
+  width: 24px;
+  background-position: center center;
+  cursor: pointer;
+}
+
+
+
+.dark {
+  color:$dark-text-color;
+  background:$dark-main-color;
+  a {
+    color:$dark-text-color;
+  }
+}
