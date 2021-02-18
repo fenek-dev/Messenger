@@ -56,6 +56,7 @@ export interface IProfileState {
   readonly user_id: string;
   readonly user_name: string;
   readonly user_photo: string;
+  readonly user_status: string;
   readonly user_logs: {
     online: boolean;
     last_seen: number;

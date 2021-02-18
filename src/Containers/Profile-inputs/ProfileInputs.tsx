@@ -1,5 +1,5 @@
 //===== React and Redux =====
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
 
@@ -72,4 +72,4 @@ const ProfileInputs: React.FC<IProfileInputs> = ({ updateUser, addUser }) => {
   ) : null;
 };
 
-export default ProfileInputs;
+export default memo(ProfileInputs);

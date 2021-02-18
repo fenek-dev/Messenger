@@ -4,6 +4,8 @@ import './ConvInput.scss';
 
 //===== Components =====
 import Button from '../Button/Button';
+
+//===== Utiles =====
 import { compressString } from '../../utils/main';
 import moment from 'moment';
 
@@ -28,6 +30,7 @@ const ConvInput: React.FC<IConvInput> = ({ handleSubmit, reply, setReply }) => {
       inputRef.current!.value = reply?.body;
     }
   }, [reply]);
+
   const handleButton = useCallback(
     (e: React.FormEvent<HTMLButtonElement>) => {
       if (inputRef.current!.value !== '') {

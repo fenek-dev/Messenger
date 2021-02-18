@@ -1,6 +1,8 @@
+//===== React and styles =====
 import React, { memo } from 'react';
 import './Menu.scss';
 
+//===== Interface =====
 interface IMenu {
   readonly coord: { x: number; y: number };
   readonly children: React.ReactNode;
@@ -8,6 +10,7 @@ interface IMenu {
   readonly onClose?: () => void;
 }
 
+//===== Main =====
 const Menu: React.FC<IMenu> = ({ children, coord, visible, onClose }) => {
   return (
     <div

@@ -5,6 +5,7 @@ const initialState: IProfileState = {
   user_id: '',
   user_name: '',
   user_photo: '',
+  user_status: '',
   user_logs: {
     online: false,
     last_seen: 0,

@@ -1,3 +1,4 @@
+//===== React and Redux =====
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchThunk } from '../../Redux/Actions/search.action';
@@ -5,13 +6,19 @@ import {
   ISearchState,
   RootReducerInterface,
 } from '../../Redux/Reducers/Reducers';
+
+//===== Components =====
 import ListItem from '../../Components/ListItem/ListItem';
+
+//===== Images =====
 import userPhoto from '../../icons/user.jpg';
 
+//===== Interface =====
 interface ISearch {
   readonly value: string;
 }
 
+//===== Main =====
 const Search: React.FC<ISearch> = ({ value }) => {
   const state = useSelector(
     (state: Readonly<RootReducerInterface>) => state.search

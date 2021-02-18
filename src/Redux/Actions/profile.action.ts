@@ -27,6 +27,7 @@ export const GetProfileThunk: IThunkAction = (user_id: string) => async (
     if (!res.ok) {
       throw new Error(data.message);
     }
+    console.log(data);
 
     dispatch(AddProfileAction(data));
   } catch (error) {

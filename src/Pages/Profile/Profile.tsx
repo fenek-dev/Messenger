@@ -1,11 +1,5 @@
-//===== React and stules =====
+//===== React and Redux =====
 import React, { useCallback, useEffect, useState } from 'react';
-import './Profile.scss';
-
-//===== Components =====
-import SettingsHeader from '../../Components/Settings-header/SettingsHeader';
-import ProfilePhoto from '../../Components/Profile-photo/ProfilePhoto';
-import ProfileInputs from '../../Containers/Profile-inputs/ProfileInputs';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AddUserAction,
@@ -14,9 +8,17 @@ import {
 import { Link, useParams } from 'react-router-dom';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
 import { GetProfileThunk } from '../../Redux/Actions/profile.action';
+import { CreateChatThunk } from '../../Redux/Actions/chats.action';
+
+//===== Styles =====
+import './Profile.scss';
+
+//===== Components =====
+import SettingsHeader from '../../Components/Settings-header/SettingsHeader';
+import ProfilePhoto from '../../Components/Profile-photo/ProfilePhoto';
+import ProfileInputs from '../../Containers/Profile-inputs/ProfileInputs';
 import ProfileLogs from '../../Components/ProfileLogs/ProfileLogs';
 import Button from '../../Components/Button/Button';
-import { CreateChatThunk } from '../../Redux/Actions/chats.action';
 
 //===== Main =====
 const Profile: React.FC = () => {
@@ -69,6 +71,7 @@ const Profile: React.FC = () => {
                 name={profile.user_name}
                 last_seen={profile.user_logs.last_seen}
                 online={profile.user_logs.online}
+                status={profile.user_status}
               />
               <Link to={`/${id}`}>
                 <Button label='Type' onClick={createChat} />

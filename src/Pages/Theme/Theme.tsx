@@ -4,6 +4,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
+import { AddThemeAction } from '../../Redux/Actions/theme.action';
 
 //================================
 // Components
@@ -14,7 +15,6 @@ import SettingsItem from '../../Components/Settings-item/SettingsItem';
 
 //===== Styles =====
 import './Theme.scss';
-import { AddThemeAction } from '../../Redux/Actions/theme.action';
 
 //===== Main =====
 const Theme: React.FC = () => {

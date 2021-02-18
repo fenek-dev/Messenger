@@ -2,6 +2,7 @@ import React from 'react'
 import ConversationHeader from './ConversationHeader'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
+import { MemoryRouter } from 'react-router'
 
 describe('<ConversationHeader>',()=> {
 
@@ -10,7 +11,7 @@ describe('<ConversationHeader>',()=> {
 
     it('should render correctly', async() => {
         
-        render(<ConversationHeader name={name} photoUrl={photoUrl} />)
+        render(<MemoryRouter><ConversationHeader name={name} photoUrl={photoUrl} /></MemoryRouter>)
         const nameElement = await screen.findByText(/Arthur Moore/i)
         const img = await screen.findByAltText(/user/i)
 

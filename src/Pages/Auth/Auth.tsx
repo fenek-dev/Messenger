@@ -4,10 +4,10 @@ import {
   CreateUserThunk,
   SignInUserThunk,
 } from '../../Redux/Actions/user.action';
+import { useDispatch } from 'react-redux';
 
 //===== Components =====
 import AuthForm from '../../Components/AuthForm/AuthForm';
-import { useDispatch } from 'react-redux';
 import Popup from '../../Components/Popup/Popup';
 
 //===== Interface =====

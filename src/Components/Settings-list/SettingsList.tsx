@@ -21,11 +21,9 @@ const SettingsList: React.FC<ISettingsList> = ({ userId }) => {
         <div className='settings-list-account'>
           <h4 className='settings-list__label'>Account</h4>
           <SettingsListItem text='Edit profile' link={`/profile/${userId}`} />
-          <SettingsListItem text='Confidentiality' link='/confidentiality' />
         </div>
         <div className='settings-list-options'>
           <h4 className='settings-list__label'>Options</h4>
-          <SettingsListItem text='Notification' link='/notification' />
           <SettingsListItem text='Theme' link='/settings/theme' />
         </div>
       </div>

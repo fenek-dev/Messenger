@@ -18,12 +18,12 @@ import {
 import ConversationHeader from '../../Components/Conversation-header/ConversationHeader';
 import ConvInput from '../../Components/Conv-input/ConvInput';
 import Message from '../../Components/Message/Message';
+import Menu from '../../Components/Menu/Menu';
+import MenuItem from '../../Components/Menu/MenuItem/MenuItem';
 
 //===== Styles and images =====
 import './Conversation.scss';
 import userPhoto from '../../icons/user.jpg';
-import Menu from '../../Components/Menu/Menu';
-import MenuItem from '../../Components/Menu/MenuItem/MenuItem';
 
 //===== Main =====
 const Conversation: React.FC = () => {
@@ -61,8 +61,6 @@ const Conversation: React.FC = () => {
   const user = state.user;
 
   useEffect(() => {
-    // console.log(state.chats.find((chat) => chat.companion_id === id)?.messages);
-
     const need = state.chats.find((chat) => chat.companion_id === id);
     setChat(need);
   }, [id, state.chats]);
@@ -76,6 +74,7 @@ const Conversation: React.FC = () => {
 
   const handleSubmit = useCallback(
     (value: Readonly<string>) => {
+      // Check if the value is the same with trim
       if (value === value.trim()) {
         const members = [user.user_id, id];
         if (reply && !reply.edit) {
@@ -109,12 +108,15 @@ const Conversation: React.FC = () => {
     },
     []
   );
+
   const handleClose = useCallback(() => {
     setOpen(false);
   }, []);
+
   const handleReply = useCallback(() => {
     setReply({ ...message, edit: false });
   }, [message]);
+
   const handleEdit = useCallback(() => {
     setReply({ ...message, edit: true });
   }, [message]);
@@ -126,6 +128,7 @@ const Conversation: React.FC = () => {
           <ConversationHeader
             name={chat!.companion_name || 'No'}
             photoUrl={userPhoto}
+            id={id}
           />
 
           <div className='conversation-chat'>
