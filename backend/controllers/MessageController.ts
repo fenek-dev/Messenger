@@ -45,14 +45,18 @@ class MessageController {
           edited: false,
         };
 
-        const chat = await Chat.findOneAndUpdate(
-          { members },
-          {
+        let chat = await Chat.findOne({ members });
+        if (!chat) {
+          chat = await Chat.findOne({ members: [members[1], members[0]] });
+        }
+
+        if (chat) {
+          chat.update({
             $push: { messages: newMessage },
             last_message: body,
             created_at: newMessage.created_at,
-          }
-        );
+          });
+        }
 
         this.io.emit('SERVER:CHAT', {
           chat_id: chat?.id,
@@ -67,15 +71,28 @@ class MessageController {
           edited: false,
           reply,
         };
-        const chat = await Chat.findOneAndUpdate(
+        let chat = await Chat.findOneAndUpdate(
           { members },
           {
             $push: { messages: newMessage },
             last_message: body,
             created_at: newMessage.created_at,
           },
-          { new: true, useFindAndModify: true }
+          { new: true }
         );
+
+        if (!chat) {
+          chat = await Chat.findOneAndUpdate(
+            { members: [members[1], members[0]] },
+            {
+              $push: { messages: newMessage },
+              last_message: body,
+              created_at: newMessage.created_at,
+            },
+            { new: true }
+          );
+        }
+
         this.io.emit('SERVER:CHAT', {
           chat_id: chat?.id,
           messages: [newMessage],

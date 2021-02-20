@@ -23,6 +23,7 @@ const createSocket = (http: http.Server) => {
   io.on('connection', function (socket: Socket) {
     const query = socket.handshake.query as { user_id: string };
     const id = query.user_id;
+
     User.findByIdAndUpdate(
       id,
       { logs: { online: true, last_activity: new Date().getTime() } },
@@ -46,17 +47,6 @@ const createSocket = (http: http.Server) => {
       socket.emit('SERVER:LIST', data);
     });
 
-    socket.on('SERVER:CHAT', async (chat_id: string, user_id: string) => {
-      const chat = await Chat.findById(chat_id);
-      socket.join(chat_id);
-      if (chat?.errors) {
-        throw new Error(chat?.errors);
-      }
-      const members = chat!.members;
-      const companion_id = members.find((user) => user !== user_id);
-      const messages = chat!.messages;
-      io.to(chat_id).emit('SERVER:CHAT', { chat_id, companion_id, messages });
-    });
     // Disconnect
     socket.on('disconnect', () => {
       socket.disconnect(true);

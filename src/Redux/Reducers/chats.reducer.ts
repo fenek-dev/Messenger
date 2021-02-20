@@ -37,7 +37,7 @@ const reducer = (
       if (need_chat)
         need_chat.messages = need_chat?.messages.map((message) => {
           // Take every message and find message with the same created_at property as passed message
-          if (message._id === payload.message._id) {
+          if (message._id === payload.message._id && message._id) {
             changed = true;
 
             // If message was found than change message body by new value from payload
@@ -54,6 +54,7 @@ const reducer = (
         });
 
       if (!changed) need_chat?.messages?.unshift(payload.message);
+
       if (need_chat) {
         return state.map((chat) =>
           chat.chat_id === payload.chat_id ? need_chat : chat

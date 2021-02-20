@@ -25,6 +25,7 @@ const createRoutes = (app: express.Express, io: socket.Server) => {
   app.post('/api/auth/profile', UserCtrl.profile);
 
   app.post('/api/chats/create', ChatCtrl.create);
+  app.get('/api/chats/:chat_id/:user_id', ChatCtrl.getChat);
 
   app.post('/api/message/create', MessageCtrl.create);
   app.patch('/api/message/update', MessageCtrl.update);
