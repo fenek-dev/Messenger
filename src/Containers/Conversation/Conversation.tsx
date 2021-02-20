@@ -161,7 +161,9 @@ const Conversation: React.FC = () => {
       {open && (
         <Menu coord={coord} visible={open} onClose={handleClose}>
           <MenuItem onClick={handleReply}>Reply</MenuItem>
-          <MenuItem onClick={handleEdit}>Edit</MenuItem>
+          {message.from === user.user_id && (
+            <MenuItem onClick={handleEdit}>Edit</MenuItem>
+          )}
         </Menu>
       )}
     </section>
