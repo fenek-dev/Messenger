@@ -58,6 +58,7 @@ export const GetAllChatsThunk: IThunkAction = (user_id: string) => async (
             chat_id: chat.chat_id,
             companion_id: chat.companion_id,
             companion_name: chat.companion_name,
+            companion_last_seen: chat.companion_last_seen,
             last_message: chat.last_massage,
             created_at: chat.created_at,
             messages: [],

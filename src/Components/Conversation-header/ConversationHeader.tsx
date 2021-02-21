@@ -5,9 +5,11 @@ import './ConversationHeader.scss';
 
 //===== SVG =====
 import options from '../../icons/settings.svg';
+import moment from 'moment';
 
 //===== Interface =====
 interface IConversationHeader {
+  readonly last_seen: number;
   readonly name: string;
   readonly photoUrl: string;
   readonly id: string;
@@ -15,6 +17,7 @@ interface IConversationHeader {
 
 //===== Main =====
 const ConversationHeader: React.FC<IConversationHeader> = ({
+  last_seen,
   name,
   photoUrl,
   id,
@@ -26,7 +29,9 @@ const ConversationHeader: React.FC<IConversationHeader> = ({
       <div className='conv-header__content'>
         <Link to={`/profile/${id}`}>
           <div className='conv-header__content-name'>{name}</div>
-          <div className='conv-header__content-status'>Online</div>
+          <div className='conv-header__content-status'>
+            {moment(last_seen).format('DD MMM HH:mm')}
+          </div>
         </Link>
       </div>
       <div className='conv-header__options'>

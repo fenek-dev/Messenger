@@ -126,6 +126,7 @@ const Conversation: React.FC = () => {
       {chat && (
         <>
           <ConversationHeader
+            last_seen={chat.companion_last_seen}
             name={chat!.companion_name || 'No'}
             photoUrl={userPhoto}
             id={id}

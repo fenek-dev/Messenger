@@ -20,6 +20,7 @@ class ChatController {
       const members = chat!.members;
       const companion_id = members.find((user) => user !== user_id);
       const messages = chat!.messages;
+
       res.json({ chat_id, companion_id, messages });
     } catch (error) {
       res.status(500).json({ message: error.message });

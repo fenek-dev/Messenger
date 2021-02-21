@@ -159,10 +159,9 @@ class UserController {
         user_id,
         user_name: user?.name,
         user_photo: '',
-        user_last_seen: user?.logs,
+        user_logs: user?.logs,
         user_status: user?.status,
       };
-      console.log(result);
 
       res.json(result);
     } catch (error) {

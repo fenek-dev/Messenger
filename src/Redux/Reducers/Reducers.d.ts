@@ -41,6 +41,7 @@ export interface IChats {
   readonly chat_id: string;
   readonly companion_id: string;
   readonly companion_name: string;
+  readonly companion_last_seen: number;
   readonly last_message: string;
   readonly created_at: string | number;
   messages: IMessage[];
