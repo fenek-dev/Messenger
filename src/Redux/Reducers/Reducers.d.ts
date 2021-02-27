@@ -6,11 +6,12 @@ export interface RootReducerInterface {
   readonly search: ISearchState[];
   readonly profile: IProfileState;
 }
-// User Eeducer
+// User Reducer
 export interface IUserReducerState {
   readonly user_id: string;
   readonly name: string;
   readonly status: string;
+  readonly photo: string;
   socket: any;
 }
 

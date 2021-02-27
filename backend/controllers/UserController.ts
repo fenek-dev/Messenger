@@ -88,6 +88,7 @@ class UserController {
         userId: user!.id,
         name: user!.name,
         status: user?.status,
+        photo: user?.photo,
       });
     } catch (error) {
       console.log(error);
@@ -158,7 +159,7 @@ class UserController {
       const result = {
         user_id,
         user_name: user?.name,
-        user_photo: '',
+        user_photo: user?.photo,
         user_logs: user?.logs,
         user_status: user?.status,
       };

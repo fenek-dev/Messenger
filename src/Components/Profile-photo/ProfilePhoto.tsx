@@ -1,6 +1,7 @@
 //===== React and styles =====
 import React, { useCallback, useEffect, useState } from 'react';
 import './ProfilePhoto.scss';
+import { UpdateUserPhotoThunk } from '../../Redux/Actions/user.action';
 
 //===== Components =====
 import FileInput from '../File-input/FileInput';
@@ -8,10 +9,21 @@ import Popup from '../Popup/Popup';
 import PhotoResizer from '../Photo-resizer/PhotoResizer';
 
 //===== Images =====
-import user from '../../icons/user.jpg';
+import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
+import { useDispatch, useSelector } from 'react-redux';
+
+//===== Interface =====
+interface IProfilePhoto {
+  owner: boolean;
+}
 
 //===== Main =====
-const ProfilePhoto: React.FC<{ owner: boolean }> = ({ owner }) => {
+const ProfilePhoto: React.FC<IProfilePhoto> = ({ owner }) => {
+  const { user, profile } = useSelector(
+    (state: Readonly<RootReducerInterface>) => state
+  );
+
+  const dispatch = useDispatch();
   const [photo, setPhoto] = useState<string>();
 
   const [open, setOpen] = useState<boolean>(false);
@@ -26,8 +38,15 @@ const ProfilePhoto: React.FC<{ owner: boolean }> = ({ owner }) => {
   });
 
   useEffect(() => {
-    setPhoto(user);
-  }, []);
+    setPhoto(profile.user_photo);
+  }, [profile.user_photo]);
+
+  const updatePhoto = useCallback(
+    (img: string) => {
+      dispatch(UpdateUserPhotoThunk(user.user_id, img));
+    },
+    [user.user_id, dispatch]
+  );
 
   const handleImg = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const image = e.target.files![0];
@@ -64,6 +83,7 @@ const ProfilePhoto: React.FC<{ owner: boolean }> = ({ owner }) => {
           setOpen={setNewPhoto}
           setPhoto={setPhoto}
           setPhotoParams={setNewPhotoParams}
+          updatePhoto={updatePhoto}
         />
       )}
     </div>

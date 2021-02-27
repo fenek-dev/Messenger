@@ -3,6 +3,7 @@ import socket from 'socket.io';
 import ChatController from '../controllers/ChatController';
 import MessageController from '../controllers/MessageController';
 import SearchController from '../controllers/SearchController';
+import UploadController from '../controllers/UploadContraller';
 import UserController from '../controllers/UserController';
 import {
   loginValidation,
@@ -14,9 +15,11 @@ const createRoutes = (app: express.Express, io: socket.Server) => {
   const ChatCtrl = new ChatController(io);
   const MessageCtrl = new MessageController(io);
   const SearchCtrl = new SearchController(io);
+  const UploadCtrl = new UploadController();
 
   app.use(express.json({ type: 'text/plain' }));
-  app.use(express.json());
+  app.use(express.json({ limit: '50mb' }));
+  app.use(express.urlencoded({ limit: '50mb', extended: true }));
   // routes
   app.post('/api/auth/register', registerValidation, UserCtrl.register);
   app.post('/api/auth/login', loginValidation, UserCtrl.login);
@@ -31,6 +34,8 @@ const createRoutes = (app: express.Express, io: socket.Server) => {
   app.patch('/api/message/update', MessageCtrl.update);
 
   app.post('/api/search/find', SearchCtrl.getMatches);
+
+  app.post('/api/user/photo', UploadCtrl.create);
 };
 
 export default createRoutes;

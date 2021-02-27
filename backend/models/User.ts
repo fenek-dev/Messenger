@@ -9,6 +9,7 @@ export interface IUser extends Document {
     readonly last_seen: number;
   };
   readonly status: string;
+  readonly photo: string;
 }
 
 const schema = new Schema({
@@ -20,6 +21,7 @@ const schema = new Schema({
     last_seen: { type: Number },
   },
   status: { type: String },
+  photo: { type: String, default: '' },
 });
 
 export default model<IUser>('User', schema);
