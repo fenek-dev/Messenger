@@ -2,7 +2,7 @@
 import { IAction, IAddUserAction, IThunkAction } from './Actions';
 
 //===== Constatns =====
-import { ADD_USER } from '../Constants';
+import { ADD_USER, UPDATE_USER_PHOTO } from '../Constants';
 
 //===== Utils =====
 import createSocket from '../../utils/socket';
@@ -10,6 +10,11 @@ import { AddThemeAction } from './theme.action';
 
 export const AddUserAction: IAction<IAddUserAction> = (payload) => ({
   type: ADD_USER,
+  payload,
+});
+
+export const UpdateUserPhoto: IAction = (payload) => ({
+  type: UPDATE_USER_PHOTO,
   payload,
 });
 
@@ -154,6 +159,32 @@ export const SignInThunk: IThunkAction = (
     }
   } catch (error) {
     setError(error.message);
+    console.error(error.message);
+  }
+};
+
+export const UpdateUserPhotoThunk: IThunkAction = (
+  userId: string,
+  file: string
+) => async (dispatch) => {
+  try {
+    console.log(file);
+
+    const res = await fetch('/api/user/photo', {
+      body: JSON.stringify({ userId, file }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message);
+    }
+
+    dispatch(UpdateUserPhoto(data));
+  } catch (error) {
     console.error(error.message);
   }
 };

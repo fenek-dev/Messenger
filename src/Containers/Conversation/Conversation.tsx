@@ -126,6 +126,7 @@ const Conversation: React.FC = () => {
       {chat && (
         <>
           <ConversationHeader
+            last_seen={chat.companion_last_seen}
             name={chat!.companion_name || 'No'}
             photoUrl={userPhoto}
             id={id}
@@ -161,7 +162,9 @@ const Conversation: React.FC = () => {
       {open && (
         <Menu coord={coord} visible={open} onClose={handleClose}>
           <MenuItem onClick={handleReply}>Reply</MenuItem>
-          <MenuItem onClick={handleEdit}>Edit</MenuItem>
+          {message.from === user.user_id && (
+            <MenuItem onClick={handleEdit}>Edit</MenuItem>
+          )}
         </Menu>
       )}
     </section>

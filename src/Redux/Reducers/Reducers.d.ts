@@ -6,11 +6,12 @@ export interface RootReducerInterface {
   readonly search: ISearchState[];
   readonly profile: IProfileState;
 }
-// User Eeducer
+// User Reducer
 export interface IUserReducerState {
   readonly user_id: string;
   readonly name: string;
   readonly status: string;
+  readonly photo: string;
   socket: any;
 }
 
@@ -41,6 +42,7 @@ export interface IChats {
   readonly chat_id: string;
   readonly companion_id: string;
   readonly companion_name: string;
+  readonly companion_last_seen: number;
   readonly last_message: string;
   readonly created_at: string | number;
   messages: IMessage[];

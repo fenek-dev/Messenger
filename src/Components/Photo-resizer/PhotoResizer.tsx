@@ -23,6 +23,7 @@ interface IPhotoResizer {
   setPhotoParams: (any: any) => void;
   setPhoto: (any: any) => void;
   setOpen: (any: any) => void;
+  updatePhoto: (...any: any) => void;
 }
 
 //===== Main =====
@@ -31,6 +32,7 @@ const PhotoResizer: React.FC<IPhotoResizer> = ({
   setPhotoParams,
   setPhoto,
   setOpen,
+  updatePhoto,
 }) => {
   //===== State for cropped image coordinates =====
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>();
@@ -68,10 +70,11 @@ const PhotoResizer: React.FC<IPhotoResizer> = ({
       );
       setPhoto(croppedImage);
       setOpen(false);
+      updatePhoto(croppedImage);
     } catch (e) {
       console.error(e);
     }
-  }, [croppedAreaPixels, setPhoto, setOpen, photoParams.image]);
+  }, [croppedAreaPixels, setPhoto, setOpen, photoParams.image, updatePhoto]);
 
   return (
     <Popup height='500px' width='500px' onClose={onClose}>

@@ -58,6 +58,7 @@ export const GetAllChatsThunk: IThunkAction = (user_id: string) => async (
             chat_id: chat.chat_id,
             companion_id: chat.companion_id,
             companion_name: chat.companion_name,
+            companion_last_seen: chat.companion_last_seen,
             last_message: chat.last_massage,
             created_at: chat.created_at,
             messages: [],
@@ -73,8 +74,6 @@ export const GetChatThunk: IThunkAction = (
   user_id: string
 ) => async (dispatch, getState) => {
   const socket: Socket = getState().user.socket;
-
-  socket.emit('SERVER:CHAT', chat_id, user_id);
   socket.on(
     'SERVER:CHAT',
     (data: { messages: IMessage[]; chat_id: string }) => {
@@ -88,4 +87,23 @@ export const GetChatThunk: IThunkAction = (
       });
     }
   );
+  const res = await fetch(`/api/chats/${chat_id}/${user_id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  data.messages.forEach((message: any) => {
+    dispatch(
+      AddMessageAction({
+        chat_id: data.chat_id,
+        message,
+      })
+    );
+  });
 };

@@ -48,6 +48,7 @@ export const SendReplyThunk: IThunkAction = (
       created_at: new Date().getTime(),
       reply,
     };
+
     const res = await fetch('/api/message/create', {
       method: 'POST',
       headers: {

@@ -54,6 +54,9 @@
   }
 }
 
+.dark .foreign .message-content {
+  background: none;
+}
 .dark .message-content {
   border: $dark-text-color 1px solid;
 }

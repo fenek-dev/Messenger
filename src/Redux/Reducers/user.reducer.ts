@@ -3,12 +3,13 @@ import { IUserPayload } from '../Actions/Actions';
 import { IUserReducerState } from './Reducers';
 
 //===== Constants =====
-import { ADD_USER } from '../Constants';
+import { ADD_USER, UPDATE_USER_PHOTO } from '../Constants';
 
 const initialState: IUserReducerState = {
   user_id: '',
   status: '',
   name: '',
+  photo: '',
   socket: '',
 };
 
@@ -21,6 +22,9 @@ const reducer = (
 ) => {
   switch (type) {
     case ADD_USER:
+      return { ...state, ...payload };
+
+    case UPDATE_USER_PHOTO:
       return { ...state, ...payload };
 
     default:

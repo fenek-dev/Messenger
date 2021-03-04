@@ -11,6 +11,7 @@ async function getEveryChat(items: IChat[], data: any[], user_id: string) {
       chat_id: chat._id,
       companion_name: user!.name,
       companion_id: user!._id,
+      companion_last_seen: user?.logs.last_seen,
       last_massage: chat.last_message || '',
       created_at: chat.created_at || 0,
     });
@@ -20,18 +21,18 @@ async function getEveryChat(items: IChat[], data: any[], user_id: string) {
 const createSocket = (http: http.Server) => {
   const io = new Server(http);
 
-  io.on('connection', function (socket: Socket) {
+  io.on('connection', async (socket: Socket) => {
     const query = socket.handshake.query as { user_id: string };
     const id = query.user_id;
-    User.findByIdAndUpdate(
-      id,
-      { logs: { online: true, last_activity: new Date().getTime() } },
-      (err) => {
-        if (err) {
-          console.error(err);
-        }
-      }
-    );
+
+    await User.findByIdAndUpdate(id, {
+      $set: {
+        logs: {
+          online: true,
+          last_seen: new Date().getTime(),
+        },
+      },
+    });
 
     socket.on('SERVER:LIST', async (user_id: string) => {
       const chats = await Chat.find({ members: user_id });
@@ -46,30 +47,17 @@ const createSocket = (http: http.Server) => {
       socket.emit('SERVER:LIST', data);
     });
 
-    socket.on('SERVER:CHAT', async (chat_id: string, user_id: string) => {
-      const chat = await Chat.findById(chat_id);
-      socket.join(chat_id);
-      if (chat?.errors) {
-        throw new Error(chat?.errors);
-      }
-      const members = chat!.members;
-      const companion_id = members.find((user) => user !== user_id);
-      const messages = chat!.messages;
-      io.to(chat_id).emit('SERVER:CHAT', { chat_id, companion_id, messages });
-    });
     // Disconnect
-    socket.on('disconnect', () => {
+    socket.on('disconnect', async () => {
+      await User.findByIdAndUpdate(id, {
+        $set: {
+          logs: {
+            online: false,
+            last_seen: new Date().getTime(),
+          },
+        },
+      });
       socket.disconnect(true);
-
-      User.findByIdAndUpdate(
-        id,
-        { logs: { online: false, last_activity: new Date().getTime() } },
-        (err) => {
-          if (err) {
-            console.log(err);
-          }
-        }
-      );
     });
   });
 
