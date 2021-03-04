@@ -128,7 +128,7 @@ const Conversation: React.FC = () => {
           <ConversationHeader
             last_seen={chat.companion_last_seen}
             name={chat!.companion_name || 'No'}
-            photoUrl={userPhoto}
+            photoUrl={chat.companion_photo || userPhoto}
             id={id}
           />
 
@@ -143,7 +143,11 @@ const Conversation: React.FC = () => {
                     key={message.created_at}
                     text={message.body}
                     reply={message.reply}
-                    photoUrl={userPhoto}
+                    photoUrl={
+                      message.from === id
+                        ? chat.companion_photo || userPhoto
+                        : user.photo || userPhoto
+                    }
                     date={message.created_at}
                     from={message.from}
                     type={message.from === id ? 'foreign' : 'own'}

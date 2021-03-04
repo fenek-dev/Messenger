@@ -43,7 +43,7 @@ const Search: React.FC<ISearch> = ({ value }) => {
             key={user.user_id}
             companion_id={user.user_id}
             name={user.user_name}
-            photoUrl={userPhoto}
+            photoUrl={user.user_photo || userPhoto}
             prefix='profile/'
           />
         ))}

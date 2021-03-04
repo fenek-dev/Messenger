@@ -65,7 +65,7 @@ const Chats: React.FC<IChatsComponent> = ({ chats }) => {
               key={chat.chat_id}
               companion_id={chat.companion_id}
               name={chat.companion_name}
-              photoUrl={user}
+              photoUrl={chat.companion_photo || user}
               lastMessage={compressString(chat.last_message)}
               date={
                 typeof chat.created_at === 'number'

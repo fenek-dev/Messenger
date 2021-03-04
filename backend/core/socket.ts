@@ -12,6 +12,7 @@ async function getEveryChat(items: IChat[], data: any[], user_id: string) {
       companion_name: user!.name,
       companion_id: user!._id,
       companion_last_seen: user?.logs.last_seen,
+      companion_photo: user?.photo,
       last_massage: chat.last_message || '',
       created_at: chat.created_at || 0,
     });

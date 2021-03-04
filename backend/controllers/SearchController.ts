@@ -17,7 +17,7 @@ class SearchController {
       const result = users.map((user) => ({
         user_id: user._id,
         user_name: user.name,
-        user_photo: '',
+        user_photo: user.photo,
         status: user.status,
       }));
       if (!users) {
