@@ -3,7 +3,7 @@ import socket from 'socket.io';
 import ChatController from '../controllers/ChatController';
 import MessageController from '../controllers/MessageController';
 import SearchController from '../controllers/SearchController';
-import UploadController from '../controllers/UploadContraller';
+import UploadController from '../controllers/UploadController';
 import UserController from '../controllers/UserController';
 import {
   loginValidation,

@@ -9,7 +9,7 @@ import { IChats, RootReducerInterface } from '../../Redux/Reducers/Reducers';
 import {
   SendMessageThunk,
   SendReplyThunk,
-  UpdateMesssageThunk,
+  UpdateMessageThunk,
 } from '../../Redux/Actions/messages.action';
 
 //================================
@@ -82,7 +82,7 @@ const Conversation: React.FC = () => {
           value = '';
           setReply(undefined);
         } else if (reply && reply.edit) {
-          dispatch(UpdateMesssageThunk(chat?.chat_id, reply.id, value));
+          dispatch(UpdateMessageThunk(chat?.chat_id, reply.id, value));
           setReply(undefined);
           value = '';
         } else {

@@ -66,7 +66,7 @@ export const SendReplyThunk: IThunkAction = (
   }
 };
 
-export const UpdateMesssageThunk: IThunkAction = (
+export const UpdateMessageThunk: IThunkAction = (
   chat_id: string,
   message_id: string,
   body: string
