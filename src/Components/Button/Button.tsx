@@ -1,34 +1,16 @@
 //===== React and styles =====
-import React, { CSSProperties, memo, useMemo } from 'react';
+import React, { memo } from 'react';
 import './Button.scss';
 
 //===== Interface =====
-interface IButton {
+interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   readonly label: string;
-  readonly type?: 'button' | 'reset' | 'submit';
-  readonly onClick?: (e: React.FormEvent<HTMLButtonElement>) => void;
-  readonly backgroundColor?: string;
-  readonly style?: CSSProperties;
 }
 
 //===== Main =====
-const Button: React.FC<IButton> = ({
-  label,
-  type = 'submit',
-  onClick,
-  backgroundColor,
-  style,
-}) => {
-  const styles = useMemo(() => ({ backgroundColor, ...style }), [
-    backgroundColor,
-    style,
-  ]);
+const Button: React.FC<IButton> = ({ label, type = 'submit', ...props }) => {
   return (
-    <button
-      style={styles}
-      className='button'
-      type={type}
-      onClick={onClick && onClick}>
+    <button className='button' type={type} {...props}>
       {label}
     </button>
   );
