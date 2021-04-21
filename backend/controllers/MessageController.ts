@@ -8,7 +8,7 @@ import { IMessageCreateReqBody, IMessageUpdateReqBody } from './types';
 class MessageController {
   constructor(private io: socket.Server) {}
 
-  create = async (req: express.Request, res: express.Response) => {
+  public create = async (req: express.Request, res: express.Response) => {
     try {
       const {
         from,
@@ -79,7 +79,7 @@ class MessageController {
     }
   };
 
-  update = async (req: express.Request, res: express.Response) => {
+  public update = async (req: express.Request, res: express.Response) => {
     try {
       const { message_id, body, chat_id }: IMessageUpdateReqBody = req.body;
 
