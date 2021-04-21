@@ -3,9 +3,10 @@ import http from 'http';
 import User from '../models/User';
 import Chat from '../models/Chat';
 import { IChatModel } from '../models/types';
+
 async function getEveryChat(items: IChatModel[], data: any[], user_id: string) {
   for (const chat of items) {
-    const user = await User.findOne({
+    const user = await User.findById({
       _id: chat.members.find((name) => name !== user_id),
     });
     data.push({
@@ -40,7 +41,7 @@ const createSocket = (http: http.Server) => {
       const chats = await Chat.find({ members: user_id });
 
       if (chats[0].errors) {
-        throw new Error(chats[0].errors);
+        throw new Error('Something goes wrong');
       }
       let data: any[] = [];
 

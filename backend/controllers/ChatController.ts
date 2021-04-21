@@ -12,7 +12,7 @@ class ChatController {
       const chat = await Chat.findById(chat_id);
 
       if (chat?.errors) {
-        throw new Error(chat?.errors);
+        throw new Error('Chat not found');
       }
 
       const members = chat!.members;
