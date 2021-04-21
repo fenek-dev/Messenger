@@ -1,4 +1,5 @@
 @import '../../styles/variables.scss';
+
 .conv-header {
   grid-area: header;
   height: 71px;
@@ -9,7 +10,7 @@
   border-bottom: $border-color 1px solid;
   padding: 0 25px;
   margin: 0;
-  animation: ease-in-out 0.5s headerApper;
+  animation: ease-in-out 0.5s headerApper alternate;
 
   &__content {
     margin-left: 10px;
@@ -29,6 +30,7 @@
       margin-right: auto;
     }
   }
+
   &__options {
     margin-left: auto;
   }
@@ -37,4 +39,3 @@
 .dark .conv-header {
   border-bottom: solid 1px $main-text-color;
 }
-

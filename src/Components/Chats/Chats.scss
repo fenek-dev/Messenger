@@ -1,6 +1,7 @@
 @import '../../styles/variables.scss';
 @import '../../styles/mixins.scss';
 @import '../../styles/animations.scss';
+
 .chats {
   grid-area: list;
   display: flex;
@@ -9,7 +10,7 @@
   width: 100%;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 
-  animation: apper ease-in-out 0.5s;
+  animation: apper ease-in-out 0.5s alternate;
 
   &-search {
     height: 70px;
@@ -31,7 +32,7 @@
     &__close {
       cursor: pointer;
       font-size: 30px;
-      animation: convApper 0.5s ease-in-out normal;
+      animation: convApper 0.5s ease-in-out normal alternate;
     }
   }
 
@@ -39,19 +40,19 @@
     padding: 10px 0;
     height: 100%;
     @include scroll
-    
   }
 }
 
 
 .dark .chats {
   &-search {
-    border:$main-text-color 1px solid ;
-  background: $dark-hover;
-  &__input {
+    border: $main-text-color 1px solid;
     background: $dark-hover;
-  color: #f5f5f5;
-  }
+
+    &__input {
+      background: $dark-hover;
+      color: #f5f5f5;
+    }
   }
 
   &-list {

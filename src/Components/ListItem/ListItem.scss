@@ -1,12 +1,14 @@
 @import '../../styles/variables.scss';
+
 .list-item {
   height: 70px;
   position: relative;
   display: flex;
   align-items: center;
-  border-bottom:$border-color 1px solid;
+  border-bottom: $border-color 1px solid;
   padding: 0 15px;
-  animation: apper 0.3s ease-in-out;
+  animation: apper 0.3s ease-in-out alternate;
+
   &__avatar {
     color: #000;
   }
@@ -44,5 +46,3 @@
 .dark .list-item {
   border-bottom: solid 1px $main-text-color;
 }
-
-

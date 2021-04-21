@@ -1,13 +1,15 @@
 @import '../../styles/variables.scss';
+
 .settings-item {
-    margin: 0;
-    padding: 0 25px;
+  margin: 0;
+  padding: 0 25px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  animation: ease-in-out 0.5s ownApper ;
+  animation: ease-in-out 0.5s ownApper alternate;
   z-index: -10;
+
   &:hover {
     transition: 0.3s ease-in;
     background: $main-hover;
@@ -15,7 +17,7 @@
 }
 
 .dark .settings-item {
-    &:hover {
-        background:$dark-hover;
-      }
+  &:hover {
+    background: $dark-hover;
+  }
 }

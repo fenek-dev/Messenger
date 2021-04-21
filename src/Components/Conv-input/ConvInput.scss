@@ -7,8 +7,8 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  border-top:$border-color 1px solid;
-  animation: ease-in-out 0.5s convInputApper;
+  border-top: $border-color 1px solid;
+  animation: ease-in-out 0.5s convInputApper alternate;
 
   .reply {
     background: #fff;
@@ -20,7 +20,7 @@
     top: -30px;
     height: 30px;
     width: 100%;
-    border-top:$border-color 1px solid;
+    border-top: $border-color 1px solid;
 
     .close {
       cursor: pointer;
@@ -28,6 +28,7 @@
       font-size: 20px;
     }
   }
+
   input {
     z-index: 11;
     width: 100%;
@@ -45,8 +46,9 @@
     border-top: solid 1px $main-text-color;
     background: $dark-main-color;
   }
+
   input {
-    background:  $dark-main-color;
+    background: $dark-main-color;
     color: $dark-text-color;
   }
 }
