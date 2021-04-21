@@ -2,6 +2,7 @@ import { Schema, model, Document } from 'mongoose';
 import { IMessageModel } from './types';
 
 const messageSchema = new Schema({
+  chat_id: { type: String, required: true },
   from: { type: String, required: true },
   body: String,
   created_at: { type: Number, required: true },

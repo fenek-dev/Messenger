@@ -18,6 +18,7 @@ export interface IUserModel extends Document {
 }
 
 export interface IMessageModel {
+  readonly chat_id: string;
   readonly from: string;
   readonly body: string;
   readonly created_at: number;

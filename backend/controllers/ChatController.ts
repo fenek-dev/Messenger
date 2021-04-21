@@ -1,6 +1,7 @@
 import express from 'express';
 import socket from 'socket.io';
 import Chat from '../models/Chat';
+import Message from '../models/Message';
 
 class ChatController {
   io: socket.Server;
