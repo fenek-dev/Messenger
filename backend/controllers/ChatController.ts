@@ -11,16 +11,18 @@ class ChatController {
       const { chat_id, user_id } = req.params;
       const chat = await Chat.findById(chat_id);
 
-      if (chat?.errors) {
+      if (!chat) {
         throw new Error('Chat not found');
       }
 
       const members = chat!.members;
       const companion_id = members.find((user) => user !== user_id);
-      const messages = Message.find({ chat_id });
+      const messages = await Message.find({ chat_id });
 
-      res.json({ chat_id, companion_id, messages });
+      res.status(200).json({ chat_id, companion_id, messages });
     } catch (error) {
+      console.log(error);
+
       res.status(500).json(error);
     }
   };

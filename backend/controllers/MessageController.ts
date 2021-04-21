@@ -36,8 +36,9 @@ class MessageController {
           });
           const message = new Message(newMessage);
           await message.save();
+          console.log('Chat id', chat_id);
 
-          this.io.emit('SERVER:CHAT', {
+          this.io.to(chat_id).emit('SERVER:CHAT', {
             chat_id,
             messages: [newMessage],
           });
@@ -64,7 +65,7 @@ class MessageController {
           const message = new Message(newMessage);
           await message.save();
 
-          this.io.emit('SERVER:CHAT', {
+          this.io.to(chat_id).emit('SERVER:CHAT', {
             chat_id,
             messages: [newMessage],
           });
@@ -73,7 +74,7 @@ class MessageController {
         }
       }
     } catch (error) {
-      this.io.emit('SERVER:CHAT', {
+      this.io.to(req.body.chat_id).emit('SERVER:CHAT', {
         error,
       });
     }

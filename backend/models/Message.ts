@@ -9,9 +9,9 @@ const messageSchema = new Schema({
   received: Boolean,
   edited: Boolean,
   reply: {
-    from: { type: String, required: true },
+    from: { type: String },
     body: String,
-    created_at: { type: Number, required: true },
+    created_at: { type: Number },
   },
 });
 

@@ -46,6 +46,10 @@ const createSocket = (http: http.Server) => {
       let data: any[] = [];
 
       await getEveryChat(chats, data, user_id);
+      chats.forEach((chat) => {
+        socket.join(chat.id);
+      });
+      console.log('Rooms in socket: ', socket.rooms);
 
       socket.emit('SERVER:LIST', data);
     });
