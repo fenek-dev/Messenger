@@ -145,11 +145,6 @@ const Conversation: React.FC = () => {
                     key={message.created_at}
                     text={message.body}
                     reply={message.reply}
-                    photoUrl={
-                      message.from === id
-                        ? chat.companion_photo || userPhoto
-                        : user.photo || userPhoto
-                    }
                     date={message.created_at}
                     from={message.from}
                     type={message.from === id ? 'foreign' : 'own'}
