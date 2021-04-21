@@ -11,7 +11,7 @@ class UserController {
     this.io = io;
   }
 
-  register = async (req: express.Request, res: express.Response) => {
+  public register = async (req: express.Request, res: express.Response) => {
     try {
       // Get all errors
       const errors = validationResult(req);
@@ -53,7 +53,7 @@ class UserController {
     }
   };
 
-  login = async (req: express.Request, res: express.Response) => {
+  public login = async (req: express.Request, res: express.Response) => {
     try {
       // Get all errors
       const errors = validationResult(req);
@@ -96,7 +96,7 @@ class UserController {
     }
   };
 
-  token = async (req: express.Request, res: express.Response) => {
+  public token = async (req: express.Request, res: express.Response) => {
     try {
       const { token } = req.body;
       if (token) {
@@ -127,7 +127,7 @@ class UserController {
     }
   };
 
-  update = async (req: express.Request, res: express.Response) => {
+  public update = async (req: express.Request, res: express.Response) => {
     try {
       const { name, status, user_id } = req.body;
 
@@ -146,7 +146,7 @@ class UserController {
     }
   };
 
-  profile = async (req: express.Request, res: express.Response) => {
+  public profile = async (req: express.Request, res: express.Response) => {
     try {
       const { user_id } = req.body;
 

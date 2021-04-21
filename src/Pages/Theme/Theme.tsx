@@ -33,7 +33,7 @@ const Theme: React.FC = () => {
     <div className='theme'>
       <SettingsHeader title='Theme settings' />
       <SettingsItem
-        styles={{ justifyContent: 'space-between', cursor: 'pointer' }}
+        style={{ justifyContent: 'space-between', cursor: 'pointer' }}
         onClick={handleTheme}>
         <h4>Dark theme</h4>
         <Checkbox checked={state.theme === 'dark'} onChange={handleTheme} />

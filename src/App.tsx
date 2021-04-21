@@ -21,17 +21,17 @@ import Profile from './Pages/Profile/Profile';
 function App() {
   const state = useSelector((state: RootReducerInterface) => state);
 
-  const dispacth = useDispatch();
+  const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState<boolean>();
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem('token')!);
-    dispacth(SignInThunk(token, setIsAuth));
-  }, [dispacth]);
+    dispatch(SignInThunk(token, setIsAuth));
+  }, [dispatch]);
 
   useEffect(() => {
-    dispacth(GetAllChatsThunk(state.user.user_id));
-  }, [dispacth, state.user.user_id]);
+    dispatch(GetAllChatsThunk(state.user.user_id));
+  }, [dispatch, state.user.user_id]);
 
   return (
     <>

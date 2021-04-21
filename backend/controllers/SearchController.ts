@@ -3,12 +3,9 @@ import socket from 'socket.io';
 import User from '../models/User';
 
 class SearchController {
-  io: socket.Server;
-  constructor(io: socket.Server) {
-    this.io = io;
-  }
+  constructor(private io: socket.Server) {}
 
-  getMatches = async (req: express.Request, res: express.Response) => {
+  public getMatches = async (req: express.Request, res: express.Response) => {
     try {
       const { value } = req.body;
       const reg = new RegExp(value, 'ig');
@@ -17,7 +14,7 @@ class SearchController {
       const result = users.map((user) => ({
         user_id: user._id,
         user_name: user.name,
-        user_photo: '',
+        user_photo: user.photo,
         status: user.status,
       }));
       if (!users) {

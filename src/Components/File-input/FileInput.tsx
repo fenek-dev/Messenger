@@ -3,19 +3,17 @@ import React, { memo } from 'react';
 import './FileInput.scss';
 
 //===== Interface =====
-interface IFileInput {
+interface IFileInput extends React.InputHTMLAttributes<HTMLInputElement> {
   readonly label: string;
-  readonly className?: string;
-  readonly onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   readonly accept?: string;
 }
 
 //===== Main =====
 const FileInput: React.FC<IFileInput> = ({
   label,
-  className,
-  onChange,
   accept,
+  className,
+  ...props
 }) => {
   return (
     <>
@@ -27,8 +25,8 @@ const FileInput: React.FC<IFileInput> = ({
         type='file'
         id='input'
         className={`file-input ${className ? className : ''}`}
-        onChange={onChange}
         accept={`.jpg, .jpeg, .png  ${accept ? accept : ''}`}
+        {...props}
       />
     </>
   );

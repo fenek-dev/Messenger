@@ -1,10 +1,12 @@
 import { Server, Socket } from 'socket.io';
 import http from 'http';
 import User from '../models/User';
-import Chat, { IChat } from '../models/Chat';
-async function getEveryChat(items: IChat[], data: any[], user_id: string) {
+import Chat from '../models/Chat';
+import { IChatModel } from '../models/types';
+
+async function getEveryChat(items: IChatModel[], data: any[], user_id: string) {
   for (const chat of items) {
-    const user = await User.findOne({
+    const user = await User.findById({
       _id: chat.members.find((name) => name !== user_id),
     });
     data.push({
@@ -12,6 +14,7 @@ async function getEveryChat(items: IChat[], data: any[], user_id: string) {
       companion_name: user!.name,
       companion_id: user!._id,
       companion_last_seen: user?.logs.last_seen,
+      companion_photo: user?.photo,
       last_massage: chat.last_message || '',
       created_at: chat.created_at || 0,
     });
@@ -38,11 +41,15 @@ const createSocket = (http: http.Server) => {
       const chats = await Chat.find({ members: user_id });
 
       if (chats[0].errors) {
-        throw new Error(chats[0].errors);
+        throw new Error('Something goes wrong');
       }
       let data: any[] = [];
 
       await getEveryChat(chats, data, user_id);
+      chats.forEach((chat) => {
+        socket.join(chat.id);
+      });
+      console.log('Rooms in socket: ', socket.rooms);
 
       socket.emit('SERVER:LIST', data);
     });

@@ -10,7 +10,6 @@ interface IMessageComponent {
   readonly text: string;
   readonly date: string | number;
   readonly from: string;
-  readonly photoUrl: string;
   readonly reply?: {
     from: string;
     body: string;
@@ -31,7 +30,6 @@ const Message: React.FC<IMessageComponent> = ({
   from,
   text,
   date,
-  photoUrl,
   type,
   reply,
   onClick,
@@ -48,7 +46,6 @@ const Message: React.FC<IMessageComponent> = ({
     <div
       data-testid='wrapper'
       className={type === 'own' ? 'message own' : 'message foreign'}>
-      <img src={photoUrl} alt='User' className='icon' />
       <div className='message-content' onClick={handleClick}>
         {reply && (
           <p className='message-content__reply'>

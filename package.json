@@ -1,6 +1,10 @@
 {
   "name": "messenger",
+<<<<<<< HEAD
   "version": "1.0.0",
+=======
+  "version": "1.1.0",
+>>>>>>> c69bfbc6347876fb779ddfeafa384906eeec60e9
   "private": true,
   "author": {
     "email": "makstreonin@gmail.com",

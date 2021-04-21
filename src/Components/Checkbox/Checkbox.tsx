@@ -1,24 +1,18 @@
 //===== React and styles =====
-import React, { CSSProperties, memo } from 'react';
+import React, { memo } from 'react';
 import './Checkbox.scss';
 
 //===== Interface =====
-interface ICheckbox {
-  readonly style?: CSSProperties;
-  readonly onChange?: () => void;
-  readonly checked?: boolean;
-}
+interface ICheckbox extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 //===== Main =====
-const Checkbox: React.FC<ICheckbox> = ({ style, onChange, checked }) => {
+const Checkbox: React.FC<ICheckbox> = ({ ...props }) => {
   return (
     <input
       data-testid='checkbox'
-      style={style}
       type='checkbox'
       className='checkbox'
-      onChange={onChange}
-      checked={checked}
+      {...props}
     />
   );
 };

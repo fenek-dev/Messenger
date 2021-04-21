@@ -9,7 +9,7 @@ import { IChats, RootReducerInterface } from '../../Redux/Reducers/Reducers';
 import {
   SendMessageThunk,
   SendReplyThunk,
-  UpdateMesssageThunk,
+  UpdateMessageThunk,
 } from '../../Redux/Actions/messages.action';
 
 //================================
@@ -60,6 +60,8 @@ const Conversation: React.FC = () => {
   const state = useSelector((state: Readonly<RootReducerInterface>) => state);
   const user = state.user;
 
+  console.log('state: ', state.chats);
+
   useEffect(() => {
     const need = state.chats.find((chat) => chat.companion_id === id);
     setChat(need);
@@ -82,7 +84,7 @@ const Conversation: React.FC = () => {
           value = '';
           setReply(undefined);
         } else if (reply && reply.edit) {
-          dispatch(UpdateMesssageThunk(chat?.chat_id, reply.id, value));
+          dispatch(UpdateMessageThunk(chat?.chat_id, reply.id, value));
           setReply(undefined);
           value = '';
         } else {
@@ -128,7 +130,7 @@ const Conversation: React.FC = () => {
           <ConversationHeader
             last_seen={chat.companion_last_seen}
             name={chat!.companion_name || 'No'}
-            photoUrl={userPhoto}
+            photoUrl={chat.companion_photo || userPhoto}
             id={id}
           />
 
@@ -143,7 +145,6 @@ const Conversation: React.FC = () => {
                     key={message.created_at}
                     text={message.body}
                     reply={message.reply}
-                    photoUrl={userPhoto}
                     date={message.created_at}
                     from={message.from}
                     type={message.from === id ? 'foreign' : 'own'}

@@ -2,6 +2,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './ProfilePhoto.scss';
 import { UpdateUserPhotoThunk } from '../../Redux/Actions/user.action';
+import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
+import { useDispatch, useSelector } from 'react-redux';
 
 //===== Components =====
 import FileInput from '../File-input/FileInput';
@@ -9,9 +11,7 @@ import Popup from '../Popup/Popup';
 import PhotoResizer from '../Photo-resizer/PhotoResizer';
 
 //===== Images =====
-import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
-import { useDispatch, useSelector } from 'react-redux';
-
+import userPhoto from '../../icons/user.jpg';
 //===== Interface =====
 interface IProfilePhoto {
   owner: boolean;
@@ -69,12 +69,17 @@ const ProfilePhoto: React.FC<IProfilePhoto> = ({ owner }) => {
   return (
     <div className='profile-photo'>
       <div onClick={handleImgClick} className='profile-photo-img'>
-        <img src={photo} alt='User' />
+        <img src={photo || userPhoto} alt='User' />
       </div>
       {owner && <FileInput label={'Add photo'} onChange={handleImg} />}
       {open && (
         <Popup height='500' width='500' onClose={handleImgClick}>
-          <img src={photo} width='500' height='500' alt='opened user' />
+          <img
+            src={photo || userPhoto}
+            width='500'
+            height='500'
+            alt='opened user'
+          />
         </Popup>
       )}
       {newPhoto && (

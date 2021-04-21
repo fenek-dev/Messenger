@@ -1,129 +1,107 @@
 import express from 'express';
 import socket from 'socket.io';
-import Chat, { IMessage } from '../models/Chat';
-
-interface IMessageCreateReqBody {
-  readonly members: string[];
-  readonly from: string;
-  readonly body: string;
-  readonly created_at: number;
-  readonly reply: {
-    readonly from: string;
-    readonly body: string;
-    readonly created_at: number;
-  };
-}
-
-interface IMessageUpdateReqBody {
-  readonly message_id: string;
-  readonly body: string;
-  readonly chat_id: string;
-}
+import Chat from '../models/Chat';
+import Message from '../models/Message';
+import { IMessageModel } from '../models/types';
+import { IMessageCreateReqBody, IMessageUpdateReqBody } from './types';
 
 class MessageController {
-  io: socket.Server;
-  constructor(io: socket.Server) {
-    this.io = io;
-  }
+  constructor(private io: socket.Server) {}
 
-  create = async (req: express.Request, res: express.Response) => {
+  public create = async (req: express.Request, res: express.Response) => {
     try {
       const {
-        members,
         from,
         body,
         reply,
         created_at,
+        chat_id,
       }: IMessageCreateReqBody = req.body;
-
       if (!reply) {
-        const newMessage: IMessage = {
+        const newMessage: IMessageModel = {
           from,
           body,
           created_at,
           received: false,
           edited: false,
+          chat_id,
         };
 
-        let chat = await Chat.findOne({ members });
-        if (!chat) {
-          chat = await Chat.findOne({ members: [members[1], members[0]] });
-        }
+        let chat = await Chat.findById(chat_id);
 
         if (chat) {
-          chat.update({
-            $push: { messages: newMessage },
+          chat.updateOne({
             last_message: body,
             created_at: newMessage.created_at,
           });
-        }
+          const message = new Message(newMessage);
+          await message.save();
+          console.log('Chat id', chat_id);
 
-        this.io.emit('SERVER:CHAT', {
-          chat_id: chat?.id,
-          messages: [newMessage],
-        });
+          this.io.to(chat_id).emit('SERVER:CHAT', {
+            chat_id,
+            messages: [newMessage],
+          });
+        } else {
+          throw new Error('Chat not found');
+        }
       } else {
-        const newMessage: IMessage = {
+        const newMessage: IMessageModel = {
           from,
           body,
           created_at,
           received: false,
           edited: false,
           reply,
+          chat_id,
         };
-        let chat = await Chat.findOneAndUpdate(
-          { members },
-          {
-            $push: { messages: newMessage },
+        let chat = await Chat.findById(chat_id);
+
+        if (chat) {
+          chat.updateOne({
             last_message: body,
             created_at: newMessage.created_at,
-          },
-          { new: true }
-        );
+          });
+          const message = new Message(newMessage);
+          await message.save();
 
-        if (!chat) {
-          chat = await Chat.findOneAndUpdate(
-            { members: [members[1], members[0]] },
-            {
-              $push: { messages: newMessage },
-              last_message: body,
-              created_at: newMessage.created_at,
-            },
-            { new: true }
-          );
+          this.io.to(chat_id).emit('SERVER:CHAT', {
+            chat_id,
+            messages: [newMessage],
+          });
+        } else {
+          throw new Error('Chat not found');
         }
-
-        this.io.emit('SERVER:CHAT', {
-          chat_id: chat?.id,
-          messages: [newMessage],
-        });
       }
-      res.status(201).json({ message: 'Message created' });
     } catch (error) {
-      res.status(500).json({ message: 'Something goes wrong' });
+      this.io.to(req.body.chat_id).emit('SERVER:CHAT', {
+        error,
+      });
     }
   };
 
-  update = async (req: express.Request, res: express.Response) => {
+  public update = async (req: express.Request, res: express.Response) => {
     try {
       const { message_id, body, chat_id }: IMessageUpdateReqBody = req.body;
-      await Chat.findOneAndUpdate(
-        { _id: chat_id, 'messages._id': message_id },
-        {
-          $set: {
-            'messages.$.body': body,
-            'messages.$.edited': true,
-          },
-        }
-      );
 
-      this.io.emit('SERVER:CHAT', {
-        chat_id,
-        messages: [{ _id: message_id, body, chat_id }],
-      });
-      res.status(201).json({ message: 'Message was updated' });
+      const message = await Message.findById(message_id);
+
+      if (message) {
+        message.updateOne({
+          body,
+        });
+
+        this.io.emit('SERVER:CHAT', {
+          chat_id,
+          messages: [{ _id: message_id, body, chat_id }],
+        });
+      } else {
+        throw new Error('Message not found');
+      }
     } catch (error) {
-      res.status(500).json({ message: 'Something goes wrong' });
+      this.io.emit('SERVER:CHAT', {
+        error,
+      });
     }
   };
 }

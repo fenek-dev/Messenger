@@ -9,10 +9,18 @@ export const SendMessageThunk: IThunkAction = (
 ) => async (dispatch, getState) => {
   try {
     const companion_id = members.find((member) => member !== from);
-    if (!getState().chats.find((chat) => chat.companion_id === companion_id)) {
+    const chat = getState().chats.find(
+      (chat) => chat.companion_id === companion_id
+    );
+    if (!chat) {
       dispatch(CreateChatThunk(members));
     }
-    const message = { members, from, body, created_at: new Date().getTime() };
+    const message = {
+      chat_id: chat?.chat_id,
+      from,
+      body,
+      created_at: new Date().getTime(),
+    };
     const res = await fetch('/api/message/create', {
       method: 'POST',
       headers: {
@@ -39,10 +47,15 @@ export const SendReplyThunk: IThunkAction = (
     text: string;
     id: number;
   }
-) => async () => {
+) => async (dispatch, getState) => {
   try {
+    const companion_id = members.find((member) => member !== from);
+    const chat = getState().chats.find(
+      (chat) => chat.companion_id === companion_id
+    );
+
     const message = {
-      members,
+      chat_id: chat?.chat_id,
       from,
       body,
       created_at: new Date().getTime(),
@@ -66,7 +79,7 @@ export const SendReplyThunk: IThunkAction = (
   }
 };
 
-export const UpdateMesssageThunk: IThunkAction = (
+export const UpdateMessageThunk: IThunkAction = (
   chat_id: string,
   message_id: string,
   body: string

@@ -1,16 +1,5 @@
-import { Schema, model, Document } from 'mongoose';
-
-export interface IUser extends Document {
-  readonly email: string;
-  readonly password: string;
-  readonly name: string;
-  readonly logs: {
-    readonly online: boolean;
-    readonly last_seen: number;
-  };
-  readonly status: string;
-  readonly photo: string;
-}
+import { Schema, model } from 'mongoose';
+import { IUserModel } from './types';
 
 const schema = new Schema({
   email: { type: String, required: true, unique: true },
@@ -24,4 +13,4 @@ const schema = new Schema({
   photo: { type: String, default: '' },
 });
 
-export default model<IUser>('User', schema);
+export default model<IUserModel>('User', schema);

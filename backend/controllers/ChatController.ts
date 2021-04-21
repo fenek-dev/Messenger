@@ -1,33 +1,33 @@
 import express from 'express';
 import socket from 'socket.io';
 import Chat from '../models/Chat';
+import Message from '../models/Message';
 
 class ChatController {
-  io: socket.Server;
-  constructor(io: socket.Server) {
-    this.io = io;
-  }
+  constructor(private io: socket.Server) {}
 
-  getChat = async (req: express.Request, res: express.Response) => {
+  public getChat = async (req: express.Request, res: express.Response) => {
     try {
       const { chat_id, user_id } = req.params;
       const chat = await Chat.findById(chat_id);
 
-      if (chat?.errors) {
-        throw new Error(chat?.errors);
+      if (!chat) {
+        throw new Error('Chat not found');
       }
 
       const members = chat!.members;
       const companion_id = members.find((user) => user !== user_id);
-      const messages = chat!.messages;
+      const messages = await Message.find({ chat_id });
 
-      res.json({ chat_id, companion_id, messages });
+      res.status(200).json({ chat_id, companion_id, messages });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      console.log(error);
+
+      res.status(500).json(error);
     }
   };
 
-  create = async (req: express.Request, res: express.Response) => {
+  public create = async (req: express.Request, res: express.Response) => {
     try {
       const members = req.body;
 
@@ -37,17 +37,16 @@ class ChatController {
         return res.status(400).json({ error: 'There is same chat' });
       }
 
-      const chat = await new Chat({
+      const chat = new Chat({
         members,
-        messages: [],
         last_message: '',
-        created_at: 0,
+        created_at: new Date().getTime(),
       });
       await chat.save();
 
-      res.status(201).json({ chat_id: chat._id, members });
+      res.status(201).json({ chat_id: chat._id });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).json(error);
     }
   };
 }

@@ -1,26 +1,14 @@
 //===== React and styles =====
-import React, { CSSProperties, memo } from 'react';
+import React, { memo } from 'react';
 import './SettingsItem.scss';
 
 //===== Interface =====
-interface ISettingsItem {
-  readonly styles?: CSSProperties;
-  readonly onClick?: any;
-  readonly children?: React.ReactNode[];
-}
+interface ISettingsItem extends React.HTMLAttributes<HTMLDivElement> {}
 
 //===== Main =====
-const SettingsItem: React.FC<ISettingsItem> = ({
-  children,
-  styles,
-  onClick,
-}) => {
+const SettingsItem: React.FC<ISettingsItem> = ({ children, ...props }) => {
   return (
-    <div
-      data-testid='wrapper'
-      style={styles}
-      className='settings-item'
-      onClick={onClick}>
+    <div data-testid='wrapper' className='settings-item' {...props}>
       {children}
     </div>
   );

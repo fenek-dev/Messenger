@@ -30,13 +30,13 @@ const Chats: React.FC<IChatsComponent> = ({ chats }) => {
     setIsSearching(true);
   }, []);
 
-  const handleBlur = useCallback(() => {
+  const handleBlur = () => {
     setIsSearching(false);
-  }, []);
+  };
 
-  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     debounce(setInputValue(e.target.value), 400);
-  }, []);
+  };
   return (
     <section className='chats'>
       <div className='chats-search'>
@@ -65,7 +65,7 @@ const Chats: React.FC<IChatsComponent> = ({ chats }) => {
               key={chat.chat_id}
               companion_id={chat.companion_id}
               name={chat.companion_name}
-              photoUrl={user}
+              photoUrl={chat.companion_photo || user}
               lastMessage={compressString(chat.last_message)}
               date={
                 typeof chat.created_at === 'number'
