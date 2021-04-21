@@ -1,6 +1,7 @@
 import express from 'express';
 import socket from 'socket.io';
-import Chat, { IMessage } from '../models/Chat';
+import Chat from '../models/Chat';
+import { IMessageModel } from '../models/types';
 
 interface IMessageCreateReqBody {
   readonly members: string[];
@@ -35,9 +36,8 @@ class MessageController {
         reply,
         created_at,
       }: IMessageCreateReqBody = req.body;
-
       if (!reply) {
-        const newMessage: IMessage = {
+        const newMessage: IMessageModel = {
           from,
           body,
           created_at,
@@ -51,19 +51,18 @@ class MessageController {
         }
 
         if (chat) {
-          chat.update({
+          chat.updateOne({
             $push: { messages: newMessage },
             last_message: body,
             created_at: newMessage.created_at,
           });
         }
-
         this.io.emit('SERVER:CHAT', {
           chat_id: chat?.id,
           messages: [newMessage],
         });
       } else {
-        const newMessage: IMessage = {
+        const newMessage: IMessageModel = {
           from,
           body,
           created_at,

@@ -19,7 +19,7 @@ class ChatController {
 
       const members = chat!.members;
       const companion_id = members.find((user) => user !== user_id);
-      const messages = chat!.messages;
+      const messages: any = []; //chat!.messages;
 
       res.json({ chat_id, companion_id, messages });
     } catch (error) {

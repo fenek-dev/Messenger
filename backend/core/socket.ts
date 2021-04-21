@@ -1,8 +1,9 @@
 import { Server, Socket } from 'socket.io';
 import http from 'http';
 import User from '../models/User';
-import Chat, { IChat } from '../models/Chat';
-async function getEveryChat(items: IChat[], data: any[], user_id: string) {
+import Chat from '../models/Chat';
+import { IChatModel } from '../models/types';
+async function getEveryChat(items: IChatModel[], data: any[], user_id: string) {
   for (const chat of items) {
     const user = await User.findOne({
       _id: chat.members.find((name) => name !== user_id),

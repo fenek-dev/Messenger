@@ -2,9 +2,11 @@
 
 @import './styles/variables.scss';
 @import './styles/animations.scss';
+
 * {
   box-sizing: border-box;
 }
+
 body {
   font-family: 'Roboto', sans-serif;
   overflow: hidden;
@@ -13,7 +15,7 @@ body {
 a {
   font-family: 'Roboto', sans-serif;
   text-decoration: none;
-  color:$main-text-color;
+  color: $main-text-color;
 }
 
 .main {
@@ -25,7 +27,7 @@ a {
 }
 
 .active {
-  border-left:$main-color 2px solid;
+  border-left: $main-color 2px solid;
   color: $main-color;
   background: $main-active;
 }
@@ -37,7 +39,7 @@ a {
 }
 
 .icon {
-  color:$main-text-color;
+  color: $main-text-color;
   height: 48px;
   width: 48px;
   background-position: center center;
@@ -46,7 +48,7 @@ a {
 }
 
 .icon-24 {
-  color:$main-text-color;
+  color: $main-text-color;
   height: 24px;
   width: 24px;
   background-position: center center;
@@ -56,9 +58,10 @@ a {
 
 
 .dark {
-  color:$dark-text-color;
-  background:$dark-main-color;
+  color: $dark-text-color;
+  background: $dark-main-color;
+
   a {
-    color:$dark-text-color;
+    color: $dark-text-color;
   }
 }
