@@ -42,20 +42,17 @@ const ConvInput: React.FC<IConvInput> = ({ handleSubmit, reply, setReply }) => {
     [handleSubmit]
   );
 
-  const handleChange = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (inputRef.current!.value !== '' && e.key === 'Enter') {
-        e.preventDefault();
-        handleSubmit(inputRef.current!.value);
-        inputRef.current!.value = '';
-      }
-    },
-    [handleSubmit]
-  );
+  const handleChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (inputRef.current!.value !== '' && e.key === 'Enter') {
+      e.preventDefault();
+      handleSubmit(inputRef.current!.value);
+      inputRef.current!.value = '';
+    }
+  };
 
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
     setReply(undefined);
-  }, [setReply]);
+  };
   return (
     <form className='conv-input'>
       {reply && (

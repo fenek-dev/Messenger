@@ -1,5 +1,5 @@
 //===== React and styles =====
-import React from 'react';
+import React, { memo } from 'react';
 import './ProfileLogs.scss';
 
 //===== Utils =====
@@ -34,4 +34,4 @@ const ProfileLogs: React.FC<IProfileLogs> = ({
   );
 };
 
-export default ProfileLogs;
+export default memo(ProfileLogs);

@@ -30,13 +30,13 @@ const Chats: React.FC<IChatsComponent> = ({ chats }) => {
     setIsSearching(true);
   }, []);
 
-  const handleBlur = useCallback(() => {
+  const handleBlur = () => {
     setIsSearching(false);
-  }, []);
+  };
 
-  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     debounce(setInputValue(e.target.value), 400);
-  }, []);
+  };
   return (
     <section className='chats'>
       <div className='chats-search'>

@@ -1,5 +1,5 @@
 //===== React and styles =====
-import React from 'react';
+import React, { memo } from 'react';
 import './SettingsHeader.scss';
 
 //===== Interface =====
@@ -16,4 +16,4 @@ const SettingsHeader: React.FC<ISettingsHeader> = ({ title }) => {
   );
 };
 
-export default SettingsHeader;
+export default memo(SettingsHeader);
