@@ -1,27 +1,27 @@
 //===== React and styles =====
-import React, { memo } from 'react';
-import './Menu.scss';
+import React, {memo} from 'react'
+import './Menu.scss'
 
 //===== Interface =====
 interface IMenu {
-  readonly coord: { x: number; y: number };
-  readonly children: React.ReactNode;
-  readonly visible: boolean;
-  readonly onClose?: () => void;
+  readonly coord: {x: number; y: number}
+  readonly children: React.ReactNode
+  readonly visible: boolean
+  readonly onClose?: () => void
 }
 
 //===== Main =====
-const Menu: React.FC<IMenu> = ({ children, coord, visible, onClose }) => {
+const Menu: React.FC<IMenu> = ({children, coord, visible, onClose}) => {
   return (
     <div
-      className='overlay'
-      style={{ display: visible ? 'block' : 'none' }}
+      className="overlay"
+      style={{display: visible ? 'block' : 'none'}}
       onClick={onClose}>
-      <div className='context-menu' style={{ top: coord.y, left: coord.x }}>
+      <div className="context-menu" style={{top: coord.y, left: coord.x}}>
         {children}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default memo(Menu);
+export default memo(Menu)

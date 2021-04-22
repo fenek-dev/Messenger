@@ -1,21 +1,21 @@
-import { ADD_USER_IN_SEARCH, CLEAN_SEARCH } from '../Constants';
-import { ISearchState } from './Reducers';
+import {ADD_USER_IN_SEARCH, CLEAN_SEARCH} from '../Constants'
+import {ISearchState} from './Reducers'
 
-const initialState: ISearchState[] = [];
+const initialState: ISearchState[] = []
 
 const reducer = (
   state = initialState,
-  { type, payload }: { type: string; payload: any }
+  {type, payload}: {type: string; payload: any},
 ) => {
   switch (type) {
     case ADD_USER_IN_SEARCH:
-      return [...state, payload];
+      return [...state, payload]
 
     case CLEAN_SEARCH:
-      return [];
+      return []
 
     default:
-      return state;
+      return state
   }
-};
-export default reducer;
+}
+export default reducer

@@ -1,18 +1,18 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import { createServer } from 'http';
-import createRoutes from './core/routes';
-import createSocket from './core/socket';
+import express from 'express'
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+import {createServer} from 'http'
+import createRoutes from './core/routes'
+import createSocket from './core/socket'
 
-dotenv.config();
+dotenv.config()
 
-const app = express();
-const server = createServer(app);
-const io = createSocket(server);
-createRoutes(app, io);
+const app = express()
+const server = createServer(app)
+const io = createSocket(server)
+createRoutes(app, io)
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000
 
 async function start() {
   try {
@@ -21,12 +21,12 @@ async function start() {
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false,
-    });
-    server.listen(PORT, () => console.log('Server is working on PORT ', PORT));
+    })
+    server.listen(PORT, () => console.log('Server is working on PORT ', PORT))
   } catch (error) {
-    console.error('Error: ', error.message);
-    process.exit(1);
+    console.error('Error: ', error.message)
+    process.exit(1)
   }
 }
 
-start();
+start()

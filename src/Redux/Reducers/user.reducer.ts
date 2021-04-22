@@ -1,9 +1,9 @@
 //===== Redux =====
-import { IUserPayload } from '../Actions/Actions';
-import { IUserReducerState } from './Reducers';
+import {IUserPayload} from '../Actions/Actions'
+import {IUserReducerState} from './Reducers'
 
 //===== Constants =====
-import { ADD_USER, UPDATE_USER_PHOTO } from '../Constants';
+import {ADD_USER, UPDATE_USER_PHOTO} from '../Constants'
 
 const initialState: IUserReducerState = {
   user_id: '',
@@ -11,24 +11,21 @@ const initialState: IUserReducerState = {
   name: '',
   photo: '',
   socket: '',
-};
+}
 
 const reducer = (
   state = initialState,
-  {
-    type,
-    payload,
-  }: { type: string; payload: IUserPayload & { theme: boolean } }
+  {type, payload}: {type: string; payload: IUserPayload & {theme: boolean}},
 ) => {
   switch (type) {
     case ADD_USER:
-      return { ...state, ...payload };
+      return {...state, ...payload}
 
     case UPDATE_USER_PHOTO:
-      return { ...state, ...payload };
+      return {...state, ...payload}
 
     default:
-      return state;
+      return state
   }
-};
-export default reducer;
+}
+export default reducer

@@ -7,7 +7,7 @@
   justify-content: center;
   &:hover {
     transition: 0.3s ease-in;
-    background:$main-hover;
+    background: $main-hover;
   }
   a {
     width: 100%;
@@ -20,7 +20,6 @@
     margin: 0;
     font-weight: 400;
   }
-
 }
 
 .dark .settings-list {
@@ -36,7 +35,7 @@
       color: #e0e0e0;
     }
     &:hover {
-      background:$dark-hover;
+      background: $dark-hover;
     }
   }
 }

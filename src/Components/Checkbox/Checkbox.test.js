@@ -1,21 +1,21 @@
 import React from 'react'
 import Checkbox from './Checkbox'
-import { render, screen, fireEvent } from '@testing-library/react'
+import {render, screen, fireEvent} from '@testing-library/react'
 
 describe('<Checkbox>', () => {
-    const onChange = jest.fn((e)=> {
-        e.target.checked = !e.target.checked
-    })
-    
-    it('should call onChange function', async ()=> {
-        render(<Checkbox onChange={onChange}  />)
-        const elem = await screen.findByTestId(/checkbox/i)
+  const onChange = jest.fn(e => {
+    e.target.checked = !e.target.checked
+  })
 
-        expect(elem.checked).toEqual(false)
+  it('should call onChange function', async () => {
+    render(<Checkbox onChange={onChange} />)
+    const elem = await screen.findByTestId(/checkbox/i)
 
-        fireEvent.click(elem)
+    expect(elem.checked).toEqual(false)
 
-        expect(elem.checked).toEqual(true)
-        expect(onChange.mock.calls.length).toEqual(1)
-    })
+    fireEvent.click(elem)
+
+    expect(elem.checked).toEqual(true)
+    expect(onChange.mock.calls.length).toEqual(1)
+  })
 })

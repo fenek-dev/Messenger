@@ -1,84 +1,84 @@
 //===== React and styles =====
-import React, { useCallback, useEffect, useState } from 'react';
-import './ProfilePhoto.scss';
-import { UpdateUserPhotoThunk } from '../../Redux/Actions/user.action';
-import { RootReducerInterface } from '../../Redux/Reducers/Reducers';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useCallback, useEffect, useState} from 'react'
+import './ProfilePhoto.scss'
+import {UpdateUserPhotoThunk} from '../../Redux/Actions/user.action'
+import {RootReducerInterface} from '../../Redux/Reducers/Reducers'
+import {useDispatch, useSelector} from 'react-redux'
 
 //===== Components =====
-import FileInput from '../File-input/FileInput';
-import Popup from '../Popup/Popup';
-import PhotoResizer from '../Photo-resizer/PhotoResizer';
+import FileInput from '../File-input/FileInput'
+import Popup from '../Popup/Popup'
+import PhotoResizer from '../Photo-resizer/PhotoResizer'
 
 //===== Images =====
-import userPhoto from '../../icons/user.jpg';
+import userPhoto from '../../icons/user.jpg'
 //===== Interface =====
 interface IProfilePhoto {
-  owner: boolean;
+  owner: boolean
 }
 
 //===== Main =====
-const ProfilePhoto: React.FC<IProfilePhoto> = ({ owner }) => {
-  const { user, profile } = useSelector(
-    (state: Readonly<RootReducerInterface>) => state
-  );
+const ProfilePhoto: React.FC<IProfilePhoto> = ({owner}) => {
+  const {user, profile} = useSelector(
+    (state: Readonly<RootReducerInterface>) => state,
+  )
 
-  const dispatch = useDispatch();
-  const [photo, setPhoto] = useState<string>();
+  const dispatch = useDispatch()
+  const [photo, setPhoto] = useState<string>()
 
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
 
-  const [newPhoto, setNewPhoto] = useState<boolean>(false);
+  const [newPhoto, setNewPhoto] = useState<boolean>(false)
 
   const [newPhotoParams, setNewPhotoParams] = useState({
     image: '',
-    crop: { x: 0, y: 0 },
+    crop: {x: 0, y: 0},
     zoom: 1,
     aspect: 1,
-  });
+  })
 
   useEffect(() => {
-    setPhoto(profile.user_photo);
-  }, [profile.user_photo]);
+    setPhoto(profile.user_photo)
+  }, [profile.user_photo])
 
   const updatePhoto = useCallback(
     (img: string) => {
-      dispatch(UpdateUserPhotoThunk(user.user_id, img));
+      dispatch(UpdateUserPhotoThunk(user.user_id, img))
     },
-    [user.user_id, dispatch]
-  );
+    [user.user_id, dispatch],
+  )
 
   const handleImg = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const image = e.target.files![0];
-    const reader = new FileReader();
-    reader.readAsDataURL(image);
+    const image = e.target.files![0]
+    const reader = new FileReader()
+    reader.readAsDataURL(image)
     reader.onloadend = () => {
-      const image = reader.result as string;
-      setNewPhotoParams((prev) => ({
+      const image = reader.result as string
+      setNewPhotoParams(prev => ({
         ...prev,
         image,
-      }));
-      setNewPhoto(true);
-    };
-  }, []);
+      }))
+      setNewPhoto(true)
+    }
+  }, [])
 
   const handleImgClick = useCallback(() => {
-    setOpen(!open);
-  }, [open]);
+    setOpen(!open)
+  }, [open])
 
   return (
-    <div className='profile-photo'>
-      <div onClick={handleImgClick} className='profile-photo-img'>
-        <img src={photo || userPhoto} alt='User' />
+    <div className="profile-photo">
+      <div onClick={handleImgClick} className="profile-photo-img">
+        <img src={photo || userPhoto} alt="User" />
       </div>
       {owner && <FileInput label={'Add photo'} onChange={handleImg} />}
       {open && (
-        <Popup height='500' width='500' onClose={handleImgClick}>
+        <Popup height="500" width="500" onClose={handleImgClick}>
           <img
             src={photo || userPhoto}
-            width='500'
-            height='500'
-            alt='opened user'
+            width="500"
+            height="500"
+            alt="opened user"
           />
         </Popup>
       )}
@@ -92,7 +92,7 @@ const ProfilePhoto: React.FC<IProfilePhoto> = ({ owner }) => {
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ProfilePhoto;
+export default ProfilePhoto
