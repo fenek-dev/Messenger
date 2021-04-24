@@ -49,8 +49,6 @@ const createSocket = (http: http.Server) => {
       chats.forEach(chat => {
         socket.join(chat.id)
       })
-      console.log('Rooms in socket: ', socket.rooms)
-
       socket.emit('SERVER:LIST', data)
     })
 

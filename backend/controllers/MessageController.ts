@@ -30,13 +30,16 @@ class MessageController {
         let chat = await Chat.findById(chat_id)
 
         if (chat) {
+          // Update chat last message and last time
           chat.updateOne({
-            last_message: body,
-            created_at: newMessage.created_at,
+            $set: {
+              last_message: body,
+              created_at: newMessage.created_at,
+            },
           })
+          // Create new message and save it
           const message = new Message(newMessage)
           await message.save()
-          console.log('Chat id', chat_id)
 
           this.io.to(chat_id).emit('SERVER:CHAT', {
             chat_id,
@@ -58,10 +61,15 @@ class MessageController {
         let chat = await Chat.findById(chat_id)
 
         if (chat) {
+          // Update chat last message and last time
           chat.updateOne({
-            last_message: body,
-            created_at: newMessage.created_at,
+            $set: {
+              last_message: body,
+              created_at: newMessage.created_at,
+            },
           })
+
+          // Create new message and save it
           const message = new Message(newMessage)
           await message.save()
 

@@ -7,8 +7,7 @@
     "start": "nodemon server.ts",
     "start:build": "node dist/index.js",
     "server:build": "nodemon dist/index.js",
-    "build": "webpack",
-    "test": "jest --watchAll"
+    "build": "webpack"
   },
   "author": "Arthur Moore",
   "license": "ISC",

@@ -9,6 +9,7 @@ class ChatController {
   public getChat = async (req: express.Request, res: express.Response) => {
     try {
       const {chat_id, user_id} = req.params
+
       const chat = await Chat.findById(chat_id)
 
       if (!chat) {
@@ -16,7 +17,11 @@ class ChatController {
       }
 
       const members = chat!.members
+
+      // Get companion id from members id
       const companion_id = members.find(user => user !== user_id)
+
+      // Find all messages by chat id
       const messages = await Message.find({chat_id})
 
       res.status(200).json({chat_id, companion_id, messages})

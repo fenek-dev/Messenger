@@ -24,8 +24,9 @@ class UserController {
       const {email, password, name} = req.body
 
       const candidate = await User.findOne({email})
-      if (!candidate) {
-        res.status(400).json({message: "User hasn't found "})
+
+      if (candidate) {
+        res.status(400).json({message: 'User already exists'})
       }
 
       const hashedPassword = await bcrypt.hash(password, 2)
@@ -41,9 +42,6 @@ class UserController {
           last_seen: new Date().getTime(),
         },
       })
-
-      const a = await user.save()
-      console.log('user ', a)
 
       const token = jwt.sign({userId: user!.id}, process.env.JWT_SECRET!, {
         expiresIn: '30d',
