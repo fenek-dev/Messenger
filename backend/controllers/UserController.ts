@@ -4,7 +4,6 @@ import socket from 'socket.io'
 import {validationResult} from 'express-validator'
 import jwt from 'jsonwebtoken'
 import User from '../models/User'
-
 class UserController {
   io: socket.Server
   constructor(io: socket.Server) {
@@ -22,33 +21,42 @@ class UserController {
         })
       }
 
-      const {email, password} = req.body
+      const {email, password, name} = req.body
 
-      const user = await User.findOne({email})
-
-      if (!user) {
+      const candidate = await User.findOne({email})
+      if (!candidate) {
         res.status(400).json({message: "User hasn't found "})
       }
 
-      // Compare passwords
-      const isMatch = await bcrypt.compare(password, user!.password)
+      const hashedPassword = await bcrypt.hash(password, 2)
 
-      if (!isMatch) {
-        return res.status(400).json({message: 'Password is wrong'})
-      }
+      const user = new User({
+        email,
+        password: hashedPassword,
+        name,
+        status: '',
+        photo: '',
+        logs: {
+          online: false,
+          last_seen: new Date().getTime(),
+        },
+      })
+
+      const a = await user.save()
+      console.log('user ', a)
 
       const token = jwt.sign({userId: user!.id}, process.env.JWT_SECRET!, {
         expiresIn: '30d',
       })
 
-      res.json({
+      res.status(201).json({
         token,
         userId: user!.id,
         name: user!.name,
         status: user?.status,
       })
     } catch (error) {
-      console.log(error)
+      console.log('error: ', error)
       res.status(500).json({message: 'Something goes wrong'})
     }
   }
