@@ -18,14 +18,6 @@ const Auth: React.FC<IAuth> = ({type, setIsAuth}) => {
   const dispatch = useDispatch()
 
   const [error, setError] = useState<string>()
-  const signIn = useCallback(
-    (values: {email: string; password: string}) => {
-      dispatch(
-        SignInUserThunk(values.email, values.password, setIsAuth, setError),
-      )
-    },
-    [dispatch, setIsAuth],
-  )
 
   const createUser = useCallback(
     (values: {email: string; password: string; name: string}) => {
@@ -37,6 +29,14 @@ const Auth: React.FC<IAuth> = ({type, setIsAuth}) => {
           setIsAuth,
           setError,
         ),
+      )
+    },
+    [dispatch, setIsAuth],
+  )
+  const signIn = useCallback(
+    (values: {email: string; password: string}) => {
+      dispatch(
+        SignInUserThunk(values.email, values.password, setIsAuth, setError),
       )
     },
     [dispatch, setIsAuth],

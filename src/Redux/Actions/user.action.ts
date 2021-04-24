@@ -47,6 +47,7 @@ export const CreateUserThunk: IThunkAction = (
   password: string,
   name: string,
   setIsAuth: (value: boolean) => void,
+  setError: (message: string) => void,
 ) => async dispatch => {
   try {
     if (email && password && name) {
@@ -80,6 +81,7 @@ export const CreateUserThunk: IThunkAction = (
     }
   } catch (error) {
     console.error(error.message)
+    setError(error.message)
   }
 }
 
