@@ -15,7 +15,13 @@ describe('<Button>', () => {
   })
 
   it('should change background color', async () => {
-    render(<Button label={label} onClick={onClick} backgroundColor={bgColor} />)
+    render(
+      <Button
+        label={label}
+        onClick={onClick}
+        style={{backgroundColor: bgColor}}
+      />,
+    )
     const btn = await screen.findByText(label)
     expect(btn.style.backgroundColor).toEqual(bgColor)
   })

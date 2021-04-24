@@ -31,10 +31,6 @@ describe('<Message>', () => {
     expect(date).toBeInTheDocument()
     expect(date).toBeVisible()
 
-    const img = await screen.findByAltText(/User/i)
-    expect(img.getAttribute('src')).toEqual(props.photoUrl)
-    expect(img).toBeVisible()
-
     const wrapper = await screen.findByTestId(/wrapper/i)
     expect(wrapper.classList[1]).toEqual(props.type)
   })

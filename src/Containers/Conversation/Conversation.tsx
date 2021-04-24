@@ -60,8 +60,6 @@ const Conversation: React.FC = () => {
   const state = useSelector((state: Readonly<RootReducerInterface>) => state)
   const user = state.user
 
-  console.log('state: ', state.chats)
-
   useEffect(() => {
     const need = state.chats.find(chat => chat.companion_id === id)
     setChat(need)
