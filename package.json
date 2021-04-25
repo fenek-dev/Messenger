@@ -23,6 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "npx prettier --write .",
+    "heroku-postbuild": "npm install typescript",
     "postinstall": "tsc"
   },
   "eslintConfig": {
