@@ -59,7 +59,7 @@
     &--selected {
       border-left: $main-color 2px solid;
       color: $main-color;
-      background:$main-active;
+      background: $main-active;
     }
 
     &--disabled {
@@ -95,23 +95,22 @@
   grid-template-columns: 2fr 3fr;
 }
 
-.dark{ 
+.dark {
   .react-tabs__tab {
-  &:hover  {
-    
-  background:$dark-hover;
+    &:hover {
+      background: $dark-hover;
+    }
+    &:focus {
+      background: $dark-main-color;
+    }
   }
-  &:focus {
-    background:$dark-main-color;
+  .react-tabs__tab-list {
+    background: $dark-main-color;
   }
-}
-.react-tabs__tab-list {
-  background:$dark-main-color;
-}
-.react-tabs__tab-panel {
-  background: $dark-main-color;  
-}
-.react-tabs__tab--selected {
-  background:$dark-hover;
-}
+  .react-tabs__tab-panel {
+    background: $dark-main-color;
+  }
+  .react-tabs__tab--selected {
+    background: $dark-hover;
+  }
 }

@@ -1,56 +1,57 @@
 //===== Redux =====
-import { IAction, IAddUserAction, IThunkAction } from './Actions';
+import {IAction, IAddUserAction, IThunkAction} from './Actions'
 
 //===== Constatns =====
-import { ADD_USER, UPDATE_USER_PHOTO } from '../Constants';
+import {ADD_USER, UPDATE_USER_PHOTO} from '../Constants'
 
 //===== Utils =====
-import createSocket from '../../utils/socket';
-import { AddThemeAction } from './theme.action';
+import createSocket from '../../utils/socket'
+import {AddThemeAction} from './theme.action'
 
-export const AddUserAction: IAction<IAddUserAction> = (payload) => ({
+export const AddUserAction: IAction<IAddUserAction> = payload => ({
   type: ADD_USER,
   payload,
-});
+})
 
-export const UpdateUserPhoto: IAction = (payload) => ({
+export const UpdateUserPhoto: IAction = payload => ({
   type: UPDATE_USER_PHOTO,
   payload,
-});
+})
 
 export const UpdateUserInfoThunk: IThunkAction = ({
   name,
   status,
 }: IAddUserAction) => async (dispatch, getState) => {
   try {
-    const { user_id } = getState().user;
-    const body = { name, status, user_id };
+    const {user_id} = getState().user
+    const body = {name, status, user_id}
     const res = await fetch('/api/auth/update', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
-    });
-    const data = await res.json();
+    })
+    const data = await res.json()
 
     if (!res.ok) {
-      throw new Error(data.message || 'Server error');
+      throw new Error(data.message || 'Server error')
     }
   } catch (error) {
-    console.error(error.message);
+    console.error(error.message)
   }
-};
+}
 
 export const CreateUserThunk: IThunkAction = (
   email: string,
   password: string,
   name: string,
-  setIsAuth: (value: boolean) => void
-) => async (dispatch) => {
+  setIsAuth: (value: boolean) => void,
+  setError: (message: string) => void,
+) => async dispatch => {
   try {
     if (email && password && name) {
-      const body = { email, password, name };
+      const body = {email, password, name}
 
       const res = await fetch('/api/auth/register', {
         method: 'POST',
@@ -58,40 +59,41 @@ export const CreateUserThunk: IThunkAction = (
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
-      });
-      const data = await res.json();
+      })
+      const data = await res.json()
 
       if (!res.ok) {
-        throw new Error(data.message || 'Server error');
+        throw new Error(data.message || 'Server error')
       }
-      setIsAuth(true);
-      localStorage.setItem('token', JSON.stringify(data.token));
+      setIsAuth(true)
+      localStorage.setItem('token', JSON.stringify(data.token))
       dispatch(
         AddUserAction({
           user_id: data.userId,
           status: data.status,
           name,
           socket: createSocket(data.userId),
-        })
-      );
+        }),
+      )
       dispatch(
-        AddThemeAction({ theme: JSON.parse(localStorage.getItem('theme')!) })
-      );
+        AddThemeAction({theme: JSON.parse(localStorage.getItem('theme')!)}),
+      )
     }
   } catch (error) {
-    console.error(error.message);
+    console.error(error.message)
+    setError(error.message)
   }
-};
+}
 
 export const SignInUserThunk: IThunkAction = (
   email: string,
   password: string,
   setIsAuth: (value: boolean) => void,
-  setError: (message: string) => void
-) => async (dispatch) => {
+  setError: (message: string) => void,
+) => async dispatch => {
   try {
     if (email && password) {
-      const body = { email, password };
+      const body = {email, password}
 
       const res = await fetch('/api/auth/login', {
         body: JSON.stringify(body),
@@ -99,92 +101,92 @@ export const SignInUserThunk: IThunkAction = (
         headers: {
           'Content-Type': 'application/json',
         },
-      });
-      const data = await res.json();
+      })
+      const data = await res.json()
       if (!res.ok) {
-        throw new Error(data.message);
+        throw new Error(data.message)
       }
-      setIsAuth(true);
-      localStorage.setItem('token', JSON.stringify(data.token));
+      setIsAuth(true)
+      localStorage.setItem('token', JSON.stringify(data.token))
       dispatch(
         AddUserAction({
           user_id: data.userId,
           status: data.status,
           name: data.name,
           socket: createSocket(data.userId),
-        })
-      );
+        }),
+      )
       dispatch(
-        AddThemeAction({ theme: JSON.parse(localStorage.getItem('theme')!) })
-      );
+        AddThemeAction({theme: JSON.parse(localStorage.getItem('theme')!)}),
+      )
     }
   } catch (error) {
-    setError(error.message);
-    console.error(error);
+    setError(error.message)
+    console.error(error)
   }
-};
+}
 
 export const SignInThunk: IThunkAction = (
   token: string,
   setIsAuth: (value: boolean) => void,
-  setError: (message: string) => void
-) => async (dispatch) => {
+  setError: (message: string) => void,
+) => async dispatch => {
   try {
     if (token) {
-      const body = { token };
+      const body = {token}
       const res = await fetch('/api/auth/token', {
         body: JSON.stringify(body),
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-      });
+      })
 
-      const data = await res.json();
+      const data = await res.json()
       if (!res.ok) {
-        throw new Error(data.message);
+        throw new Error(data.message)
       }
-      setIsAuth(true);
+      setIsAuth(true)
       dispatch(
         AddUserAction({
           user_id: data.userId,
           status: data.status,
           name: data.name,
           socket: createSocket(data.userId),
-        })
-      );
+        }),
+      )
       dispatch(
-        AddThemeAction({ theme: JSON.parse(localStorage.getItem('theme')!) })
-      );
+        AddThemeAction({theme: JSON.parse(localStorage.getItem('theme')!)}),
+      )
     }
   } catch (error) {
-    setError(error.message);
-    console.error(error.message);
+    setError(error.message)
+    console.error(error.message)
   }
-};
+}
 
 export const UpdateUserPhotoThunk: IThunkAction = (
   userId: string,
-  file: string
-) => async (dispatch) => {
+  file: string,
+) => async dispatch => {
   try {
-    console.log(file);
+    console.log(file)
 
     const res = await fetch('/api/user/photo', {
-      body: JSON.stringify({ userId, file }),
+      body: JSON.stringify({userId, file}),
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-    });
+    })
 
-    const data = await res.json();
+    const data = await res.json()
     if (!res.ok) {
-      throw new Error(data.message);
+      throw new Error(data.message)
     }
 
-    dispatch(UpdateUserPhoto(data));
+    dispatch(UpdateUserPhoto(data))
   } catch (error) {
-    console.error(error.message);
+    console.error(error.message)
   }
-};
+}

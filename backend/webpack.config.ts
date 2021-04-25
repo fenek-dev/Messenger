@@ -1,7 +1,7 @@
-import path from 'path';
-import webpack from 'webpack';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-const nodeExternals = require('webpack-node-externals');
+import path from 'path'
+import webpack from 'webpack'
+import {CleanWebpackPlugin} from 'clean-webpack-plugin'
+const nodeExternals = require('webpack-node-externals')
 module.exports = {
   target: 'node',
   entry: './server.ts',
@@ -24,4 +24,4 @@ module.exports = {
     extensions: ['.ts', '.js'],
   },
   plugins: [new CleanWebpackPlugin(), new webpack.HotModuleReplacementPlugin()],
-};
+}

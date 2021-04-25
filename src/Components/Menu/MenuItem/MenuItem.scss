@@ -1,18 +1,18 @@
 @import '../../../styles/variables.scss';
 
 .context-menu-item {
-    line-height: 0;
-    padding: 5px 0;
-    text-align: center;
-    border: 1px solid $search-color;
-    cursor: pointer;
-    transition: ease-in-out .3s;
+  line-height: 0;
+  padding: 5px 0;
+  text-align: center;
+  border: 1px solid $search-color;
+  cursor: pointer;
+  transition: ease-in-out 0.3s;
 
-    &:hover {
-        background: $dark-hover;
-    }
+  &:hover {
+    background: $dark-hover;
+  }
 }
 
 .dark .context-menu-item {
-    border: 1px solid $dark-hover;
+  border: 1px solid $dark-hover;
 }

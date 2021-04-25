@@ -39,10 +39,9 @@
   &-list {
     padding: 10px 0;
     height: 100%;
-    @include scroll
+    @include scroll;
   }
 }
-
 
 .dark .chats {
   &-search {

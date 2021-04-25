@@ -1,100 +1,98 @@
 //================================
 // React and Redux
 //================================
-import React, { memo, useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { GetChatThunk } from '../../Redux/Actions/chats.action';
-import { IChats, RootReducerInterface } from '../../Redux/Reducers/Reducers';
+import React, {memo, useCallback, useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {GetChatThunk} from '../../Redux/Actions/chats.action'
+import {IChats, RootReducerInterface} from '../../Redux/Reducers/Reducers'
 import {
   SendMessageThunk,
   SendReplyThunk,
   UpdateMessageThunk,
-} from '../../Redux/Actions/messages.action';
+} from '../../Redux/Actions/messages.action'
 
 //================================
 // Components
 //================================
-import ConversationHeader from '../../Components/Conversation-header/ConversationHeader';
-import ConvInput from '../../Components/Conv-input/ConvInput';
-import Message from '../../Components/Message/Message';
-import Menu from '../../Components/Menu/Menu';
-import MenuItem from '../../Components/Menu/MenuItem/MenuItem';
+import ConversationHeader from '../../Components/Conversation-header/ConversationHeader'
+import ConvInput from '../../Components/Conv-input/ConvInput'
+import Message from '../../Components/Message/Message'
+import Menu from '../../Components/Menu/Menu'
+import MenuItem from '../../Components/Menu/MenuItem/MenuItem'
 
 //===== Styles and images =====
-import './Conversation.scss';
-import userPhoto from '../../icons/user.jpg';
+import './Conversation.scss'
+import userPhoto from '../../icons/user.jpg'
 
 //===== Main =====
 const Conversation: React.FC = () => {
   // Get id from search params
-  const params = useParams<{ id: Readonly<string> }>();
-  const id = params.id;
+  const params = useParams<{id: Readonly<string>}>()
+  const id = params.id
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const [chat, setChat] = useState<IChats>();
+  const [chat, setChat] = useState<IChats>()
 
-  const [coord, setCoord] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [open, setOpen] = useState<boolean>(false);
+  const [coord, setCoord] = useState<{x: number; y: number}>({x: 0, y: 0})
+  const [open, setOpen] = useState<boolean>(false)
 
   const [message, setMessage] = useState<{
-    created_at: number;
-    body: string;
-    from: string;
-    id: string;
+    created_at: number
+    body: string
+    from: string
+    id: string
   }>({
     created_at: 0,
     body: '',
     from: '',
     id: '',
-  });
+  })
   const [reply, setReply] = useState<{
-    created_at: number;
-    body: string;
-    from: string;
-    edit: boolean;
-    id: string;
-  }>();
+    created_at: number
+    body: string
+    from: string
+    edit: boolean
+    id: string
+  }>()
 
-  const state = useSelector((state: Readonly<RootReducerInterface>) => state);
-  const user = state.user;
-
-  console.log('state: ', state.chats);
+  const state = useSelector((state: Readonly<RootReducerInterface>) => state)
+  const user = state.user
 
   useEffect(() => {
-    const need = state.chats.find((chat) => chat.companion_id === id);
-    setChat(need);
-  }, [id, state.chats]);
+    const need = state.chats.find(chat => chat.companion_id === id)
+    setChat(need)
+  }, [id, state.chats])
 
   // Get all chats from server
   useEffect(() => {
     if (chat?.messages.length === 0) {
-      dispatch(GetChatThunk(chat.chat_id, user.user_id));
+      dispatch(GetChatThunk(chat.chat_id, user.user_id))
     }
-  }, [dispatch, id, chat, user.user_id]);
+  }, [dispatch, id, chat, user.user_id])
 
   const handleSubmit = useCallback(
     (value: Readonly<string>) => {
       // Check if the value is the same with trim
       if (value === value.trim()) {
-        const members = [user.user_id, id];
+        const members = [user.user_id, id]
         if (reply && !reply.edit) {
-          dispatch(SendReplyThunk(members, user.user_id, value, reply));
-          value = '';
-          setReply(undefined);
+          dispatch(SendReplyThunk(members, user.user_id, value, reply))
+          value = ''
+          setReply(undefined)
         } else if (reply && reply.edit) {
-          dispatch(UpdateMessageThunk(chat?.chat_id, reply.id, value));
-          setReply(undefined);
-          value = '';
+          dispatch(UpdateMessageThunk(chat?.chat_id, reply.id, value))
+          setReply(undefined)
+          value = ''
         } else {
-          dispatch(SendMessageThunk(members, user.user_id, value));
-          value = '';
+          dispatch(SendMessageThunk(members, user.user_id, value))
+          value = ''
         }
       }
     },
-    [dispatch, id, user.user_id, reply, chat?.chat_id]
-  );
+    [dispatch, id, user.user_id, reply, chat?.chat_id],
+  )
 
   const handleClick = useCallback(
     (
@@ -102,29 +100,29 @@ const Conversation: React.FC = () => {
       created_at: number,
       body: string,
       from: string,
-      id: string
+      id: string,
     ) => {
-      setCoord({ x: e.clientX, y: e.clientY });
-      setOpen(true);
-      setMessage({ created_at, body, from, id });
+      setCoord({x: e.clientX, y: e.clientY})
+      setOpen(true)
+      setMessage({created_at, body, from, id})
     },
-    []
-  );
+    [],
+  )
 
   const handleClose = useCallback(() => {
-    setOpen(false);
-  }, []);
+    setOpen(false)
+  }, [])
 
   const handleReply = useCallback(() => {
-    setReply({ ...message, edit: false });
-  }, [message]);
+    setReply({...message, edit: false})
+  }, [message])
 
   const handleEdit = useCallback(() => {
-    setReply({ ...message, edit: true });
-  }, [message]);
+    setReply({...message, edit: true})
+  }, [message])
 
   return (
-    <section className='conversation'>
+    <section className="conversation">
       {chat && (
         <>
           <ConversationHeader
@@ -134,10 +132,10 @@ const Conversation: React.FC = () => {
             id={id}
           />
 
-          <div className='conversation-chat'>
+          <div className="conversation-chat">
             {
               // If messages is existing
-              chat.messages.map((message) => {
+              chat.messages.map(message => {
                 return (
                   <Message
                     id={message._id}
@@ -149,7 +147,7 @@ const Conversation: React.FC = () => {
                     from={message.from}
                     type={message.from === id ? 'foreign' : 'own'}
                   />
-                );
+                )
               })
             }
           </div>
@@ -169,7 +167,7 @@ const Conversation: React.FC = () => {
         </Menu>
       )}
     </section>
-  );
-};
+  )
+}
 
-export default memo(Conversation);
+export default memo(Conversation)

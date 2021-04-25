@@ -1,5 +1,5 @@
-import { ADD_PROFILE, CLEAN_PROFILE } from '../Constants';
-import { IProfileState } from './Reducers';
+import {ADD_PROFILE, CLEAN_PROFILE} from '../Constants'
+import {IProfileState} from './Reducers'
 
 const initialState: IProfileState = {
   user_id: '',
@@ -10,15 +10,15 @@ const initialState: IProfileState = {
     online: false,
     last_seen: 0,
   },
-};
+}
 
 const reducer = (
   state = initialState,
-  { type, payload }: { type: string; payload: any }
+  {type, payload}: {type: string; payload: any},
 ) => {
   switch (type) {
     case ADD_PROFILE:
-      return { ...state, ...payload };
+      return {...state, ...payload}
 
     case CLEAN_PROFILE:
       return {
@@ -29,9 +29,9 @@ const reducer = (
           online: false,
           last_seen: 0,
         },
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
-export default reducer;
+}
+export default reducer

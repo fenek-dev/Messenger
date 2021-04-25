@@ -2,55 +2,54 @@
 @import '../../styles/animations.scss';
 
 .popup {
-    &-layout {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 100;
-        height: 100vh;
-        width: 100vw;
-        background: rgba($color: #000000, $alpha: 0.5);
+  &-layout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    height: 100vh;
+    width: 100vw;
+    background: rgba($color: #000000, $alpha: 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-window {
+    animation: popup 0.4s ease-in-out alternate;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: $main-text-color;
+    display: block;
+    z-index: 101;
+    background: $border-color;
+    border-radius: 10px;
+
+    &__close {
+      z-index: 1000;
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      right: 10px;
+      font-size: 30px;
+    }
+
+    &__content {
+      padding: 0 10px;
+      z-index: 102;
+
+      &-title {
+        font-size: 25px;
+        line-height: 1;
+        margin-bottom: 0;
+      }
+
+      &-buttons {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-evenly;
+      }
     }
-
-    &-window {
-        animation: popup .4s ease-in-out alternate;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        color: $main-text-color;
-        display: block;
-        z-index: 101;
-        background: $border-color;
-        border-radius: 10px;
-
-        &__close {
-            z-index: 1000;
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            right: 10px;
-            font-size: 30px;
-        }
-
-        &__content {
-            padding: 0 10px;
-            z-index: 102;
-
-
-            &-title {
-                font-size: 25px;
-                line-height: 1;
-                margin-bottom: 0;
-            }
-
-            &-buttons {
-                display: flex;
-                align-items: center;
-                justify-content: space-evenly;
-            }
-        }
-    }
+  }
 }

@@ -7,8 +7,7 @@
   grid-area: conv;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows:
-    71px 1fr 74px;
+  grid-template-rows: 71px 1fr 74px;
   grid-template-areas:
     'header'
     'chat'
@@ -19,7 +18,7 @@
     display: flex;
     flex-direction: column;
     padding: 20px 15px;
-    @include scroll
+    @include scroll;
   }
 }
 
