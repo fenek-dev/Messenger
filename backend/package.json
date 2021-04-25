@@ -6,12 +6,11 @@
   "scripts": {
     "start:dev": "nodemon server.ts",
     "start": "node dist/index.js",
-    "server:build": "nodemon dist/index.js",
     "build": "webpack",
     "heroku-postbuild": "npm install && npm run build"
   },
   "engines": {
-    "node": "10.16.0"
+    "node": "14.16.0"
   },
   "author": "Arthur Moore",
   "license": "ISC",
