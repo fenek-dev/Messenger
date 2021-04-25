@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import {createServer} from 'http'
 import createRoutes from './core/routes'
 import createSocket from './core/socket'
+import path from 'path'
 
 dotenv.config()
 
@@ -13,6 +14,11 @@ const io = createSocket(server)
 createRoutes(app, io)
 
 const PORT = process.env.PORT || 5000
+
+app.use(express.static(path.join(__dirname, '../build')))
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build'))
+})
 
 async function start() {
   try {

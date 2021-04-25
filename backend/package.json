@@ -7,13 +7,18 @@
     "start": "nodemon server.ts",
     "start:build": "node dist/index.js",
     "server:build": "nodemon dist/index.js",
-    "build": "webpack"
+    "build": "webpack",
+    "heroku-postbuild": "npm install && npm run build"
+  },
+  "engines": {
+    "node": "10.16.0"
   },
   "author": "Arthur Moore",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "npm": "^7.11.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.12.1",
