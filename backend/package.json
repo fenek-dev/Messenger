@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "nodemon server.ts",
-    "start:build": "node dist/index.js",
+    "start:dev": "nodemon server.ts",
+    "start": "node dist/index.js",
     "server:build": "nodemon dist/index.js",
     "build": "webpack",
     "heroku-postbuild": "npm install && npm run build"
